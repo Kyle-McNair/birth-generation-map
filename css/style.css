@@ -1,0 +1,138 @@
+body{
+    background-color: #191919 !important;
+}
+@media (max-width: 576px){
+    html {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    }
+    .circleBox{
+        padding: 1vh;
+        height:10vh !important;
+        text-align: left !important;
+    }
+    .c{
+        height: 8vh !important;
+        width: 8vh !important;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    div.introBox h1{
+        font-size: 40px !important;
+    }
+    .facts{
+        margin-left: -10px !important;
+    }
+    .introBox{
+        width: 85% !important;
+    }
+    .introParagraph{
+        font-size: 1em !important;
+        width: 95% !important;
+        padding: 20px !important;
+    }
+    h2{
+        font-size: 1.5em !important;
+    }
+    h3{
+        font-size: 0.9em !important;
+    }
+    li{
+        font-size: 0.7em !important;
+    }
+    ul{
+        margin-left: -25px !important;
+    }
+  }
+canvas.dots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+ }
+.circleBox{
+    padding: 1vh;
+    height:16vh;
+    text-align: center;
+}
+.c{
+    height: 14vh;
+    width: 14vh;
+    border-radius: 50%;
+    display: inline-block;
+}
+.c1 {
+  background-color: #7b3393;
+}
+.c2 {
+   background-color: #c2a5cf;
+}  
+.c3 {
+    background-color: #d2eadb;
+ }
+.c4 {
+    background-color: #a7d5a0;
+}
+.c5 {
+    background-color: #078844;
+}
+div.introBox h1{
+    font-size: 4rem;
+    text-align: center;
+}
+h2{
+    color: white;
+    font-size: 2.5em;
+}
+h3{
+    color: white
+}
+.introBox{
+    padding: 15px, 0;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    width: 45%;
+    background-color: rgba(25,25,25,0.85);
+    border: 1px solid white;
+    position: relative;
+    z-index: 10;
+    top: 20vh;
+}
+.introParagraph{
+    padding: 40px;
+    text-align: left;
+    color: white;
+    font-size: 1.25em;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    width: 85%;
+    background-color: rgba(25,25,25,0.8);
+    border:1px solid white;
+    position: relative;
+    top: 10vh;
+    margin-bottom: 25vh;
+}
+.introSection{
+    height: 100vh;
+    background-color: #191919;
+    
+}
+li{
+    color: white;
+    font-size: 1.05em;
+}
+.navbar{
+    position: sticky !important; 
+    top: 0; 
+    overflow: hidden;
+    border-bottom: solid 1px #998ec3;
+    box-shadow: 0 6px 4px -5px #998ec3;
+    z-index: 10;
+}
+ul{
+    margin-left: -15px;
+}
