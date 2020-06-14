@@ -136,3 +136,10 @@ li{
 ul{
     margin-left: -15px;
 }
+.step{
+    opacity: 1;
+    text-transform: none;
+}
+.scrollama__debug-offset{
+    border-top: 2px dashed red !important;
+}
