@@ -1,22 +1,32 @@
 
 const scroller = scrollama();
+const scrolly = scrollama()
 function handleStepEnter(response){
-    response.element.style.opacity = 1;
+    if(response.direction === 'down'){
+        response.element.style.opacity = 1
+    }
+    else if(response.direction === 'up'){
+        response.element.style.opacity = 0
+    }
 }
 function handleStepExit(response){
     if(response.direction === 'up'){
-        response.element.style.opacity =0
+        response.element.style.opacity = 0
     }
-
+    else{
+        response.element.style.opacity = 0.25
+    }
 }
+
+function init(){
 scroller
     .setup({
         step: '.step',
-        debug: false,
-        offset: 0.55
+        debug: true,
+        offset: 0.5,
     })
     .onStepEnter(handleStepEnter)
-    .onStepExit(handleStepExit)
-
-
+    .onStepExit(handleStepExit);
     window.addEventListener("resize", scroller.resize);
+}
+init();
