@@ -143,3 +143,11 @@ ul{
 .scrollama__debug-offset{
     border-top: 2px dashed red !important;
 }
+article {
+    position: relative;
+}
+figure.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}

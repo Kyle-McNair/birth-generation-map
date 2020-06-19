@@ -1,6 +1,7 @@
 
+
 const scroller = scrollama();
-const scrolly = scrollama()
+// const scrolly = scrollama()
 function handleStepEnter(response){
     if(response.direction === 'down'){
         response.element.style.opacity = 1
@@ -14,7 +15,7 @@ function handleStepExit(response){
         response.element.style.opacity = 0
     }
     else{
-        response.element.style.opacity = 0.25
+        response.element.style.opacity = 1
     }
 }
 
