@@ -26,7 +26,7 @@
       </section>
       
 
-      <nav  id = "start" class="navbar navbar-expand-lg navbar-expand-sm navbar-expand-md navbar-dark bg-dark">
+      <!-- <nav  id = "start" class="navbar navbar-expand-lg navbar-expand-sm navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="index.html#main-start">Generation Migrations</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -41,7 +41,7 @@
             </li>
           </ul>
         </div>
-      </nav>
+      </nav> -->
     <div class = "header-bar" style = "position: sticky"></div>
 
       <div class = "container">
@@ -135,26 +135,39 @@
               </ul>
           </div>
         </div>
+        <div style = "height: 200px"></div>
+        <div class = "introParagraph step" style = "opacity: 0 ;transition: opacity 1000ms">
+          Let's take a look at where all the generations are currently living... 
+        </div>
+        <div style = "height: 100px"></div>
       </div>
-      <div style = "height: 600px"></div>
-      <div class='scrolly'>
-        <div class = "map">LOOK NO FURTHER</div>
-        <article>
-          <div class='step' data-index='0'>
-            <p>Step text</p>
-          </div>
-        </article>
-      
-      </div>
-      <div style = "height: 500px"></div>
-
+      <section id = "scrolly">
+      <figure class='prop-map'></figure>
+      <article>
+        <div class="stepper" data-step="1">
+          <p class = "introParagraph">STEP 1</p>
+        </div>
+        <div class="stepper" data-step="2">
+          <p class = "introParagraph">STEP 2</p>
+        </div>
+        <div class="stepper" data-step="3">
+          <p class = "introParagraph">STEP 3</p>
+        </div>
+        <div class="stepper" data-step="4">
+          <p class = "introParagraph">STEP 4</p>
+        </div>
+      </article>
+      </section>
+        
+        <script type="text/javascript" src="lib/d3.js"></script>
+        <script type="text/javascript" src="lib/topojson.js"></script>
         <script src = "lib\jquery-3.4.1.js"></script>
         <script src="https://unpkg.com/intersection-observer"></script>
         <script src="https://unpkg.com/scrollama"></script>
         <script type= "text/javascript" src="js/main.js"></script>
         <script type= "text/javascript" src="js/randomDots.js"></script>
-		    <script type= "text/javascript" src = "lib\bootstrap.min.js"></script>
-        <script type= "text/javascript" src = "lib\bootstrap.bundle.min.js"></script>
+		    <script type= "text/javascript" src = "lib\bootstrap\bootstrap.min.js"></script>
+        <script type= "text/javascript" src = "lib\bootstrap\bootstrap.bundle.min.js"></script>
         
     </body>
 </html>

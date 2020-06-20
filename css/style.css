@@ -151,3 +151,18 @@ figure.sticky {
     position: sticky;
     top: 0;
 }
+/* map styling */
+.prop-map{
+    height: 100%;
+    width: 100%;
+    border: 1px solid white
+}
+.states{
+    border: 1px solid white
+}
+figure{
+    z-index: 0;
+}
+p.introParagraph{
+    width: 40%;
+}
