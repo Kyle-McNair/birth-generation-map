@@ -155,14 +155,29 @@ figure.sticky {
 .prop-map{
     height: 100%;
     width: 100%;
-    border: 1px solid white
+    border: 1px solid white;
 }
 .states{
     border: 1px solid white
 }
-figure{
+figure.sticky{
+    position: sticky;
     z-index: 0;
 }
 p.introParagraph{
     width: 40%;
+}
+.stepper:last-child {
+    margin-bottom: 0;
+}
+#scrolly {
+    position: relative;
+}
+
+article {
+    position: relative;
+    z-index: 10;
+}
+.gap{
+    height: 100vh
 }

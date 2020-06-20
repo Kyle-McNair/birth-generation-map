@@ -1,5 +1,10 @@
 
 setMap()
+var main = d3.select("body");
+var scrolly = main.select("#scrolly");
+var figure = scrolly.select("figure");
+var article = scrolly.select("article");
+var stepper = article.selectAll(".stepper");
 const scroller = scrollama();
 const stickyscroller = scrollama()
 function handleStepEnter(response){
@@ -11,7 +16,10 @@ function handleStepEnter(response){
     }
 }
 function handleStickyEnter(response){
-    console.log(response)
+    stepper.classed("is-active", function(d, i) {
+        return i === response.index;
+      });
+      figure.select("p").text(response.index + 1);
 }
 function handleStepExit(response){
     if(response.direction === 'up'){
@@ -27,17 +35,12 @@ function setupStickyfill() {
     });
   }
 function init(){
-    var main = d3.select("body");
-    var scrolly = main.select("#scrolly");
-    var figure = scrolly.select("figure");
-    var article = scrolly.select("article");
-    var stepper = article.selectAll(".stepper");
-    setupStickyfill();
+setupStickyfill();
 stickyscroller
     .setup({
         step: '#scrolly article .stepper',
         debug: true,
-        offset: 0.33
+        offset: 0.7
     })
     .onStepEnter(handleStickyEnter)
 scroller
@@ -53,16 +56,16 @@ scroller
 init();
 // load proportional symbol map //
 function setMap(){
-    var height = screen.height,
+    var height = screen.height*0.9,
     width = screen.width;
 
     //create new svg container for the map
-    var map = d3.select(".prop-map")
+    var map = d3.select("figure.prop-map")
         .append("svg")
         .attr("viewBox", `0 0 ${width} ${height}`)
         .attr("width", "100%")
         .attr("height", "100%")
-        .style("position","absolute");
+        // .style("position","absolute");
 
     //create Albers equal area conic projection centered on Chicago
     var albers = d3.geoAlbers()
