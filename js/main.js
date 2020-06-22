@@ -45,7 +45,7 @@ scroller
 }
 
 // load proportional symbol map //
-height = screen.height*0.9,
+height = screen.height*0.95,
 width = screen.width;
 
  //create new svg container for the map
@@ -107,13 +107,11 @@ function updatePropSymbols(response){
     console.log(index)
     
         var colors = ["#7b3393","#7b3393","#c2a5cf","#c2a5cf","#d2eadb","#d2eadb","#a7d5a0","#a7d5a0","#078844","#078844","blank","blank","#c2a5cf","#a7d5a0"];
-        var list = ["SG_2010","SG_2018","BB_2010","BB_2018","GZ_2010","GZ_2018","ML_2010","ML_2018","GZ_2010","GZ_2018","blank","blank","BB_pct","ML_pct"]
+        var list = ["SG_2010","SG_2018","BB_2010","BB_2018","GZ_2010","GZ_2018","ML_2010","ML_2018","GZ_2010","GZ_2018","blank","blank","BB_ch","ML_ch"]
     
         
         console.log(min, max)
-        var radius = d3.scaleSqrt()
-            .domain([min, max])
-            .range([1, 15*(width/700)]);
+        
 
     if(index < 10){
         var totals = [];
@@ -134,7 +132,9 @@ function updatePropSymbols(response){
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
 
-        var minRadius = 1
+        var radius = d3.scaleSqrt()
+            .domain([min, max])
+            .range([1, 15*(width/700)]);
 
         map.selectAll('.map')
             .data(msa2010.features)
@@ -145,26 +145,35 @@ function updatePropSymbols(response){
             .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
             .transition()
             .duration(750)
-                .attr("r", function(d){return 1.0083 * Math.pow(d.properties[list[index]]/min,0.5715) * minRadius})
+                .attr("r", function(d){return radius(d.properties[list[index]])})
             .attr("fill", colors[index])
             .attr("fill-opacity", 0.6)
             .attr("stroke", colors[index])
             .attr("stroke-width", 0.2);
-            // {return 1.0083 * Math.pow(d.properties[list[index]]/min,0.5715) * minRadius})
     } 
     else if(index > 11){
         var totals = [];
         for (var i in msa2010.features) {
             var r1 = msa2010.features[i].properties.BB_ch
             var r2 = msa2010.features[i].properties.ML_ch
+            // var r3 = msa2010.features[i].properties.SG_ch
+            // var r4 = msa2010.features[i].properties.GX_ch
+            // var r5 = msa2010.features[i].properties.GZ_ch
             totals.push(Number(r1))
             totals.push(Number(r2))
+            // totals.push(Number(r3))
+            // totals.push(Number(r4))
+            // totals.push(Number(r5))
         }
         var minRadius = 1
 
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
-        var minRadius = 1
+        
+        var radius = d3.scaleSqrt()
+        .domain([1, max])
+        .range([1, 15*(width/700)]);
+
         map.selectAll('.map')
             .data(msa2010.features)
             .enter()
@@ -174,7 +183,7 @@ function updatePropSymbols(response){
             .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
             .transition()
             .duration(750)
-                .attr("r", function(d){return 1.0083 * Math.pow(d.properties[list[index]]/0.25,0.5715) * minRadius})
+                .attr("r", function(d){return radius(d.properties[list[index]])})
             .attr("fill", colors[index])
             .attr("fill-opacity", 0.6)
             .attr("stroke", colors[index])
