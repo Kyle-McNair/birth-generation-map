@@ -103,52 +103,84 @@ function callback(data){
 function updatePropSymbols(response){
     map.selectAll(".proportional")
     .remove()
-    var colors = ["#7b3393","#c2a5cf","#d2eadb","#a7d5a0","#078844","#7b3393","#c2a5cf","#d2eadb","#a7d5a0","#078844"];
-    var gen = ["SilentG","BabyBoomer","GenX","Millennials","GenZ"];
-    var density = ["SilentG_Density","BabyBoomers_Density","GenX_Density","Millennials_Density","GenZ_Density"]
-    var change = ["SilentG_Ch","BB_ch","GenX_ch","Mill_ch","GenZ_ch"]
-    var pct = ["SG_pct","BB_pct","GX_pct","ML_pct","GZ_pct"]
-    console.log(msa2010)
     var index = response.index
-    var totals = [];
-    for (var i in msa2010.features) {
-        var r1 = msa2010.features[i].properties.SG_pct
-        var r2 = msa2010.features[i].properties.BB_pct
-        var r3 = msa2010.features[i].properties.GX_pct
-        var r4 = msa2010.features[i].properties.ML_pct
-        var r5 = msa2010.features[i].properties.GZ_pct
-        totals.push(Number(r1))
-        totals.push(Number(r2))
-        totals.push(Number(r3))
-        totals.push(Number(r4))
-        totals.push(Number(r5))
-    }
-    console.log(totals)
-    var minRadius = .05
-
-    var min = Math.min.apply(Math, totals);
-    var max = Math.max.apply(Math, totals);
-    console.log(min, max)
-    var radius = d3.scaleSqrt()
-        .domain([min, max])
-        .range([1, 15*(width/700)]);
-
-    map
-    .selectAll('.map')
-    .data(msa2010.features)
-    .enter()
-    .append("circle")
-        .attr("class","proportional")
-        .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
-        .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
-        .transition()
-        .duration(750)
-            .attr("r", function(d){return 1.0083 * Math.pow(d.properties[change[index]]/1,0.5715) * minRadius})
-        .attr("fill", colors[index])
-        .attr("fill-opacity", 0.6)
-        .attr("stroke", colors[index])
-        .attr("stroke-width", 0.2);
+    console.log(index)
     
+        var colors = ["#7b3393","#7b3393","#c2a5cf","#c2a5cf","#d2eadb","#d2eadb","#a7d5a0","#a7d5a0","#078844","#078844","blank","blank","#c2a5cf","#a7d5a0"];
+        var list = ["SG_2010","SG_2018","BB_2010","BB_2018","GZ_2010","GZ_2018","ML_2010","ML_2018","GZ_2010","GZ_2018","blank","blank","BB_pct","ML_pct"]
+    
+        
+        console.log(min, max)
+        var radius = d3.scaleSqrt()
+            .domain([min, max])
+            .range([1, 15*(width/700)]);
+
+    if(index < 10){
+        var totals = [];
+        for (var i in msa2010.features) {
+            var r1 = msa2010.features[i].properties.SG_2010
+            var r2 = msa2010.features[i].properties.BB_2010
+            var r3 = msa2010.features[i].properties.GX_2010
+            var r4 = msa2010.features[i].properties.ML_2010
+            var r5 = msa2010.features[i].properties.GZ_2010
+            totals.push(Number(r1))
+            totals.push(Number(r2))
+            totals.push(Number(r3))
+            totals.push(Number(r4))
+            totals.push(Number(r5))
+        }
+        var minRadius = 1
+
+        var min = Math.min.apply(Math, totals);
+        var max = Math.max.apply(Math, totals);
+
+        var minRadius = 1
+
+        map.selectAll('.map')
+            .data(msa2010.features)
+            .enter()
+            .append("circle")
+            .attr("class","proportional")
+            .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+            .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+            .transition()
+            .duration(750)
+                .attr("r", function(d){return 1.0083 * Math.pow(d.properties[list[index]]/min,0.5715) * minRadius})
+            .attr("fill", colors[index])
+            .attr("fill-opacity", 0.6)
+            .attr("stroke", colors[index])
+            .attr("stroke-width", 0.2);
+            // {return 1.0083 * Math.pow(d.properties[list[index]]/min,0.5715) * minRadius})
+    } 
+    else if(index > 11){
+        var totals = [];
+        for (var i in msa2010.features) {
+            var r1 = msa2010.features[i].properties.BB_ch
+            var r2 = msa2010.features[i].properties.ML_ch
+            totals.push(Number(r1))
+            totals.push(Number(r2))
+        }
+        var minRadius = 1
+
+        var min = Math.min.apply(Math, totals);
+        var max = Math.max.apply(Math, totals);
+        var minRadius = 1
+        map.selectAll('.map')
+            .data(msa2010.features)
+            .enter()
+            .append("circle")
+            .attr("class","proportional")
+            .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+            .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+            .transition()
+            .duration(750)
+                .attr("r", function(d){return 1.0083 * Math.pow(d.properties[list[index]]/0.25,0.5715) * minRadius})
+            .attr("fill", colors[index])
+            .attr("fill-opacity", 0.6)
+            .attr("stroke", colors[index])
+            .attr("stroke-width", 0.2);
+            // {return 1.0083 * Math.pow(d.properties[list[index]]/min,0.5715) * minRadius})
+    }
 }
 init()
 }
