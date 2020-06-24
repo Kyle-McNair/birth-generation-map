@@ -181,3 +181,13 @@ article {
 .gap{
     height: 100vh
 }
+/* Chart 1 */
+.axis{
+    color: white;
+    font-size: .8em;
+}
+.label{
+    fill: white;
+    font-size: .9em;
+}
+

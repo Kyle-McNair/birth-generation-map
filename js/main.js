@@ -6,8 +6,7 @@ var article = scrolly.select("article");
 var stepper = article.selectAll(".stepper");
 const scroller = scrollama();
 const stickyscroller = scrollama()
-var map, albers, msa2010, msa2018, height, width;
-console.log(map)
+var map, chart1, albers, msa2010, msa2018, height, width;
 function handleStepEnter(response){
     if(response.direction === 'down'){
         response.element.style.opacity = 1
@@ -60,7 +59,6 @@ map = d3.select("figure.prop-map")
 // prop = map.append("g")
 //     .attr("opacity",1)
 
-console.log(map)
 albers = d3.geoAlbers()
     .scale(width)
     .translate([width / 2, height / 2]);
@@ -74,14 +72,19 @@ var promises = [];
 
 promises.push(d3.json("data/topos/states.topojson"));
 promises.push(d3.json("data/UA_TopCities.geojson"));
+promises.push(d3.json("data/bg_share.json"))
     //list of promises goes and has the callback function be called
 Promise.all(promises).then(callback);
     
 function callback(data){
     states = data[0]
     msa2010 = data[1]
+    bg_sh = data[2]
+    
+    setChart1(bg_sh)
+
     var country = topojson.feature(states, states.objects.states);
-    console.log(msa2010)
+
     var states_US = map.append("path")
         .datum(country)
         .attr("class", "states")
@@ -191,6 +194,90 @@ function updatePropSymbols(response){
             // {return 1.0083 * Math.pow(d.properties[list[index]]/min,0.5715) * minRadius})
     }
 }
+function setChart1(bg_sh){
+    var margin = {top: 15, right: 5, bottom: 100, left: 45},
+    
+    leftPadding = 5,
+    rightPadding = 5,
+    topBottomPadding = 20,
+    chartWidth = window.innerWidth * 0.65,
+    chartHeight = window.innerHeight*0.5,
+
+    translate = "translate(" + leftPadding + "," + topBottomPadding + ")";
+
+    for(var i in bg_sh){
+        console.log(bg_sh[i])
+    }
+
+    var yTick = (d => d *100 + "%")
+    
+    var y = d3.scaleLinear()
+        .range([chartHeight, 0])
+        .domain([0,0.4])
+        
+        
+    var x = d3.scaleBand()
+        .range([0, chartWidth])
+        .domain(bg_sh.map(function(d) { return d.Generation; }))
+        .padding(0.25);
+
+    
+
+    chart1 = d3.select("#chart1")
+        .append("svg")
+        .attr("class","chart1")
+        .attr("width", chartWidth + margin.left + margin.right)
+        .attr("height", chartHeight + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+
+
+    var bars = chart1.selectAll(".bar")
+        .data(bg_sh)
+        .enter()
+        .append("g")
+    bars.append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return x(d.Generation); })
+        .attr("width", x.bandwidth())
+        .attr("y", function(d) { return y(d.Value)})
+        .attr("height", function(d){return chartHeight - y(d.Value)})
+        .style("fill",function(d){
+            return d.Color
+        })
+        .text(function(d){return 100*d.Value})
+    bars.append("text")
+        .attr("class","label")
+        .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
+        .attr("y", function(d) { return y(d.Value) - 10; })
+        .text(function(d){return  d3.format(",.1%")(d.Value)})
+        .attr("text-anchor","middle")
+
+        
+
+    var yAxis = d3.axisLeft()
+        .tickFormat(yTick)
+        .scale(y)
+
+    var xAxis = d3.axisBottom()
+        .scale(x)
+    
+    chart1.append("g")
+        .attr("class", "axis") //.axis is for css
+        .call(yAxis)
+        
+    chart1.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(1," + chartHeight + ")")
+        .call(xAxis)
+        .selectAll("text")
+        .attr("class","xLabels")
+        .attr("transform", "translate(-10,10)rotate(-45)")
+        .style("text-anchor", "end");
+}
+
 init()
 }
+
 $(document).ready(whole);
