@@ -26,11 +26,15 @@ body{
     .introBox{
         width: 85% !important;
     }
-    .introParagraph{
+    .introParagraph, .introParagraphLEFT{
         font-size: 1em !important;
         width: 95% !important;
         padding: 20px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        float: none !important;
     }
+
     h2{
         font-size: 1.5em !important;
     }
@@ -115,6 +119,7 @@ h3{
     position: relative;
     top: 10vh;
     margin-bottom: 25vh;
+    z-index: 99999 !important;
 }
 .introSection{
     height: 100vh;
@@ -131,7 +136,7 @@ li{
     overflow: hidden;
     border-bottom: solid 1px #998ec3;
     box-shadow: 0 6px 4px -5px #998ec3;
-    z-index: 10;
+    z-index: 100;
 }
 ul{
     margin-left: -15px;
@@ -150,12 +155,49 @@ figure.sticky {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
+    z-index: 10 !important;
+
 }
 /* map styling */
 .prop-map{
     height: 100%;
     width: 100%;
     border: 1px solid white;
+}
+.introParagraphLEFT{
+    padding: 1vw;
+    text-align: left;
+    color: white;
+    font-size: 1em;
+    margin-left: 1vw;
+    height: auto;
+    width: 12.5vw;
+    background-color: rgba(25,25,25,0.8);
+    border:1px solid white;
+    position: relative;
+    top: 10vh;
+    margin-bottom: 25vh;
+    float: left
+}
+.infolabel h1 {
+    margin: 0 20px 0 0;
+    padding: 0;
+    display: inline-block;
+    font-size: 1em;
+    font-family: 'Heebo', sans-serif;
+}
+.infolabel {
+    margin: 0 20px 0 0;
+    position: absolute;
+    min-height: 6vh;
+    max-height: 8vh;
+    min-width: 100px;
+    color: #fff;
+    background-color: #191919;
+    border: solid thin #fff;
+    padding: 5px 10px;
+    top: -75px;
+    font-family: 'Merriweather Sans', sans-serif;
 }
 .states{
     border: 1px solid white
@@ -176,10 +218,12 @@ p.introParagraph{
 
 article {
     position: relative;
-    z-index: 10;
 }
 .gap{
-    height: 100vh
+    height: 100vh;
+    opacity: 0;
+    width: 0;
+    z-index: 0
 }
 /* Chart 1 */
 .axis{

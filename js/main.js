@@ -6,7 +6,7 @@ var article = scrolly.select("article");
 var stepper = article.selectAll(".stepper");
 const scroller = scrollama();
 const stickyscroller = scrollama()
-var map, chart1, albers, msa2010, msa2018, height, width;
+var map, chart1, albers, City, height, width;
 function handleStepEnter(response){
     if(response.direction === 'down'){
         response.element.style.opacity = 1
@@ -35,7 +35,7 @@ function init(){
 scroller
     .setup({
         step: '.step',
-        debug: true,
+        debug: false,
         offset: 0.5,
     })
     .onStepEnter(handleStepEnter)
@@ -78,7 +78,7 @@ Promise.all(promises).then(callback);
     
 function callback(data){
     states = data[0]
-    msa2010 = data[1]
+    City = data[1]
     bg_sh = data[2]
     
     setChart1(bg_sh)
@@ -97,7 +97,7 @@ function callback(data){
     stickyscroller
     .setup({
         step: '#scrolly article .stepper',
-        debug: true,
+        debug: false,
         offset: 0.85
     })
     .onStepEnter(updatePropSymbols)
@@ -106,24 +106,21 @@ function callback(data){
 function updatePropSymbols(response){
     map.selectAll(".proportional")
     .remove()
+    d3.select(".infolabel") //remove the htlm tag.
+        .remove();
     var index = response.index
-    console.log(index)
     
         var colors = ["#7b3393","#7b3393","#c2a5cf","#c2a5cf","#d2eadb","#d2eadb","#a7d5a0","#a7d5a0","#078844","#078844","blank","blank","#c2a5cf","#a7d5a0"];
         var list = ["SG_2010","SG_2018","BB_2010","BB_2018","GZ_2010","GZ_2018","ML_2010","ML_2018","GZ_2010","GZ_2018","blank","blank","BB_ch","ML_ch"]
-    
-        
-        console.log(min, max)
-        
 
-    if(index < 10){
+
         var totals = [];
-        for (var i in msa2010.features) {
-            var r1 = msa2010.features[i].properties.SG_2010
-            var r2 = msa2010.features[i].properties.BB_2010
-            var r3 = msa2010.features[i].properties.GX_2010
-            var r4 = msa2010.features[i].properties.ML_2010
-            var r5 = msa2010.features[i].properties.GZ_2010
+        for (var i in City.features) {
+            var r1 = City.features[i].properties.SG_2010
+            var r2 = City.features[i].properties.BB_2010
+            var r3 = City.features[i].properties.GX_2010
+            var r4 = City.features[i].properties.ML_2010
+            var r5 = City.features[i].properties.GZ_2010
             totals.push(Number(r1))
             totals.push(Number(r2))
             totals.push(Number(r3))
@@ -135,63 +132,86 @@ function updatePropSymbols(response){
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
 
+    if(index < 10){
         var radius = d3.scaleSqrt()
-            .domain([min, max])
-            .range([1, 15*(width/700)]);
-
-        map.selectAll('.map')
-            .data(msa2010.features)
+            .domain([1, max])
+            .range([1, 20*(width/700)]);
+        
+       map.selectAll('.map')
+            .data(City.features)
             .enter()
             .append("circle")
-            .attr("class","proportional")
+            .sort(function(a, b){
+                //this function sorts from highest to lowest values
+                return b.properties[list[index]] - a.properties[list[index]]
+                })
+            .style("fill", colors[index])
+            .style("fill-opacity", 1)
+            .style("stroke","black")
+            .style("stroke-width",0.5) 
+            .attr("class", function(d){
+                return "proportional "+d.properties.Join; })
+            .on("mouseover", function(d){
+                console.log("hover")
+                highlight(d.properties,d.properties[list[index]]);})
+            .on("mouseout", function(d){
+                dehighlight(d.properties)
+            })
+             .on("mousemove", moveLabel)
             .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
             .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
             .transition()
             .duration(750)
-                .attr("r", function(d){return radius(d.properties[list[index]])})
-            .attr("fill", colors[index])
-            .attr("fill-opacity", 0.6)
-            .attr("stroke", colors[index])
-            .attr("stroke-width", 0.2);
+            .attr("r", function(d){return radius(d.properties[list[index]])})
+            
+            map.selectAll('circle')
+            .append("desc")
+            .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     } 
     else if(index > 11){
-        var totals = [];
-        for (var i in msa2010.features) {
-            var r1 = msa2010.features[i].properties.BB_ch
-            var r2 = msa2010.features[i].properties.ML_ch
-            // var r3 = msa2010.features[i].properties.SG_ch
-            // var r4 = msa2010.features[i].properties.GX_ch
-            // var r5 = msa2010.features[i].properties.GZ_ch
-            totals.push(Number(r1))
-            totals.push(Number(r2))
-            // totals.push(Number(r3))
-            // totals.push(Number(r4))
-            // totals.push(Number(r5))
-        }
-        var minRadius = 1
-
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
-        
+ 
         var radius = d3.scaleSqrt()
-        .domain([1, max])
-        .range([1, 15*(width/700)]);
+            .domain([1, max])
+            .range([1, 20*(width/700)]);
+
 
         map.selectAll('.map')
-            .data(msa2010.features)
+            .data(City.features)
             .enter()
             .append("circle")
-            .attr("class","proportional")
+            .sort(function(a, b){
+                //this function sorts from highest to lowest values
+                return b.properties[list[index]] - a.properties[list[index]]
+                })
+            .attr("class", function(d){
+                return "proportional "+d.properties.Urban_Areas; })
+            .style("fill", colors[index])
+            .style("fill-opacity", 1)
+            .style("stroke","black")
+            .style("stroke-width",0.5) 
+            .style("z-index", "99999")
+            .attr("class", function(d){
+                return "proportional "+d.properties.Join; })
+            .on("mouseover", function(d){
+                console.log("hover")
+                highlight(d.properties,d.properties[list[index]]);})
+            .on("mouseout", function(d){
+                dehighlight(d.properties)
+            })
+            .on("mousemove", moveLabel)
             .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
             .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
             .transition()
             .duration(750)
-                .attr("r", function(d){return radius(d.properties[list[index]])})
-            .attr("fill", colors[index])
-            .attr("fill-opacity", 0.6)
-            .attr("stroke", colors[index])
-            .attr("stroke-width", 0.2);
-            // {return 1.0083 * Math.pow(d.properties[list[index]]/min,0.5715) * minRadius})
+            .attr("r", function(d){
+                if(d.properties[list[index]] > 0){
+                return radius(d.properties[list[index]])}})
+
+            map.selectAll('circle')
+            .append("desc")
+            .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     }
 }
 function setChart1(bg_sh){
@@ -276,7 +296,72 @@ function setChart1(bg_sh){
         .attr("transform", "translate(-10,10)rotate(-45)")
         .style("text-anchor", "end");
 }
+function highlight(props, actual){
+    //change stroke
+    var selected = d3.selectAll("." + props.Join )//if the mouse is hovered over an element with .Neighborhood name, the charts and map will highlight that unit.
+        .style("fill", "#6E6E6E") //color and stroke width
+        .style("stroke-width", "2");
+    setLabel(props, actual)//html element will popup if hovered over a unit.
+};
+function dehighlight(props){
+    var selected = d3.selectAll("." + props.Join) //same condition as highlight, but if the mouse is not hovered over.
+        .style("fill", function(){
+            return getStyle(this, "fill") //getStyle is a function inside this function to restore original styles.
+        })
+        .style("stroke-width", function(){
+            return getStyle(this, "stroke-width")
+        });
+    function getStyle(element, styleName){
+        var styleText = d3.select(element)
+            .select("desc") //the desc finds the same as the element to go back to original style.
+            .text();
 
+        var styleObject = JSON.parse(styleText);
+
+        return styleObject[styleName];
+    };
+    d3.select(".infolabel") //remove the htlm tag.
+        .remove();
+};
+function setLabel(props, actual){
+    //label content
+    var labelAttribute
+
+    //percent is the label for attributes with percentages
+    var urban = "<h1>Urban Area: " + props.Urban_Area +
+        "</h1><br>Population: " + d3.format(",")(actual)
+
+    labelAttribute = urban
+
+    var infolabel = d3.select("figure.sticky")
+        .append("div")
+        .attr("class", "infolabel")//.inforlabel for css
+        .attr("id", props.Join + "_label") //this attribute is based on the selected attribute.
+        .html(labelAttribute); //.html calls up the html tag
+
+};
+function moveLabel(){
+    //get width of labels
+    var labelWidth = d3.select(".infolabel")
+        .node()
+        .getBoundingClientRect()//studies screen real estate.
+        .width;
+
+    //use coordinates of mousemove event to set label coordinates
+    var x1 = d3.event.clientX + 10, //determines the html placement depending where the mouse moves.
+        y1 = d3.event.clientY - 60,
+        x2 = d3.event.clientX - labelWidth - 10,
+        y2 = d3.event.clientY + 15;
+
+    //x for the horizontal, avoids overlap
+    var x = d3.event.clientX > window.innerWidth - labelWidth - 20 ? x2 : x1; 
+    //y for the horizontal, avoids overlap
+    var y = d3.event.clientY < 75 ? y2 : y1; 
+
+    d3.select(".infolabel") //the infolabel html will now adjust based on mouse location
+        .style("left", x + "px")
+        .style("top", y + "px");
+};
 init()
 }
 
