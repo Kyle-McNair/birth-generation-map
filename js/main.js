@@ -6,7 +6,7 @@ var article = scrolly.select("article");
 var stepper = article.selectAll(".stepper");
 const scroller = scrollama();
 const stickyscroller = scrollama()
-var map, chart1, albers, City, height, width;
+var map, chart1, albers, City, urbanArea, height, width;
 function handleStepEnter(response){
     if(response.direction === 'down'){
         response.element.style.opacity = 1
@@ -80,6 +80,7 @@ function callback(data){
     states = data[0]
     City = data[1]
     bg_sh = data[2]
+    urban = data[3]
     
     setChart1(bg_sh)
 
@@ -100,19 +101,19 @@ function callback(data){
         debug: false,
         offset: 0.85
     })
-    .onStepEnter(updatePropSymbols)
-
+    .onStepEnter(updateMap)
 } 
-function updatePropSymbols(response){
+function updateMap(response){
     map.selectAll(".proportional")
     .remove()
     d3.select(".infolabel") //remove the htlm tag.
-        .remove();
-    var index = response.index
-    
-        var colors = ["#7b3393","#7b3393","#c2a5cf","#c2a5cf","#d2eadb","#d2eadb","#a7d5a0","#a7d5a0","#078844","#078844","blank","blank","#c2a5cf","#a7d5a0"];
-        var list = ["SG_2010","SG_2018","BB_2010","BB_2018","GZ_2010","GZ_2018","ML_2010","ML_2018","GZ_2010","GZ_2018","blank","blank","BB_ch","ML_ch"]
+    .remove();
 
+    var index = response.index
+    console.log(index)
+    
+        var colors = ["#FFFF00","#7b3393","#7b3393","#c2a5cf","#c2a5cf","#d2eadb","#d2eadb","#a7d5a0","#a7d5a0","#078844","#078844","blank","blank","#c2a5cf","#a7d5a0"];
+        var list = ["blank","SG_2010","SG_2018","BB_2010","BB_2018","GZ_2010","GZ_2018","ML_2010","ML_2018","GZ_2010","GZ_2018","blank","blank","BB_ch","ML_ch"]
 
         var totals = [];
         for (var i in City.features) {
@@ -131,8 +132,48 @@ function updatePropSymbols(response){
 
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
+        console.log(urbanArea)
+    if(index == 0){
+        map.selectAll(".map")
+        .data(City.features)
+        .enter()
+        .append("circle")
+        .sort(function(a, b){
+            //this function sorts from highest to lowest values
+            return b.properties[list[index]] - a.properties[list[index]]
+            })
+        .style("fill", colors[index])
+        .style("fill-opacity", 0.5)
+        .attr("class", function(d){
+            return "proportional "+d.properties.Join; })
+        .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+        .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+        .transition()
+        .duration(750)
+        .attr("r", "1.5")
 
-    if(index < 10){
+        map.selectAll(".map")
+        .data(City.features)
+        .enter()
+        .append("circle")
+        .sort(function(a, b){
+            //this function sorts from highest to lowest values
+            return b.properties[list[index]] - a.properties[list[index]]
+            })
+        .style("fill", colors[index])
+        .style("fill-opacity", 0.4)
+        .attr("class", function(d){
+            return "proportional "+d.properties.Join; })
+        .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+        .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+        .transition()
+        .duration(750)
+        .attr("r", "3")
+        
+
+    }
+
+    if(index < 12 && index > 0){
         var radius = d3.scaleSqrt()
             .domain([1, max])
             .range([1, 20*(width/700)]);
@@ -168,7 +209,7 @@ function updatePropSymbols(response){
             .append("desc")
             .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     } 
-    else if(index > 11){
+    else if(index > 12){
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
  
