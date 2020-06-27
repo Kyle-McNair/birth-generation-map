@@ -108,6 +108,7 @@ function updateMap(response){
     .remove()
     d3.select(".infolabel") //remove the htlm tag.
     .remove();
+    d3.selectAll(".propLegend").remove();
 
     var index = response.index
     console.log(index)
@@ -132,7 +133,6 @@ function updateMap(response){
 
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
-        console.log(urbanArea)
     if(index == 0){
         map.selectAll(".map")
         .data(City.features)
@@ -254,6 +254,71 @@ function updateMap(response){
             .append("desc")
             .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     }
+
+    var radius = d3.scaleSqrt()
+    .domain([1, max])
+    .range([1, 20*(width/700)]);
+
+    var LegendValues = [50000,500000,1000000]
+
+    var LegendRange = radius.range()[1]*width/700
+
+    var legend =  d3.select(".legend")
+        .style("width", LegendRange+50+"px")
+        .style("height", LegendRange+"px");
+
+    var lHeight = $(".legend").height()
+
+    var circles = legend.append("svg")
+        .attr("class","propLegend")
+        .attr("width","100%")
+        .attr("height","100%")
+        .style("top", "0px")
+        .style("left", "0px");
+
+    var propCircles = circles.selectAll(".legendCircles")
+        .data(LegendValues)
+        .enter()
+        .append("circle")
+        .attr("cx",LegendRange/2)
+        .attr("cy", function(d){
+            return LegendRange - radius(d) - 10
+        })
+        .attr("r", function(d){
+            return radius(d)
+        })
+        .attr("fill","none")
+        .attr("stroke","white")
+        .attr("stroke-width","0.5")
+    
+    var lines = circles.selectAll(".propLines")
+        .data(LegendValues)
+        .enter()
+        .append("line")
+        .attr("x1", LegendRange/2)
+        .attr("x2", LegendRange - 25)
+        .attr("y1", function(d){ 
+            return LegendRange - (radius(d)*2)-10})
+        .attr("y2", function(d){ 
+            return LegendRange - (radius(d)*2)-10})
+        .attr("stroke","white")
+        .attr("stroke-width","0.5")
+    
+    var legendLabels = circles.selectAll(".legendLabels")
+        .data(LegendValues)
+        .enter()
+        .append("text")
+        .attr("class","propLabels")
+        .text(function(d){
+            return d3.format(",")(d)})
+        .attr("x", LegendRange-25)
+        .attr("y",function(d){
+            return LegendRange - (radius(d)*2)-10
+        })
+        .attr("stroke", "white")
+        .attr('alignment-baseline', 'middle')
+        .attr("font-size","15")
+    
 }
 function setChart1(bg_sh){
     var margin = {top: 15, right: 5, bottom: 100, left: 45},

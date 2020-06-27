@@ -159,6 +159,11 @@ figure.sticky {
 
 }
 /* map styling */
+.legend{
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+}
 .prop-map{
     height: 100%;
     width: 100%;
