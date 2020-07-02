@@ -130,6 +130,14 @@ li{
     color: white;
     font-size: 1.05em;
 }
+li.about{
+    color: black
+}
+.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    color: black
+}
 .navbar{
     position: sticky !important; 
     top: 0; 
@@ -239,4 +247,6 @@ article {
     fill: white;
     font-size: .9em;
 }
-
+a.fa {
+    color: #191919;
+}

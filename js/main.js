@@ -201,9 +201,10 @@ function updateMap(response){
              .on("mousemove", moveLabel)
             .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
             .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+            .attr("r", function(d){return radius(d.properties[list[index]])})
             .transition()
             .duration(750)
-            .attr("r", function(d){return radius(d.properties[list[index]])})
+            
             
             map.selectAll('circle')
             .append("desc")

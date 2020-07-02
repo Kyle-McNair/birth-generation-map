@@ -11,6 +11,7 @@
         <!--put your external stylesheet links here-->
         <link rel="stylesheet" href="css\style.css">
         <link rel="stylesheet" href="lib/leaflet/leaflet.css">
+        <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel='stylesheet' />
         <link rel="stylesheet" href="css\bootstrap-grid.min.css"/>
         <link rel="stylesheet" href="css\bootstrap.min.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -32,7 +33,6 @@
                 <div class="modal-body">
                   <h4>Developing this project got me inspired by several visualizations including, but not limited to: </h4>
                     <ul>
-                      <li>University of Virginia Cooper Center's <a href = "https://demographics.virginia.edu/DotMap/" target = "_blank">Racial Dot Map</a></li>
                       <li>Robert Manduca's <a href = "http://www.robertmanduca.com/projects/jobs.html?utm_content=buffer903c7&utm_medium=social&utm_source=plus.google.com&utm_campaign=buffer" target = "_blank">Where Are The Jobs?</a></li>
                       <li>Kyle Walker's <a href = "http://personal.tcu.edu/kylewalker/maps/education/#12/37.7536/-122.4473" target = "_blank">Educational Attainment in America</a></li>
                     </ul>
@@ -63,14 +63,14 @@
         </div>
     </div>
       <nav  id = "start" class="navbar navbar-expand-lg navbar-expand-sm navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="../index.html">Generation Migrations</a>
+        <a class="navbar-brand" href="../index.html">Where do Birth Generations Live?</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse w-100 order-3 dual-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto navbar-fixed-top">
             <li>
-              <a class="nav-link" href="../index.html"><i class="fa fa-bar-chart fa-lg" aria-hidden="true"></i> Discover</a>
+              <a class="nav-link" href="../index.html"><i class="fa fa-bar-chart fa-lg" aria-hidden="true"></i> Scrollytelling</a>
             </li>
             <li>
               <a class="nav-link" href="index.html"><i class="fa fa-map fa-lg" aria-hidden="true"></i> Explore</a>
@@ -81,11 +81,23 @@
           </ul>
         </div>
       </nav>
-      
+      <div id = 'legend'>
+        <h2>Birth Generations</h2>
+          <div class = "container">
+            <div class = "generation"><span class = "c c1"></span><p class = "bGen">Silent Generation</p></div>
+            <div class = "generation"><span class = "c c2"></span><p class = "bGen">Baby Boomers</p></div>
+            <div class = "generation"><span class = "c c3"></span><p class = "bGen">Generation X</p></div>
+            <div class = "generation"><span class = "c c4"></span><p class = "bGen">Millennials</p></div>
+            <div class = "generation"><span class = "c c5"></span><p class = "bGen">Generation Z</p></div>
+            <input type = "radio"><span> See from the year 2010</span><br>
+            <input type = "radio"><span> See from the year 2018</span>
+          </div>
+      </div>
       <div id = "map"></div>
         
         <script type="text/javascript" src="lib/leaflet/leaflet.js"></script>
         <script src = "lib\jquery-3.4.1.js"></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
         <script type= "text/javascript" src="js/main.js"></script>
         <script type = "text/javascript" src="lib/leaflet/leaflet-providers.js"></script>
 		    <script type= "text/javascript" src = "lib\bootstrap\bootstrap.min.js"></script>
