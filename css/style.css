@@ -60,9 +60,20 @@ canvas.dots {
     height:16vh;
     text-align: center;
 }
+.circleBoxR{
+    padding: 1vh;
+    height:6vh;
+    text-align: center;
+}
 .c{
     height: 14vh;
     width: 14vh;
+    border-radius: 50%;
+    display: inline-block;
+}
+.cs{
+    height: 5vh;
+    width: 5vh;
     border-radius: 50%;
     display: inline-block;
 }
@@ -81,9 +92,18 @@ canvas.dots {
 .c5 {
     background-color: #078844;
 }
+.container-redefined{
+    max-width: 60%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
 div.introBox h1{
     font-size: 4rem;
     text-align: center;
+}
+.factsR{
+    padding:15px
 }
 h2{
     color: white;

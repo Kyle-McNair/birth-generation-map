@@ -71,7 +71,7 @@ var path = d3.geoPath()
 var promises = [];
 
 promises.push(d3.json("data/topos/states.topojson"));
-promises.push(d3.json("data/UA_TopCities.geojson"));
+promises.push(d3.json("data/UA_Top_Cities.geojson"));
 promises.push(d3.json("data/bg_share.json"))
     //list of promises goes and has the callback function be called
 Promise.all(promises).then(callback);
@@ -114,15 +114,15 @@ function updateMap(response){
     console.log(index)
     
         var colors = ["#FFFF00","#7b3393","#7b3393","#c2a5cf","#c2a5cf","#d2eadb","#d2eadb","#a7d5a0","#a7d5a0","#078844","#078844","blank","blank","#c2a5cf","#a7d5a0"];
-        var list = ["blank","SG_2010","SG_2018","BB_2010","BB_2018","GZ_2010","GZ_2018","ML_2010","ML_2018","GZ_2010","GZ_2018","blank","blank","BB_ch","ML_ch"]
+        var list = ["blank","SG_2013","SG_2018","BB_2013","BB_2018","GZ_2013","GZ_2018","ML_2013","ML_2018","GZ_2013","GZ_2018","blank","blank","BB_ch","ML_ch"]
 
         var totals = [];
         for (var i in City.features) {
-            var r1 = City.features[i].properties.SG_2010
-            var r2 = City.features[i].properties.BB_2010
-            var r3 = City.features[i].properties.GX_2010
-            var r4 = City.features[i].properties.ML_2010
-            var r5 = City.features[i].properties.GZ_2010
+            var r1 = City.features[i].properties.SG_2018
+            var r2 = City.features[i].properties.BB_2018
+            var r3 = City.features[i].properties.GX_2018
+            var r4 = City.features[i].properties.ML_2018
+            var r5 = City.features[i].properties.GZ_2018
             totals.push(Number(r1))
             totals.push(Number(r2))
             totals.push(Number(r3))
@@ -172,7 +172,7 @@ function updateMap(response){
         
 
     }
-
+    console.log(City)
     if(index < 12 && index > 0){
         var radius = d3.scaleSqrt()
             .domain([1, max])
