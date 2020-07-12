@@ -113,8 +113,8 @@ function updateMap(response){
     var index = response.index
     console.log(index)
     
-        var colors = ["#FFFF00","#7b3393","#7b3393","#c2a5cf","#c2a5cf","#d2eadb","#d2eadb","#a7d5a0","#a7d5a0","#078844","#078844","blank","blank","#c2a5cf","#a7d5a0"];
-        var list = ["blank","SG_2013","SG_2018","BB_2013","BB_2018","GZ_2013","GZ_2018","ML_2013","ML_2018","GZ_2013","GZ_2018","blank","blank","BB_ch","ML_ch"]
+        var colors = ["#FFFF00","#7b3393","#7b3393","#c2a5cf","#c2a5cf","#d2eadb","#d2eadb","#a7d5a0","#a7d5a0","#078844","#078844","blank","blank","#c2a5cf","#d2eadb","#a7d5a0"];
+        var list = ["blank","SG_2013","SG_2018","BB_2013","BB_2018","GX_2013","GX_2018","ML_2013","ML_2018","GZ_2013","GZ_2018","blank","blank","BB_ch","GX_ch","ML_ch"]
 
         var totals = [];
         for (var i in City.features) {
@@ -172,7 +172,6 @@ function updateMap(response){
         
 
     }
-    console.log(City)
     if(index < 12 && index > 0){
         var radius = d3.scaleSqrt()
             .domain([1, max])

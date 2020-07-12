@@ -21,7 +21,9 @@ function setMap(){
         container: 'map',
         style: 'mapbox://styles/mcnairk94/ckbr1y01s0y7x1ik6etmyzu3v',
         center: [-87.8, 41.8], // starting position [lng, lat]
-        zoom: 9 // starting zoom
+        zoom: 9, // starting zoom
+        minZoom: 4,
+        maxZoom: 12
         });
 }
 $(document).ready(setMap);

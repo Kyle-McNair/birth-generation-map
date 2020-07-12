@@ -8,6 +8,8 @@ import numpy as np
 import random
 from shapely.geometry import Polygon, Point
 
+answer = input("Would you like the module to combine all the parquet files at the end? Enter Y/N")
+
 # Random Points function goes through each census block group and generates random XY coordinates within that block group
 def randomPoints(polygon, n):
     minX, minY, maxX, maxY = polygon.bounds
@@ -37,26 +39,41 @@ def getPoints(state, csv):
                 gen.append(g)
     df = pd.DataFrame(data={"X": x, "Y":y, "Generation":gen})
     return df
-#AL already done, AK will go last...
-states = ["AZ","AR","CA","CO","CT","DC","DE","FL","GA","HI","ID","IL","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT",
-                    "NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","AK","IN"]
+
+def combine_parquet_files(input_folder, target_path):
+    try:
+        files = []
+        for file_name in os.listdir(input_folder):
+            files.append(pq.read_table(os.path.join(input_folder, file_name)))
+        with pq.ParquetWriter(target_path,
+                files[0].schema,
+                version='2.0',
+                compression='gzip',
+                use_dictionary=True,
+                write_statistics=True) as writer:
+            for f in files:
+                writer.write_table(f)
+    except Exception as e:
+        print(e)
+        
 
 csv = pd.read_csv("C:/Users/kwmcnair/Documents/Semester_2/Final_Practicum/Website/python/Census_Block/Birth_Generations_BG_2018.csv", encoding = "ISO-8859-1")
 csv = pd.DataFrame(csv)
 
-path = "C:/Users/kwmcnair/Documents/Semester_2/Final_Practicum/Website/python/xy_csv/"
+csv_path = "C:/Users/kwmcnair/Documents/Semester_2/Final_Practicum/Website/python/xy_csv/"
+parquet_path = "C:/Users/kwmcnair/Documents/Semester_2/Final_Practicum/Website/python/xy_parquet_2018/"
+
 
 for s in states:
     print("Creating random points with "+s+"...")
     d = getPoints(s, csv)
     d.to_csv(path+s+"_Gen_XY.csv", sep = ',', index = False)
+    d.to_parquet(parq_path+s+"_Gen_XY.parquet.gzip", compression = "gzip")
     print(s+" complete")
 
+input_path = "C:/Users/kwmcnair/Documents/Semester_2/Final_Practicum/Website/python/xy_parquet_2018"
 
-##print("combining all dataframes into one before exporting to csv...") 
-##combine = pd.concat(df_list)    
-###naming the csv file
-##print("exporting csv...")
-
-
-##print("csv exported")
+if answer == "Y":
+    combine_parquet_files(input_path, 'combined.parquet')
+else:
+    print("Randomize Points is complete.")
