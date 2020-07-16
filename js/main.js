@@ -36,7 +36,7 @@ scroller
     .setup({
         step: '.step',
         debug: false,
-        offset: 0.5,
+        offset: 0.6,
     })
     .onStepEnter(handleStepEnter)
     .onStepExit(handleStepExit);
@@ -215,7 +215,7 @@ function updateMap(response){
  
         var radius = d3.scaleSqrt()
             .domain([1, max])
-            .range([1, 20*(width/700)]);
+            .range([2, 20*(width/700)]);
 
 
         map.selectAll('.map')

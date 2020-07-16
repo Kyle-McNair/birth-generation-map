@@ -1,8 +1,11 @@
 .c{
     height: 1.5vh;
     width: 1.5vh;
+    margin-left: 5px;
     border-radius: 50%;
     display: inline-block;
+    margin-bottom: auto;
+    margin-top: auto;
 }
 .c1 {
   background-color: #7b3393;
@@ -23,11 +26,11 @@ p{
     line-height: 1rem;
 }
 .generation{
-    display: flex;
+    display: inline-flex;
+    height: 3vh;
+    width: 100%
 }
-.bGen{
-    margin-left: 0.5vw;
-}
+
 a.fa {
     color: #191919;
 }
@@ -65,8 +68,60 @@ ul{
     bottom: 4vh;
     left: 1vw;
     z-index: 100;
+    cursor: default !important;
+}
+.dotScale{
+    position: absolute;
+    height: 5vh;
+    width: 20%;
+    background-color: black;
+    color: white;
+    opacity: 0.8;
+    top: 8vh;
+    left: 40%;
+    z-index: 100;
+    cursor: default !important;
+    border: 2px solid white
+}
+h3{
+    text-align: center;
+    font-size: 1.5em !important;
+    margin-top: 5px !important;
 }
 h2{
     text-align: center;
     font-size: 1.5em !important;
+}
+.bGen{
+    margin-left: 0.5vw;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+.birthDesc {
+    display: none;
+    top: 8.5%;
+    padding: 7px;
+    width: 225px;
+    position: absolute;
+    margin-left: 95%;
+    background-color: black;
+    color: white;
+    font-size: 1em;
+    font-weight: 600;
+    opacity: 0.9;
+}
+@media (max-width: 576px){
+    .dotScale{
+        position: absolute;
+        height: 5vh;
+        width: 80%;
+        background-color: black;
+        color: white;
+        opacity: 0.8;
+        top: 8vh;
+        left: 10%;
+        z-index: 100;
+        cursor: default !important;
+        border: 2px solid white
+    }
 }
