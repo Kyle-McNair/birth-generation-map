@@ -102,6 +102,12 @@ div.introBox h1{
     font-size: 4rem;
     text-align: center;
 }
+.dropdownDiv{
+    position: absolute;
+    left: 15%;
+    font-size: 1.25em;
+    z-index: 99999 !important;
+}
 .factsR{
     padding:15px
 }

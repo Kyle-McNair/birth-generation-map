@@ -73,7 +73,7 @@ var promises = [];
 promises.push(d3.json("data/topos/states_generalized.topojson"));
 promises.push(d3.json("data/UA_Top_Cities.geojson"));
 promises.push(d3.json("data/bg_share.json"))
-promises.push(d3.csv("data/Birth_Generations_2018_State.csv"))
+promises.push(d3.json("data/state_data.json"))
     //list of promises goes and has the callback function be called
 Promise.all(promises).then(callback);
     
@@ -83,6 +83,8 @@ function callback(data){
     bg_sh = data[2]
     state_data = data[3]
     
+    console.log(state_data)
+
     setChart1(bg_sh)
     // createDropdown(state_data)
     setStateChart(state_data)
@@ -378,7 +380,7 @@ function setChart1(bg_sh){
     
     var y = d3.scaleLinear()
         .range([chartHeight, 0])
-        .domain([0,0.4])
+        .domain([0,0.3])
         
         
     var x = d3.scaleBand()
@@ -423,6 +425,7 @@ function setChart1(bg_sh){
 
     var yAxis = d3.axisLeft()
         .tickFormat(yTick)
+        .ticks(5)
         .scale(y)
 
     var xAxis = d3.axisBottom()
@@ -451,22 +454,19 @@ function setStateChart(state_data){
     chartHeight = window.innerHeight*0.5,
 
     translate = "translate(" + leftPadding + "," + topBottomPadding + ")";
-
+    var select = state_data.WI
     var yTick = (d => d *100 + "%")
     
     var y = d3.scaleLinear()
         .range([chartHeight, 0])
         .domain([0,0.4])
-    
-    
+
     var x = d3.scaleBand()
         .range([0, chartWidth])
-        .domain(state_data.map(function(d) { return d.total; }))
-        .padding(0.25);
+        .domain(select.map(function(d) { return d.Generation; }))
+        .padding(0.25);  
 
-    
-
-    chart1 = d3.select("#chart2")
+    chart2 = d3.select("#chart2")
         .append("svg")
         .attr("class","chart2")
         .attr("width", chartWidth + margin.left + margin.right)
@@ -476,41 +476,43 @@ function setStateChart(state_data){
           "translate(" + margin.left + "," + margin.top + ")");
 
 
-    var bars = chart1.selectAll(".bar")
-        .data(state_data)
+    var statebars = chart2.selectAll(".bar")
+        .data(select)
         .enter()
         .append("g")
-    bars.append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return x(d.GX, d.ML, d.BB, d.GZ, d.SG); })
+
+    statebars.append("rect")
+        .attr("class", "statebar")
+        .attr("x", function(d) { return x(d.Generation); })
         .attr("width", x.bandwidth())
-        .attr("y", function(d) { return y(d.total)})
+        .attr("y", function(d) { return y(d.Value)})
         .attr("height", function(d){return chartHeight - y(d.Value)})
         .style("fill",function(d){
             return d.Color
         })
         .text(function(d){return 100*d.total})
-    bars.append("text")
+    statebars.append("text")
         .attr("class","label")
         .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
         .attr("y", function(d) { return y(d.Value) - 10; })
         .text(function(d){return  d3.format(",.1%")(d.Value)})
         .attr("text-anchor","middle")
-
+    
         
 
     var yAxis = d3.axisLeft()
         .tickFormat(yTick)
+        .ticks(5)
         .scale(y)
 
     var xAxis = d3.axisBottom()
         .scale(x)
     
-    chart1.append("g")
+    var axis = chart2.append("g")
         .attr("class", "axis") //.axis is for css
         .call(yAxis)
         
-    chart1.append("g")
+    chart2.append("g")
         .attr("class", "axis")
         .attr("transform", "translate(1," + chartHeight + ")")
         .call(xAxis)
@@ -518,29 +520,111 @@ function setStateChart(state_data){
         .attr("class","xLabels")
         .attr("transform", "translate(-10,10)rotate(-45)")
         .style("text-anchor", "end");
+
+    var chartTitle = d3.select(".stateTitle")
+    // chart title is updated based on selected attribute. 
+        .text("Population Share of Wisconsin -2018");
+    createDropdown(statebars, state_data)
 }
-function createDropdown(csvData){
+function createDropdown(statebars, state_data){
     //add select element
-    var dropdown = d3.select("body")
+    var abvList = {"Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA",
+    "Colorado":"CO","Connecticut":"CT","Delaware":"DE","Florida":"FL", "Georgia":"GA","Hawaii":"HI","Idaho":"ID",
+    "Illinois":"IL","Indiana":"IN","Iowa":"IA","Kansas":"KS","Kentucky":"KY","Louisiana":"LA","Maine":"ME",
+    "Maryland":"MD","Massachusetts":"MA","Michigan":"MI","Minnesota":"MN","Mississippi":"MS","Missouri":"MO","Montana":"MT",
+    "Nebraska":"NE","Nevada":"NV","New Hampshire":"NH","New Jersey":"NJ","New Mexico":"NM","New York":"NY","North Carolina":"NC","North Dakota":"ND",
+    "Ohio":"OH","Oklahoma":"OK","Oregon":"OR","Pennsylvania":"PA","Rhode Island":"RI","South Carolina":"SC","South Dakota":"SD","Tennessee":"TN",
+    "Texas":"TX","Utah":"UT","Vermont":"VT","Virginia":"VA","Washington":"WA","West Virginia":"WV","Wisconsin":"WI","Wyoming":"WY"}
+
+    var dropdown = d3.select(".dropdownDiv")
         .append("select")
         .attr("class", "dropdown")//.dropwdown is for css, this will also determine the placement on the screen
         .on("change", function(){
-            changeAttribute(this.value, csvData)// when attribute is changed, the changeAttribute function is called to update.
+            console.log(this.value)
+            updateChart(statebars, this.value, state_data, abvList)// when attribute is changed, the changeAttribute function is called to update.
         });
 
     //add initial option
     var titleOption = dropdown.append("option")
         .attr("class", "titleOption") //.titleOption for css
         .attr("disabled", "true")
-        .text("Select Any State"); // initial text when opening the page
+        .text("Select Any State..."); // initial text when opening the page
 
     //add attribute name options
     var attrOptions = dropdown.selectAll("attrOptions")
-        .data(csvData) //the list of data inside the dropdown menu
+        .data(Object.keys(abvList)) //the list of data inside the dropdown menu
         .enter()
         .append("option")
         .attr("value", function(d){ return d })
         .text(function(d){ return d });
+};
+function updateChart(statebars,state_value, state_data, abvList){
+    var select;
+    for(var i in abvList){
+        if(i == state_value){
+            select = "state_data."+String(abvList[i])
+        }
+    };
+    select = eval(select)
+    var margin = {top: 15, right: 5, bottom: 100, left: 45},
+    leftPadding = 5,
+    rightPadding = 5,
+    topBottomPadding = 20,
+    chartWidth = window.innerWidth * 0.65,
+    chartHeight = window.innerHeight*0.5;
+    var yTick = (d => d + "%");
+
+
+    var y = d3.scaleLinear()
+        .range([chartHeight, 0])
+        .domain([0,0.4])
+
+    var x = d3.scaleBand()
+        .range([0, chartWidth])
+        .domain(select.map(function(d) { return d.Generation; }))
+        .padding(0.25); 
+    //position bars
+    var svg = d3.select("#chart2")
+
+    var u = svg.selectAll("rect")
+        .data(select)
+
+    u
+    .enter()
+    .append("rect")
+    .merge(u)
+    .transition()
+    .duration(1500)
+    .attr("x", function(d) { return x(d.Generation); })
+    .attr("width", x.bandwidth())
+    .attr("y", function(d) { return y(d.Value)})
+    .attr("height", function(d){return chartHeight - y(d.Value)})
+    .style("fill",function(d){
+        return d.Color
+    })
+    .text(function(d){return 100*d.total})
+    var t = svg.selectAll('.label')
+    t.data(select)
+    t.enter()
+    .append("text")
+    .merge(t)
+    .transition()
+    .duration(1500)
+    .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
+    .attr("y", function(d) { return y(d.Value) - 10; })
+    .text(function(d){return  d3.format(",.1%")(d.Value)})
+    .attr("text-anchor","middle")
+
+    // u.append("text")
+    //     .attr("class","label")
+    //     .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
+    //     .attr("y", function(d) { return y(d.Value) - 10; })
+    //     .text(function(d){return  d3.format(",.1%")(d.Value)})
+    //     .attr("text-anchor","middle")
+    
+    var chartTitle = d3.select(".stateTitle")
+    // chart title is updated based on selected attribute. 
+        .text("Population Share of "+ state_value + " -2018");
 };
 function highlight(props, actual){
     //change stroke
