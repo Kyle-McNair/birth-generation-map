@@ -70,9 +70,10 @@ var path = d3.geoPath()
     //use Promise.all to parallelize asynchronous data loading
 var promises = [];
 
-promises.push(d3.json("data/topos/states.topojson"));
+promises.push(d3.json("data/topos/states_generalized.topojson"));
 promises.push(d3.json("data/UA_Top_Cities.geojson"));
 promises.push(d3.json("data/bg_share.json"))
+promises.push(d3.csv("data/Birth_Generations_2018_State.csv"))
     //list of promises goes and has the callback function be called
 Promise.all(promises).then(callback);
     
@@ -80,10 +81,11 @@ function callback(data){
     states = data[0]
     City = data[1]
     bg_sh = data[2]
-    urban = data[3]
+    state_data = data[3]
     
     setChart1(bg_sh)
-
+    // createDropdown(state_data)
+    setStateChart(state_data)
     var country = topojson.feature(states, states.objects.states);
 
     var states_US = map.append("path")
@@ -113,7 +115,7 @@ function updateMap(response){
     var index = response.index
     console.log(index)
     
-        var colors = ["#FFFF00","#7b3393","#7b3393","#c2a5cf","#c2a5cf","#d2eadb","#d2eadb","#a7d5a0","#a7d5a0","#078844","#078844","blank","blank","#c2a5cf","#d2eadb","#a7d5a0"];
+        var colors = ["#FFFF00","#7b3393","#7b3393","#c2a5cf","#c2a5cf","#996415","#996415","#a7d5a0","#a7d5a0","#078844","#078844","blank","blank","#c2a5cf","#996415","#a7d5a0"];
         var list = ["blank","SG_2013","SG_2018","BB_2013","BB_2018","GX_2013","GX_2018","ML_2013","ML_2018","GZ_2013","GZ_2018","blank","blank","BB_ch","GX_ch","ML_ch"]
 
         var totals = [];
@@ -172,7 +174,8 @@ function updateMap(response){
         
 
     }
-    if(index < 12 && index > 0){
+    if(index < 11 && index > 0){
+        createLegend()
         var radius = d3.scaleSqrt()
             .domain([1, max])
             .range([1, 20*(width/700)]);
@@ -209,7 +212,9 @@ function updateMap(response){
             .append("desc")
             .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     } 
+
     else if(index > 12){
+        createLegend()
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
  
@@ -254,17 +259,39 @@ function updateMap(response){
             .append("desc")
             .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     }
+   
+}
+function createLegend(){
+    var totals = [];
+        for (var i in City.features) {
+            var r1 = City.features[i].properties.SG_2018
+            var r2 = City.features[i].properties.BB_2018
+            var r3 = City.features[i].properties.GX_2018
+            var r4 = City.features[i].properties.ML_2018
+            var r5 = City.features[i].properties.GZ_2018
+            totals.push(Number(r1))
+            totals.push(Number(r2))
+            totals.push(Number(r3))
+            totals.push(Number(r4))
+            totals.push(Number(r5))
+        }
+        var minRadius = 1
 
+        var min = Math.min.apply(Math, totals);
+        var max = Math.max.apply(Math, totals);
     var radius = d3.scaleSqrt()
     .domain([1, max])
     .range([1, 20*(width/700)]);
 
     var LegendValues = [50000,500000,1000000]
 
+    var LegendString = [{"Type":"Fifty Thousand","Amount":50000},{"Type":"Five Hundred Thousand","Amount":500000},{"Type":"One Million","Amount":1000000}]
+
+
     var LegendRange = radius.range()[1]*width/700
 
     var legend =  d3.select(".legend")
-        .style("width", LegendRange+50+"px")
+        .style("width", LegendRange+100+"px")
         .style("height", LegendRange+"px");
 
     var lHeight = $(".legend").height()
@@ -296,7 +323,7 @@ function updateMap(response){
         .enter()
         .append("line")
         .attr("x1", LegendRange/2)
-        .attr("x2", LegendRange - 25)
+        .attr("x2", LegendRange - 10)
         .attr("y1", function(d){ 
             return LegendRange - (radius(d)*2)-10})
         .attr("y2", function(d){ 
@@ -311,14 +338,26 @@ function updateMap(response){
         .attr("class","propLabels")
         .text(function(d){
             return d3.format(",")(d)})
-        .attr("x", LegendRange-25)
+        .attr("x", function(d){
+            if(d == 50000){
+                return(LegendRange-8)}
+             
+            if(d == 500000){
+                return(LegendRange-15)
+            }
+            return LegendRange-25})
         .attr("y",function(d){
+            if(d ==1000000){
+                return LegendRange-(radius(d)*2)-14
+            }
+            if(d ==500000){
+                return LegendRange-(radius(d)*2)-9
+            }
             return LegendRange - (radius(d)*2)-10
         })
         .attr("stroke", "white")
         .attr('alignment-baseline', 'middle')
-        .attr("font-size","15")
-    
+        .attr("font-size","14")
 }
 function setChart1(bg_sh){
     var margin = {top: 15, right: 5, bottom: 100, left: 45},
@@ -402,6 +441,107 @@ function setChart1(bg_sh){
         .attr("transform", "translate(-10,10)rotate(-45)")
         .style("text-anchor", "end");
 }
+function setStateChart(state_data){
+    var margin = {top: 15, right: 5, bottom: 100, left: 45},
+    
+    leftPadding = 5,
+    rightPadding = 5,
+    topBottomPadding = 20,
+    chartWidth = window.innerWidth * 0.65,
+    chartHeight = window.innerHeight*0.5,
+
+    translate = "translate(" + leftPadding + "," + topBottomPadding + ")";
+
+    var yTick = (d => d *100 + "%")
+    
+    var y = d3.scaleLinear()
+        .range([chartHeight, 0])
+        .domain([0,0.4])
+    
+    
+    var x = d3.scaleBand()
+        .range([0, chartWidth])
+        .domain(state_data.map(function(d) { return d.total; }))
+        .padding(0.25);
+
+    
+
+    chart1 = d3.select("#chart2")
+        .append("svg")
+        .attr("class","chart2")
+        .attr("width", chartWidth + margin.left + margin.right)
+        .attr("height", chartHeight + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+
+
+    var bars = chart1.selectAll(".bar")
+        .data(state_data)
+        .enter()
+        .append("g")
+    bars.append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return x(d.GX, d.ML, d.BB, d.GZ, d.SG); })
+        .attr("width", x.bandwidth())
+        .attr("y", function(d) { return y(d.total)})
+        .attr("height", function(d){return chartHeight - y(d.Value)})
+        .style("fill",function(d){
+            return d.Color
+        })
+        .text(function(d){return 100*d.total})
+    bars.append("text")
+        .attr("class","label")
+        .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
+        .attr("y", function(d) { return y(d.Value) - 10; })
+        .text(function(d){return  d3.format(",.1%")(d.Value)})
+        .attr("text-anchor","middle")
+
+        
+
+    var yAxis = d3.axisLeft()
+        .tickFormat(yTick)
+        .scale(y)
+
+    var xAxis = d3.axisBottom()
+        .scale(x)
+    
+    chart1.append("g")
+        .attr("class", "axis") //.axis is for css
+        .call(yAxis)
+        
+    chart1.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(1," + chartHeight + ")")
+        .call(xAxis)
+        .selectAll("text")
+        .attr("class","xLabels")
+        .attr("transform", "translate(-10,10)rotate(-45)")
+        .style("text-anchor", "end");
+}
+function createDropdown(csvData){
+    //add select element
+    var dropdown = d3.select("body")
+        .append("select")
+        .attr("class", "dropdown")//.dropwdown is for css, this will also determine the placement on the screen
+        .on("change", function(){
+            changeAttribute(this.value, csvData)// when attribute is changed, the changeAttribute function is called to update.
+        });
+
+    //add initial option
+    var titleOption = dropdown.append("option")
+        .attr("class", "titleOption") //.titleOption for css
+        .attr("disabled", "true")
+        .text("Select Any State"); // initial text when opening the page
+
+    //add attribute name options
+    var attrOptions = dropdown.selectAll("attrOptions")
+        .data(csvData) //the list of data inside the dropdown menu
+        .enter()
+        .append("option")
+        .attr("value", function(d){ return d })
+        .text(function(d){ return d });
+};
 function highlight(props, actual){
     //change stroke
     var selected = d3.selectAll("." + props.Join )//if the mouse is hovered over an element with .Neighborhood name, the charts and map will highlight that unit.
@@ -434,7 +574,7 @@ function setLabel(props, actual){
     var labelAttribute
 
     //percent is the label for attributes with percentages
-    var urban = "<h1>Urban Area: " + props.Urban_Area +
+    var urban = "<h1>" +props.Urban_Area +
         "</h1><br>Population: " + d3.format(",")(actual)
 
     labelAttribute = urban
