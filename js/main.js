@@ -118,7 +118,7 @@ function updateMap(response){
     var index = response.index
     console.log(index)
     
-        var colors = ["#FFFF00","#750d87","#b28dc4","#af6e23","#71a756","#015205","blank","blank","#c2a5cf","#996415","#a7d5a0"];
+        var colors = ["#FFFF00","#750d87","#b28dc4","#af6e23","#a7d5a0","#006b2a","blank","blank","#b28dc4","#af6e23","#a7d5a0"];
         var list = ["blank","SG_2018","BB_2018","GX_2018","ML_2018","GZ_2018","blank","blank","BB_ch","GX_ch","ML_ch"]
 
         var totals = [];
@@ -245,7 +245,7 @@ function updateMap(response){
                 return "proportional "+d.properties.Join; })
             .on("mouseover", function(d){
                 console.log("hover")
-                highlight(d.properties,d.properties[list[index]]);})
+                highlight(d.properties,d.properties[list[index]],index);})
             .on("mouseout", function(d){
                 dehighlight(d.properties)
             })
@@ -659,9 +659,39 @@ function setLabel(props, actual, index){
             assign = match[m].Urban_Area
         }
     }
-    //percent is the label for attributes with percentages
-    var urban = "<h1>" +props.Urban_Area +
-        "</h1><br>Population: " + d3.format(",")(actual)+"<br>"
+    var gen;
+    if(index == 1){
+        gen = "Silent Generation"
+    }
+    else if(index == 2){
+        gen = "Baby Boomer"
+    }
+    else if(index ==3){
+        gen = "Generation X"
+    }
+    else if(index == 4){
+        gen = "Millennial"
+    }
+    else if(index == 5){
+        gen = "Generation X"
+    }
+    else if(index == 8){
+        gen = "Baby Boomer"
+    }
+    else if(index == 9){
+        gen = "Generation X"
+    }
+    else if(index == 10){
+        gen = "Millennial"
+    }
+    if(index <6){
+        var urban = "<h1>" +props.Urban_Area +
+            "</h1><br>"+gen+" Population: " + d3.format(",")(actual)+"<br>"
+    }
+    else if(index > 7){
+        var urban = "<h1>" +props.Urban_Area +
+        "</h1><br>"+gen+" Population Increase: " + d3.format(",")(actual)+"<br>" 
+    }
 
     labelAttribute = urban
 
@@ -675,7 +705,7 @@ function setLabel(props, actual, index){
         setMiniChart(assign)
     }
     else if(index > 7){
-        setMiniLinePolot(assign)
+        setMiniChartChange(assign)
     }
     
 };
@@ -741,7 +771,7 @@ function setMiniChart(assign){
         .style("fill",function(d){
             return d.Color
         })
-        .text(function(d){return 100*d.total})
+        // .text(function(d){return 100*d.total})
     miniBars.append("text")
         .attr("class","miniBarLabel")
         .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
@@ -777,23 +807,23 @@ function setMiniChart(assign){
 
 
 }
-function setMiniLinePolot(assign){
-    var margin = {top: 30, right: 5, bottom: 10, left: 45},
+function setMiniChartChange(assign){
+    var margin = {top: 30, right: 15, bottom: 20, left: 15},
     leftPadding = 5;
-    chartWidth = 150,
+    chartWidth = 200,
     chartHeight = 100;
 
-    var y = d3.scaleLinear()
-        .range([chartHeight, 0])
-        .domain([0,0.5])
-
-    var yTick = (d => d *100+ "%");
-
-    var x = d3.scaleBand()
+    var x = d3.scaleLinear()
         .range([0, chartWidth])
-        .domain(assign.yr2018.map(function(d) { return d.Generation; })) 
+        .domain([-0.30,0.30])
 
-    var miniPlot = d3.select('.infolabel')
+    var xTick = (d => d *100+ "%");
+
+    var y = d3.scaleBand()
+        .range([0, chartHeight])
+        .domain(assign.change.map(function(d) { return d.Generation; })) 
+
+    var miniChartChange = d3.select('.infolabel')
         .append("svg")
         .attr("class","miniPlot")
         .attr("width", chartWidth + margin.left + margin.right)
@@ -803,48 +833,49 @@ function setMiniLinePolot(assign){
           "translate(" + margin.left + "," + margin.top + ")");
 
 
-    var miniBars = miniChart.selectAll(".bar")
-        .data(assign.yr2018)
+    var miniBars = miniChartChange.selectAll(".bar")
+        .data(assign.change)
         .enter()
         .append("g")
 
     miniBars.append("rect")
         .attr("class", "statebar")
-        .attr("x", function(d) { return x(d.Generation); })
-        .attr("width",chartWidth/6)
-        .attr("y", function(d) { return y(d.Value)})
-        .attr("height", function(d){return 100 - y(d.Value)})
+        .attr("x", function(d) { return x(Math.min(0, d.Value/d.Totalyr2013)); })
+        .attr("width", function(d){ return Math.abs(x(d.Value/d.Totalyr2013)-x(0))})
+        .attr("y", function(d) { return y(d.Generation)})
+        .attr("height", function(d){y.range()})
         .style("fill",function(d){
             return d.Color
         })
-        .text(function(d){return 100*d.total})
-    miniBars.append("text")
-        .attr("class","miniBarLabel")
-        .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
-        .attr("y", function(d) { return y(d.Value) - 5; })
-        .text(function(d){return  d3.format(",.0%")(d.Value)})
-        .attr("text-anchor","middle")
-        .attr("color","white")
+        .text(function(d){return 100*d.Value})
+    // miniBars.append("text")
+    //     .attr("class","miniBarLabel")
+    //     .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
+    //     .attr("y", function(d) { return y(d.Value) - 5; })
+    //     .text(function(d){return  d3.format(",.0%")(d.Value/d.Totalyr2013)})
+    //     .attr("text-anchor","middle")
+    //     .attr("color","white")
         
-    var yAxis = d3.axisLeft()
-        .tickFormat(yTick)
-        .ticks(5)
-        .scale(y)
-        
-    
     var xAxis = d3.axisBottom()
-        .tickValues([])
+        .tickFormat(xTick)
+        .ticks(5)
         .scale(x)
-
-    var axis = miniChart.append("g")
-        .attr("class", "miniYaxis") //.axis is for css
-        .call(yAxis)
+        
     
-    miniChart.append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(1," + chartHeight + ")")
+    var YAxis = d3.axisLeft()
+        .tickValues([])
+        .scale(y)
+
+    var axis = miniChartChange.append("g")
+        .attr("class", "miniYaxis") //.axis is for css
+        .attr("transform", "translate(0," + chartHeight + ")")
         .call(xAxis)
-    var chartTitle = miniChart.append("text")
+    
+    miniChartChange.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(" + x(0) + ",0)")
+        .call(YAxis)
+    var chartTitle = miniChartChange.append("text")
         .attr("x", 10)
         .attr("y", -10)
         .attr("class", "miniTitleText") // .titleText is for css

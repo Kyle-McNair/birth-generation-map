@@ -78,19 +78,19 @@ canvas.dots {
     display: inline-block;
 }
 .c1 {
-  background-color: #7b3393;
+  background-color: #750d87;
 }
 .c2 {
-   background-color: #c2a5cf;
+   background-color: #b28dc4;
 }  
 .c3 {
-    background-color: #d2eadb;
+    background-color: #af6e23;
  }
 .c4 {
     background-color: #a7d5a0;
 }
 .c5 {
-    background-color: #078844;
+    background-color: #006b2a;
 }
 .container-redefined{
     max-width: 60%;
