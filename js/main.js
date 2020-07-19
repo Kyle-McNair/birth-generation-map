@@ -6,7 +6,7 @@ var article = scrolly.select("article");
 var stepper = article.selectAll(".stepper");
 const scroller = scrollama();
 const stickyscroller = scrollama()
-var map, chart1, albers, City, urbanArea, height, width;
+var map, chart1, albers, City, city_object, height, width;
 function handleStepEnter(response){
     if(response.direction === 'down'){
         response.element.style.opacity = 1
@@ -74,6 +74,7 @@ promises.push(d3.json("data/topos/states_generalized.topojson"));
 promises.push(d3.json("data/UA_Top_Cities.geojson"));
 promises.push(d3.json("data/bg_share.json"))
 promises.push(d3.json("data/state_data.json"))
+promises.push(d3.json("data/cities.json"))
     //list of promises goes and has the callback function be called
 Promise.all(promises).then(callback);
     
@@ -82,8 +83,8 @@ function callback(data){
     City = data[1]
     bg_sh = data[2]
     state_data = data[3]
+    city_object = data[4]
     
-    console.log(state_data)
 
     setChart1(bg_sh)
     // createDropdown(state_data)
@@ -117,8 +118,8 @@ function updateMap(response){
     var index = response.index
     console.log(index)
     
-        var colors = ["#FFFF00","#7b3393","#7b3393","#c2a5cf","#c2a5cf","#996415","#996415","#a7d5a0","#a7d5a0","#078844","#078844","blank","blank","#c2a5cf","#996415","#a7d5a0"];
-        var list = ["blank","SG_2013","SG_2018","BB_2013","BB_2018","GX_2013","GX_2018","ML_2013","ML_2018","GZ_2013","GZ_2018","blank","blank","BB_ch","GX_ch","ML_ch"]
+        var colors = ["#FFFF00","#750d87","#b28dc4","#af6e23","#71a756","#015205","blank","blank","#c2a5cf","#996415","#a7d5a0"];
+        var list = ["blank","SG_2018","BB_2018","GX_2018","ML_2018","GZ_2018","blank","blank","BB_ch","GX_ch","ML_ch"]
 
         var totals = [];
         for (var i in City.features) {
@@ -176,13 +177,13 @@ function updateMap(response){
         
 
     }
-    if(index < 11 && index > 0){
+    if(index < 6 && index > 0){
         createLegend()
         var radius = d3.scaleSqrt()
             .domain([1, max])
             .range([1, 20*(width/700)]);
         
-       map.selectAll('.map')
+        map.selectAll('circle')
             .data(City.features)
             .enter()
             .append("circle")
@@ -190,6 +191,7 @@ function updateMap(response){
                 //this function sorts from highest to lowest values
                 return b.properties[list[index]] - a.properties[list[index]]
                 })
+            
             .style("fill", colors[index])
             .style("fill-opacity", 1)
             .style("stroke","black")
@@ -198,7 +200,7 @@ function updateMap(response){
                 return "proportional "+d.properties.Join; })
             .on("mouseover", function(d){
                 console.log("hover")
-                highlight(d.properties,d.properties[list[index]]);})
+                highlight(d.properties,d.properties[list[index]],index);})
             .on("mouseout", function(d){
                 dehighlight(d.properties)
             })
@@ -206,8 +208,7 @@ function updateMap(response){
             .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
             .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
             .attr("r", function(d){return radius(d.properties[list[index]])})
-            .transition()
-            .duration(750)
+            
             
             
             map.selectAll('circle')
@@ -215,7 +216,7 @@ function updateMap(response){
             .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     } 
 
-    else if(index > 12){
+    else if(index > 7){
         createLegend()
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
@@ -566,15 +567,11 @@ function updateChart(statebars,state_value, state_data, abvList){
         }
     };
     select = eval(select)
-    var margin = {top: 15, right: 5, bottom: 100, left: 45},
-    leftPadding = 5,
-    rightPadding = 5,
-    topBottomPadding = 20,
     chartWidth = window.innerWidth * 0.65,
     chartHeight = window.innerHeight*0.5;
     var yTick = (d => d + "%");
 
-
+    console.log(select)
     var y = d3.scaleLinear()
         .range([chartHeight, 0])
         .domain([0,0.4])
@@ -626,12 +623,12 @@ function updateChart(statebars,state_value, state_data, abvList){
     // chart title is updated based on selected attribute. 
         .text("Population Share of "+ state_value + " -2018");
 };
-function highlight(props, actual){
+function highlight(props, actual, index){
     //change stroke
     var selected = d3.selectAll("." + props.Join )//if the mouse is hovered over an element with .Neighborhood name, the charts and map will highlight that unit.
         .style("fill", "#6E6E6E") //color and stroke width
         .style("stroke-width", "2");
-    setLabel(props, actual)//html element will popup if hovered over a unit.
+    setLabel(props, actual, index)//html element will popup if hovered over a unit.
 };
 function dehighlight(props){
     var selected = d3.selectAll("." + props.Join) //same condition as highlight, but if the mouse is not hovered over.
@@ -653,13 +650,18 @@ function dehighlight(props){
     d3.select(".infolabel") //remove the htlm tag.
         .remove();
 };
-function setLabel(props, actual){
-    //label content
-    var labelAttribute
-
+function setLabel(props, actual, index){
+    var labelAttribute;
+    var match = city_object.Feature
+    var assign;
+    for(var m in match){
+        if(match[m].Urban_Area.City == props.Urban_Area){
+            assign = match[m].Urban_Area
+        }
+    }
     //percent is the label for attributes with percentages
     var urban = "<h1>" +props.Urban_Area +
-        "</h1><br>Population: " + d3.format(",")(actual)
+        "</h1><br>Population: " + d3.format(",")(actual)+"<br>"
 
     labelAttribute = urban
 
@@ -669,6 +671,13 @@ function setLabel(props, actual){
         .attr("id", props.Join + "_label") //this attribute is based on the selected attribute.
         .html(labelAttribute); //.html calls up the html tag
 
+    if(index < 6){
+        setMiniChart(assign)
+    }
+    else if(index > 7){
+        setMiniLinePolot(assign)
+    }
+    
 };
 function moveLabel(){
     //get width of labels
@@ -679,19 +688,168 @@ function moveLabel(){
 
     //use coordinates of mousemove event to set label coordinates
     var x1 = d3.event.clientX + 10, //determines the html placement depending where the mouse moves.
-        y1 = d3.event.clientY - 60,
+        y1 = d3.event.clientY - 180,
         x2 = d3.event.clientX - labelWidth - 10,
         y2 = d3.event.clientY + 15;
-
+  
     //x for the horizontal, avoids overlap
     var x = d3.event.clientX > window.innerWidth - labelWidth - 20 ? x2 : x1; 
     //y for the horizontal, avoids overlap
-    var y = d3.event.clientY < 75 ? y2 : y1; 
+    var y = d3.event.clientY < window.innerHeight - 225 ? y2 : y1; 
 
     d3.select(".infolabel") //the infolabel html will now adjust based on mouse location
         .style("left", x + "px")
         .style("top", y + "px");
 };
+function setMiniChart(assign){
+    var margin = {top: 30, right: 5, bottom: 10, left: 45},
+    leftPadding = 5;
+    chartWidth = 150,
+    chartHeight = 100;
+
+    var y = d3.scaleLinear()
+        .range([chartHeight, 0])
+        .domain([0,0.5])
+
+    var yTick = (d => d *100+ "%");
+
+    var x = d3.scaleBand()
+        .range([0, chartWidth])
+        .domain(assign.yr2018.map(function(d) { return d.Generation; })) 
+
+    var miniChart = d3.select('.infolabel')
+        .append("svg")
+        .attr("class","minichart")
+        .attr("width", chartWidth + margin.left + margin.right)
+        .attr("height", chartHeight + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+
+
+    var miniBars = miniChart.selectAll(".bar")
+        .data(assign.yr2018)
+        .enter()
+        .append("g")
+
+    miniBars.append("rect")
+        .attr("class", "statebar")
+        .attr("x", function(d) { return x(d.Generation); })
+        .attr("width",chartWidth/6)
+        .attr("y", function(d) { return y(d.Value)})
+        .attr("height", function(d){return 100 - y(d.Value)})
+        .style("fill",function(d){
+            return d.Color
+        })
+        .text(function(d){return 100*d.total})
+    miniBars.append("text")
+        .attr("class","miniBarLabel")
+        .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
+        .attr("y", function(d) { return y(d.Value) - 5; })
+        .text(function(d){return  d3.format(",.0%")(d.Value)})
+        .attr("text-anchor","middle")
+        .attr("color","white")
+        
+    var yAxis = d3.axisLeft()
+        .tickFormat(yTick)
+        .ticks(5)
+        .scale(y)
+        
+    
+    var xAxis = d3.axisBottom()
+        .tickValues([])
+        .scale(x)
+
+    var axis = miniChart.append("g")
+        .attr("class", "miniYaxis") //.axis is for css
+        .call(yAxis)
+    
+    miniChart.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(1," + chartHeight + ")")
+        .call(xAxis)
+    var chartTitle = miniChart.append("text")
+        .attr("x", 10)
+        .attr("y", -10)
+        .attr("class", "miniTitleText") // .titleText is for css
+        .text("Pop. Share - 2018"); // expressed is the attribute name.
+
+
+
+}
+function setMiniLinePolot(assign){
+    var margin = {top: 30, right: 5, bottom: 10, left: 45},
+    leftPadding = 5;
+    chartWidth = 150,
+    chartHeight = 100;
+
+    var y = d3.scaleLinear()
+        .range([chartHeight, 0])
+        .domain([0,0.5])
+
+    var yTick = (d => d *100+ "%");
+
+    var x = d3.scaleBand()
+        .range([0, chartWidth])
+        .domain(assign.yr2018.map(function(d) { return d.Generation; })) 
+
+    var miniPlot = d3.select('.infolabel')
+        .append("svg")
+        .attr("class","miniPlot")
+        .attr("width", chartWidth + margin.left + margin.right)
+        .attr("height", chartHeight + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+
+
+    var miniBars = miniChart.selectAll(".bar")
+        .data(assign.yr2018)
+        .enter()
+        .append("g")
+
+    miniBars.append("rect")
+        .attr("class", "statebar")
+        .attr("x", function(d) { return x(d.Generation); })
+        .attr("width",chartWidth/6)
+        .attr("y", function(d) { return y(d.Value)})
+        .attr("height", function(d){return 100 - y(d.Value)})
+        .style("fill",function(d){
+            return d.Color
+        })
+        .text(function(d){return 100*d.total})
+    miniBars.append("text")
+        .attr("class","miniBarLabel")
+        .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
+        .attr("y", function(d) { return y(d.Value) - 5; })
+        .text(function(d){return  d3.format(",.0%")(d.Value)})
+        .attr("text-anchor","middle")
+        .attr("color","white")
+        
+    var yAxis = d3.axisLeft()
+        .tickFormat(yTick)
+        .ticks(5)
+        .scale(y)
+        
+    
+    var xAxis = d3.axisBottom()
+        .tickValues([])
+        .scale(x)
+
+    var axis = miniChart.append("g")
+        .attr("class", "miniYaxis") //.axis is for css
+        .call(yAxis)
+    
+    miniChart.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(1," + chartHeight + ")")
+        .call(xAxis)
+    var chartTitle = miniChart.append("text")
+        .attr("x", 10)
+        .attr("y", -10)
+        .attr("class", "miniTitleText") // .titleText is for css
+        .text("Pop. Change 2013 - 2018"); // expressed is the attribute name.
+}
 init()
 }
 

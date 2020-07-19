@@ -228,8 +228,8 @@ figure.sticky {
     margin: 0 20px 0 0;
     position: absolute;
     min-height: 6vh;
-    max-height: 8vh;
-    min-width: 100px;
+    max-height: auto;
+    min-width: auto;
     color: #fff;
     background-color: #191919;
     border: solid thin #fff;
@@ -274,4 +274,16 @@ article {
 }
 a.fa {
     color: #191919;
+}
+/* Mini Charts */
+.miniBarLabel{
+    font-size: 0.7em;
+    fill: white;
+}
+.miniTitleText{
+    fill: white;
+    font-size: 0.9em;
+}
+.miniYaxis{
+    font-size: 0.7em;
 }
