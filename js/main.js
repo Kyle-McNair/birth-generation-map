@@ -118,8 +118,8 @@ function updateMap(response){
     var index = response.index
     console.log(index)
     
-        var colors = ["#FFFF00","#750d87","#b28dc4","#af6e23","#a7d5a0","#006b2a","blank","blank","#b28dc4","#af6e23","#a7d5a0"];
-        var list = ["blank","SG_2018","BB_2018","GX_2018","ML_2018","GZ_2018","blank","blank","BB_ch","GX_ch","ML_ch"]
+        var colors = ["#FFFF00","#750d87","#b28dc4","#af6e23","#a7d5a0","#006b2a","blank","blank","#b28dc4","#af6e23","#a7d5a0","#FFFF00"];
+        var list = ["blank","SG_2018","BB_2018","GX_2018","ML_2018","GZ_2018","blank","blank","BB_ch","GX_ch","ML_ch","blank"]
 
         var totals = [];
         for (var i in City.features) {
@@ -216,7 +216,7 @@ function updateMap(response){
             .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     } 
 
-    else if(index > 7){
+    else if(index > 7 && index < 11){
         createLegend()
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
@@ -249,7 +249,7 @@ function updateMap(response){
             .on("mouseout", function(d){
                 dehighlight(d.properties)
             })
-            .on("mousemove", moveLabel)
+            .on("mousemove", moveChartlessLabel)
             .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
             .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
             .transition()
@@ -261,6 +261,35 @@ function updateMap(response){
             map.selectAll('circle')
             .append("desc")
             .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
+    }
+    if(index == 11){
+        map.selectAll(".map")
+        .data(City.features)
+        .enter()
+        .append("circle")
+        .sort(function(a, b){
+            //this function sorts from highest to lowest values
+            return b.properties[list[index]] - a.properties[list[index]]
+            })
+        .style("fill", colors[index])
+        .style("fill-opacity", 0.5)
+        .attr("class", function(d){
+            return "proportional "+d.properties.Join; })
+        .on("mouseover", function(d){
+            highlight(d.properties,d.properties[list[index]],index);})
+        .on("mouseout", function(d){
+            dehighlight(d.properties)
+        })
+        .on("mousemove", moveLabel)
+        .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+        .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+        .transition()
+        .duration(750)
+        .attr("r", "4")
+
+        map.selectAll('circle')
+        .append("desc")
+        .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     }
    
 }
@@ -527,6 +556,7 @@ function setStateChart(state_data){
         .text("Population Share of Wisconsin -2018");
     createDropdown(statebars, state_data)
 }
+function setStateChartChange(state_data){}
 function createDropdown(statebars, state_data){
     //add select element
     var abvList = {"Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA",
@@ -673,7 +703,7 @@ function setLabel(props, actual, index){
         gen = "Millennial"
     }
     else if(index == 5){
-        gen = "Generation X"
+        gen = "Generation Z"
     }
     else if(index == 8){
         gen = "Baby Boomer"
@@ -688,9 +718,12 @@ function setLabel(props, actual, index){
         var urban = "<h1>" +props.Urban_Area +
             "</h1><br>"+gen+" Population: " + d3.format(",")(actual)+"<br>"
     }
-    else if(index > 7){
+    else if(index > 7 && index < 11){
         var urban = "<h1>" +props.Urban_Area +
         "</h1><br>"+gen+" Population Increase: " + d3.format(",")(actual)+"<br>" 
+    }
+    else if(index == 11){
+        var urban = "<h1>" +props.Urban_Area +"</h1><br>"
     }
 
     labelAttribute = urban
@@ -704,7 +737,7 @@ function setLabel(props, actual, index){
     if(index < 6){
         setMiniChart(assign)
     }
-    else if(index > 7){
+    else if(index == 11){
         setMiniChartChange(assign)
     }
     
@@ -726,6 +759,28 @@ function moveLabel(){
     var x = d3.event.clientX > window.innerWidth - labelWidth - 20 ? x2 : x1; 
     //y for the horizontal, avoids overlap
     var y = d3.event.clientY < window.innerHeight - 225 ? y2 : y1; 
+
+    d3.select(".infolabel") //the infolabel html will now adjust based on mouse location
+        .style("left", x + "px")
+        .style("top", y + "px");
+};
+function moveChartlessLabel(){
+    //get width of labels
+    var labelWidth = d3.select(".infolabel")
+        .node()
+        .getBoundingClientRect()//studies screen real estate.
+        .width;
+
+    //use coordinates of mousemove event to set label coordinates
+    var x1 = d3.event.clientX + 10, //determines the html placement depending where the mouse moves.
+        y1 = d3.event.clientY - 10,
+        x2 = d3.event.clientX - labelWidth - 10,
+        y2 = d3.event.clientY + 15;
+  
+    //x for the horizontal, avoids overlap
+    var x = d3.event.clientX > window.innerWidth - labelWidth - 20 ? x2 : x1; 
+    //y for the horizontal, avoids overlap
+    var y = d3.event.clientY < 75 ? y2 : y1; 
 
     d3.select(".infolabel") //the infolabel html will now adjust based on mouse location
         .style("left", x + "px")
@@ -815,7 +870,7 @@ function setMiniChartChange(assign){
 
     var x = d3.scaleLinear()
         .range([0, chartWidth])
-        .domain([-0.30,0.30])
+        .domain([-0.20,0.20])
 
     var xTick = (d => d *100+ "%");
 
@@ -843,18 +898,23 @@ function setMiniChartChange(assign){
         .attr("x", function(d) { return x(Math.min(0, d.Value/d.Totalyr2013)); })
         .attr("width", function(d){ return Math.abs(x(d.Value/d.Totalyr2013)-x(0))})
         .attr("y", function(d) { return y(d.Generation)})
-        .attr("height", function(d){y.range()})
+        .attr("height", function(d){return y.bandwidth()})
         .style("fill",function(d){
             return d.Color
         })
         .text(function(d){return 100*d.Value})
-    // miniBars.append("text")
-    //     .attr("class","miniBarLabel")
-    //     .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
-    //     .attr("y", function(d) { return y(d.Value) - 5; })
-    //     .text(function(d){return  d3.format(",.0%")(d.Value/d.Totalyr2013)})
-    //     .attr("text-anchor","middle")
-    //     .attr("color","white")
+    miniBars.append("text")
+        .attr("class","miniBarLabel")
+        .attr("y", function (d) {return y(d.Generation) + y.bandwidth()/1.5})
+        .attr("x", function(d) { 
+            if((d.Value/d.Totalyr2013) > 0){
+                return x(d.Value/d.Totalyr2013) + 20}
+            else{
+                return x(d.Value/d.Totalyr2013) - 20}
+        })
+        .text(function(d){return  d3.format(",.1%")(d.Value/d.Totalyr2013)})
+        .attr("text-anchor","middle")
+        .attr("color","white")
         
     var xAxis = d3.axisBottom()
         .tickFormat(xTick)

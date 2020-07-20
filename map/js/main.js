@@ -56,34 +56,31 @@ function setMap(){
 }
 
 function dotScale(){
+    var scale = 25
     var zoom = map.getZoom();
-    if(zoom >= 12){
-        
-        return "1 Dot = 5 People"
-    }
-    else if(zoom < 12 && zoom >= 11){
-        return "1 Dot = 10 People"
-    }
-    else if(zoom < 11 && zoom >= 10){
-        return "1 Dot = 20 People"
+    if(zoom >= 12 && zoom > 9){
+        return "1 Dot = "+String(scale)+" People"
     }
     else if(zoom < 10 && zoom >= 9){
-        return "1 Dot = 40 People"
+        return "1 Dot = "+String(scale*2)+" People"
     }
     else if(zoom < 9 && zoom >= 8){
-        return "1 Dot = 80 People"
+        return "1 Dot = "+String(scale*4)+" People"
     }
     else if(zoom < 8 && zoom >=7){
-        return "1 Dot = 160 People"
+        return "1 Dot = "+String(scale*8)+" People"
     }
     else if(zoom < 7 && zoom >= 6){
-        return "1 Dot = 320 People"
+        return "1 Dot = "+String(scale*16)+" People"
     }
     else if(zoom < 6 && zoom >= 5){
-        return "1 Dot = 640 People"
+        return "1 Dot = "+String(scale*32)+" People"
     }
     else if(zoom < 5 && zoom >= 4){
-        return "1 Dot = 1280 People"
+        return "1 Dot = "+String(scale*64)+" People"
+    }
+    else if(zoom < 4 && zoom >= 1){
+        return "1 Dot = "+String(scale*128)+" People"
     }
 }
 function legendHover(){
