@@ -47,6 +47,9 @@ body{
     ul{
         margin-left: -25px !important;
     }
+    .navbar-brand{
+        font-size: 1.1em !important;
+    }
   }
 canvas.dots {
     position: absolute;
@@ -167,10 +170,15 @@ li.about{
 .navbar{
     position: sticky !important; 
     top: 0; 
-    overflow: hidden;
     border-bottom: solid 1px #998ec3;
     box-shadow: 0 6px 4px -5px #998ec3;
     z-index: 100 !important;
+    height: 60px
+}
+.nav-item{
+    background-color: #191919 !important;
+    text-align: center;
+    font-size: 1em !important;
 }
 ul{
     margin-left: -15px;

@@ -34,18 +34,26 @@ p{
 a.fa {
     color: #191919;
 }
-nav.li{
-    color: white;
-    font-size: 1.05em;
+.nav-item{
+    background-color: #191919 !important;
+    text-align: center;
 }
-
+nav.li{
+    background-color: #191919 !important;
+    color: white;
+    font-size: 1.0em;
+    z-index: 99999 !important;
+}
 .navbar{
     position: sticky !important; 
     top: 0; 
     border-bottom: solid 1px #998ec3;
     box-shadow: 0 6px 4px -5px #998ec3;
-    z-index: 10;
-    height: 6vh;
+    z-index: 99999 !important;
+    height: 60px;
+}
+.navbar-nav{
+    z-index: 99999 !important;
 }
 ul{
     margin-left: -15px;
@@ -110,10 +118,13 @@ h2{
     font-weight: 600;
     opacity: 0.9;
 }
+body{
+    background-color: #191919 !important;
+}
 @media (max-width: 576px){
     .dotScale{
         position: absolute;
-        height: 5vh;
+        height: 10%;
         width: 80%;
         background-color: black;
         color: white;
@@ -123,5 +134,29 @@ h2{
         z-index: 100;
         cursor: default !important;
         border: 2px solid white
+    }
+    .navbar-brand{
+        font-size: 1.1em !important;
+    }
+    nav.li{
+        color: white;
+        z-index: 99999 !important;
+    }
+    nav{
+        z-index: 99999 !important;
+    }
+    #legend{
+        left: 0;
+        bottom: 0;
+        height: auto;
+        width: 100%;
+        display: inline-block
+    }
+    #generations{
+        float: left;
+        width: 50%;
+    }
+    #functions{
+        float: right;
     }
 }
