@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=10"/>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
-        <title>The Migration of Millennials</title>
+        <title>Where do Birth Generations Live?</title>
 
         <!--put your external stylesheet links here-->
         <link rel="stylesheet" href="css\style.css">
@@ -15,6 +15,8 @@
         <link rel="stylesheet" href="css\bootstrap-grid.min.css"/>
         <link rel="stylesheet" href="css\bootstrap.min.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&family=Viga&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Heebo&display=swap" rel="stylesheet">
 
 
     </head>
@@ -37,17 +39,18 @@
                       <li>Kyle Walker's <a href = "http://personal.tcu.edu/kylewalker/maps/education/#12/37.7536/-122.4473" target = "_blank">Educational Attainment in America</a></li>
                     </ul>
                   <h4>Data Sources</h4>
-                  <p>Scrollytelling Data:</p>
+                  <p><u>Scrollytelling Data:</u></p>
                     <ul>
-                      <li>Insert</li>
-                      <li>Insert</li>
-                      <li>Insert</li>
+                      <li>GIS & Tabular at the United States level, State Level, Urban Area level, and U.S. Census Block Group level were all provided by 
+                        the <a href = "https://www.nhgis.org/" target = "_blank">National Historical GIS (NHGIS)</a> 2014-2018 American Community Survey, and 2009-2013 American 
+                        Community Survey (ACS).
+                      </li>
+                      <li>Original age classificaiton of the birth generations were from PEW Research.</li>
                     </ul>
-                  <p>Generation Dot Map</p>
+                  <p><u>Generation Dot Map</u></p>
                     <ul>
-                      <li>Insert</li>
-                      <li>Insert</li>
-                      <li>Insert</li>
+                      <li>Dots were randomly generated from each Census Block Group based on the NGHIS 2014-2018 ACS & NHGIS 2009-2013 ACS.</li>
+                      <li>Basemap and vector tilesets hosting by Mapbox.</li>
                     </ul>
                   <p>Thanks for checking out my project! Feel free to see my other work <a href="https://kyle-mcnair.github.io/" target = "_blank">here</a>. 
                   If you have any questions or comments about this project, please feel free to reach out - 
@@ -102,7 +105,7 @@
             <div id = "functions">
               <input type = "radio"><span> See 2013</span><br>
               <input type = "radio"><span> See 2018</span><br>
-              <input type = "radio"><span> Compare Between <br>the Two Years</span><br>
+              <input type = "radio"><span class = "compare"> Compare Between the Two Years</span><br>
               <input type = "checkbox"><span> See Who Gained</span><br>
               <input type = "checkbox"><span> See Who Lost</span><br>
             </div>

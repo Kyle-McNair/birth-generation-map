@@ -1,6 +1,9 @@
 body{
     background-color: #191919 !important;
 }
+#about{
+    font-family: 'Heebo', sans-serif;
+}
 @media (max-width: 576px){
     html {
     overflow-y: scroll;
@@ -104,6 +107,7 @@ canvas.dots {
 div.introBox h1{
     font-size: 4rem;
     text-align: center;
+    font-family: 'Heebo', sans-serif;
 }
 .dropdownDiv{
     position: absolute;
@@ -117,9 +121,11 @@ div.introBox h1{
 h2{
     color: white;
     font-size: 2.5em;
+    font-family: 'Heebo', sans-serif;
 }
 h3{
-    color: white
+    color: white;
+    font-family: 'Heebo', sans-serif;
 }
 .introBox{
     padding: 15px, 0;
@@ -133,6 +139,7 @@ h3{
     position: relative;
     z-index: 10;
     top: 20vh;
+    font-family: 'Heebo', sans-serif;
 }
 .introParagraph{
     padding: 40px;
@@ -149,6 +156,7 @@ h3{
     top: 10vh;
     margin-bottom: 25vh;
     z-index: 15 !important;
+    font-family: 'Heebo', sans-serif;
 }
 .introSection{
     height: 100vh;
@@ -173,7 +181,8 @@ li.about{
     border-bottom: solid 1px #998ec3;
     box-shadow: 0 6px 4px -5px #998ec3;
     z-index: 100 !important;
-    height: 60px
+    height: 60px;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 .nav-item{
     background-color: #191919 !important;
@@ -198,6 +207,7 @@ figure.sticky {
     position: sticky;
     top: 0;
     z-index: 10 !important;
+    font-family: 'Heebo', sans-serif;
 
 }
 /* map styling */
@@ -205,6 +215,7 @@ figure.sticky {
     position: absolute;
     bottom: 10%;
     right: 10%;
+    font-family: 'Heebo', sans-serif;
 }
 .prop-map{
     height: 100%;
@@ -223,7 +234,8 @@ figure.sticky {
     position: relative;
     top: 10vh;
     margin-bottom: 25vh;
-    float: left
+    float: left;
+    font-family: 'Heebo', sans-serif;
 }
 .infolabel h1 {
     margin: 0 20px 0 0;
@@ -243,7 +255,7 @@ figure.sticky {
     border: solid thin #fff;
     padding: 5px 10px;
     top: -75px;
-    font-family: 'Merriweather Sans', sans-serif;
+    font-family: 'Heebo', sans-serif;
 }
 .states{
     border: 1px solid white

@@ -28,7 +28,7 @@ p{
 .generation{
     display: inline-flex;
     height: 3vh;
-    width: 100%
+    width: 100%;
 }
 
 a.fa {
@@ -51,6 +51,7 @@ nav.li{
     box-shadow: 0 6px 4px -5px #998ec3;
     z-index: 99999 !important;
     height: 60px;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 .navbar-nav{
     z-index: 99999 !important;
@@ -77,6 +78,7 @@ ul{
     left: 1vw;
     z-index: 100;
     cursor: default !important;
+    font-family: 'Heebo', sans-serif;
 }
 .dotScale{
     position: absolute;
@@ -85,16 +87,18 @@ ul{
     background-color: black;
     color: white;
     opacity: 0.8;
-    top: 8vh;
+    top: 80px;
     left: 40%;
     z-index: 100;
     cursor: default !important;
-    border: 2px solid white
+    border: 2px solid white;
+    font-family: 'Heebo', sans-serif;
 }
 h3{
     text-align: center;
     font-size: 1.5em !important;
     margin-top: 5px !important;
+    
 }
 h2{
     text-align: center;
@@ -120,6 +124,9 @@ h2{
 }
 body{
     background-color: #191919 !important;
+}
+#about{
+    font-family: 'Heebo', sans-serif;
 }
 @media (max-width: 576px){
     .dotScale{
@@ -158,5 +165,14 @@ body{
     }
     #functions{
         float: right;
+    }
+}
+@media (max-width: 370px){
+    .navbar-brand{
+        font-size: 0.9em !important;
+    }
+    #functions{
+        float: right;
+        margin-right: -10px;
     }
 }
