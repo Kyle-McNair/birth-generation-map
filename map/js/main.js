@@ -3,10 +3,20 @@ var map
 // var collection = {"SG":{"Opacity": 1, "Color": "#750d87"},"BB":{"Opacity": 1, "Color": "#b28dc4"},"GX":{"Opacity": 1, "Color": "#af6e23"},
 //         "ML":{"Opacity": 1, "Color": "#a7d5a0"},"GZ":{"Opacity": 1, "Color": "#0062a"}};
 
-var collection = {"SG":{"Opacity": 1, "Color": "#93003a"},"BB":{"Opacity": 1, "Color": "#c95293"},"GX":{"Opacity": 1, "Color": "#ffb94f"},
-        "ML":{"Opacity": 1, "Color": "#7fac79"},"GZ":{"Opacity": 1, "Color": "#176b2a"}};
+var collections = {"SG":{"Opacity": 1, "Color": "#93003a"},
+    "BB":{"Opacity": 1, "Color": "#c95293"},
+    "GX":{"Opacity": 1, "Color": "#ffb94f"},
+    "ML":{"Opacity": 1, "Color": "#7fac79"},
+    "GZ":{"Opacity": 1, "Color": "#176b2a"}};
 
-   
+var collection = {"SG":{"Opacity": 1, "Color": "#652187"},
+    "BB":{"Opacity": 1, "Color": "#9463ab"},
+    "GX":{"Opacity": 1, "Color": "#fdcf79"},
+    "ML":{"Opacity": 1, "Color": "#558c58"},
+    "GZ":{"Opacity": 1, "Color": "#003d13"}};
+
+
+
 
 cities = [[-87.65, 41.88],[-112.09, 33.53],[-74.01, 40.71],[-71.06, 42.36],[-82.51, 27.89],[-97.74, 30.26],[-104.98, 39.74],[-93.27, 44.98],[-122.40, 37.73]];
 var firstSymbolId;

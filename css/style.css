@@ -84,19 +84,19 @@ canvas.dots {
     display: inline-block;
 }
 .c1 {
-  background-color: #750d87;
+  background-color: #652187;
 }
 .c2 {
-   background-color: #b28dc4;
+   background-color: #9463ab;
 }  
 .c3 {
-    background-color: #af6e23;
+    background-color: #fdcf79;
  }
 .c4 {
-    background-color: #a7d5a0;
+    background-color: #558c58;
 }
 .c5 {
-    background-color: #006b2a;
+    background-color: #003d13;
 }
 .container-redefined{
     max-width: 60%;
