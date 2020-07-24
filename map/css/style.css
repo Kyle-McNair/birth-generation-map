@@ -157,7 +157,7 @@ body{
 .mobileButton{
     z-index: 99999 !important;
     width: 100% !important;
-    height:5%;
+    height: 50px;
     bottom: 0 !important;
     color: white !important;
     background-color: black !important;
@@ -209,7 +209,8 @@ body{
         z-index: 99999 !important;
     }
     #legend{
-        left: 0;
+        left:0;
+        bottom:50px;
         height: 200px;
         width: 100%;
 
