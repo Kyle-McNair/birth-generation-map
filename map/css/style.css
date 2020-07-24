@@ -30,7 +30,10 @@ p{
     height: 3vh;
     width: 100%;
 }
-
+.generations{
+    margin-left: auto;
+    margin-right: auto;
+}
 a.fa {
     color: #191919;
 }
@@ -59,6 +62,25 @@ nav.li{
 ul{
     margin-left: -15px;
 }
+.buttonYear{
+    text-align: center;
+}
+.year.active{
+    background-color: white;
+    color: black;
+}
+.year:hover{
+    background-color: white;
+    color: black;
+}
+.year{
+    background-color: black;
+    color: white;
+    font-family: 'Heebo', sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    border-style: none;
+}
 
 /* map styling */
 #map, body, html{
@@ -80,6 +102,9 @@ ul{
     z-index: 100;
     cursor: default !important;
     font-family: 'Heebo', sans-serif;
+}
+.legendTitle{
+    margin-top: 10px;
 }
 .dotScale{
     position: absolute;
@@ -129,19 +154,23 @@ body{
 #about{
     font-family: 'Heebo', sans-serif;
 }
+#gained_box{
+    margin-top: 10px;
+}
 @media (max-width: 576px){
     .dotScale{
         position: absolute;
-        height: 10%;
-        width: 80%;
+        height: 40px;
+        width: 70%;
         background-color: black;
         color: white;
         opacity: 0.8;
-        top: 8vh;
-        left: 10%;
+        top: 80px;
+        left: 15%;
         z-index: 100;
         cursor: default !important;
-        border: 2px solid white
+        border: 2px solid white;
+       
     }
     .navbar-brand{
         font-size: 1.1em !important;
@@ -166,9 +195,28 @@ body{
     }
     #functions{
         float: right;
+        margin-right: 20px;
     }
 }
 @media (max-width: 370px){
+    .navbar-brand{
+        font-size: 1.05em !important;
+    }
+    #functions{
+        float: right;
+        margin-right: -10px;
+    }
+}
+@media (max-width: 325px){
+    .dotScale{
+        position: absolute;
+        height: 35px;
+        width: 75%;
+        opacity: 0.8;
+        top: 80px;
+        left: 15%;
+        font-size: 0.9em;
+    }
     .navbar-brand{
         font-size: 0.9em !important;
     }

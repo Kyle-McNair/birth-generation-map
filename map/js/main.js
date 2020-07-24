@@ -1,5 +1,7 @@
 var map
-
+// if(window.innerWidth < 576){
+//     mobileToggle()
+// }
 // var collection = {"SG":{"Opacity": 1, "Color": "#750d87"},"BB":{"Opacity": 1, "Color": "#b28dc4"},"GX":{"Opacity": 1, "Color": "#af6e23"},
 //         "ML":{"Opacity": 1, "Color": "#a7d5a0"},"GZ":{"Opacity": 1, "Color": "#0062a"}};
 
@@ -15,12 +17,19 @@ var collection = {"SG":{"Opacity": 1, "Color": "#652187"},
     "ML":{"Opacity": 1, "Color": "#558c58"},
     "GZ":{"Opacity": 1, "Color": "#003d13"}};
 
-
+    var collection4 = {"SG":{"Opacity": 1, "Color": "#882255"},
+    "BB":{"Opacity": 1, "Color": "#CC6677"},
+    "GX":{"Opacity": 1, "Color": "#DDCC77"},
+    "ML":{"Opacity": 1, "Color": "#44AA99"},
+    "GZ":{"Opacity": 1, "Color": "#117733"}};
 
 
 cities = [[-87.65, 41.88],[-112.09, 33.53],[-74.01, 40.71],[-71.06, 42.36],[-82.51, 27.89],[-97.74, 30.26],[-104.98, 39.74],[-93.27, 44.98],[-122.40, 37.73]];
+
 var firstSymbolId;
+
 randomCity = cities[Math.floor(Math.random()*cities.length)]
+
 function setMap(){
     mapboxgl.accessToken = "pk.eyJ1IjoibWNuYWlyazk0IiwiYSI6ImNrNmpxdDI1eDAwZjUzbG15OGFnZGxyd2EifQ.7XQ2utbtmE1Vqu4LbrcXyw"
 
@@ -48,6 +57,10 @@ function setMap(){
         map.addSource('Birth-Generations', {
             type: 'vector',
             url: 'mapbox://mcnairk94.amuexkf6'
+        });
+        map.addSource('Birth-Generations-2013', {
+            type: 'vector',
+            url: 'mapbox://mcnairk94.7zri5lts'
         });
         map.addSource('Population-Change',{
             type: 'vector',
@@ -89,13 +102,62 @@ function setMap(){
             fade.style.pointerEvents = 'auto'
             map.removeLayer('lost_dots')
             addMainDots()
-        }
-      
+            }
         })
         var layer
+        layer = "dots_2018"
+        $($('.year')).on({
+            click: function(e){
+
+                var click = e.target.id
+                if(click == '2018' && e.target.classList.contains('active')){
+                    return
+                }
+                if(click == '2013' && e.target.classList.contains('active')){
+                    return
+                }
+                if(click == '2013'){
+                    layer = 'dots_2013'
+                    $('.year').each(function(){
+                        if($(this).hasClass('active')){
+                            $(this).removeClass('active')
+                        }})
+                    e.target.classList.add('active')
+                    map.removeLayer('dots_2018')
+                    add2013Dots()
+                    var gBox = document.getElementById('gained_box')
+                    gBox.style.opacity = 0.25
+                    gBox.style.pointerEvents = 'none'
+
+                    var lBox = document.getElementById('lost_box')
+                    lBox.style.opacity = 0.25
+                    lBox.style.pointerEvents = 'none'
+                }
+                if(click == '2018'){
+                    layer = 'dots_2018'
+                    $('.year').each(function(){
+                        if($(this).hasClass('active')){
+                            $(this).removeClass('active')
+                        }})
+                    e.target.classList.add('active')
+                    map.removeLayer('dots_2013')
+                    addMainDots()
+                    
+                    var gBox = document.getElementById('gained_box')
+                    gBox.style.opacity = 0.9
+                    gBox.style.pointerEvents = 'auto'
+
+                    var lBox = document.getElementById('lost_box')
+                    lBox.style.opacity = 0.9
+                    lBox.style.pointerEvents = 'auto'
+                }
+            }
+            
+        });
+        
         var gen = document.getElementById('generations')    
         gen.addEventListener('click',function(e){
-            layer = 'dots_2018'
+            
             if(document.getElementById('gained').checked == true){
                 layer = 'gained_dots'
             }
@@ -141,7 +203,8 @@ function setMap(){
                 ])
                 }
         })
-        })
+        
+    })
     
     
     map.on('render',function(){
@@ -233,6 +296,73 @@ function addMainDots(){
         },firstSymbolId);
     };
 }
+function add2013Dots(){
+    if(window.innerWidth > 576){
+        map.addLayer({
+            'id':'dots_2013',
+            'type':'circle',
+            'source':'Birth-Generations-2013',
+            'source-layer':'2013_BG_Scale25',
+            'paint':{
+                'circle-radius': {
+                    'stops':[
+                        [5,1],
+                        [6, 1],
+                        [7,1.1],
+                        [8,1.2],
+                        [9,1.2],
+                        [10, 1.2],
+                        [10.5,1.35],
+                        [11, 1.5]
+                    ]
+                },
+                'circle-color':[
+                    'match',
+                    ['get','Generation'],
+                    'SG',collection.SG.Color,
+                    'BB',collection.BB.Color,
+                    'GX',collection.GX.Color,
+                    'ML',collection.ML.Color,
+                    'GZ',collection.GZ.Color,
+                    /* other */ '#ccc'
+                ]
+            }
+        },firstSymbolId);
+    }
+    else{
+        map.addLayer({
+            'id':'dots_2013',
+            'type':'circle',
+            'source':'Birth-Generations-2013',
+            'source-layer':'2013_BG_Scale25',
+            'paint':{
+                'circle-radius': {
+                    'stops':[
+                        [5,0.65],
+                        [6, 0.75],
+                        [7,0.85],
+                        [8,0.95],
+                        [9,0.95],
+                        [10, 0.95],
+                        [10.5,0.95],
+                        [11, 0.95],
+                        [12,1.5]
+                    ]
+                },
+                'circle-color':[
+                    'match',
+                    ['get','Generation'],
+                    'SG',collection.SG.Color,
+                    'BB',collection.BB.Color,
+                    'GX',collection.GX.Color,
+                    'ML',collection.ML.Color,
+                    'GZ',collection.GZ.Color,
+                    /* other */ '#ccc'
+                ]
+            }
+        },firstSymbolId);
+    };
+}
 function addGained(){
     if(window.innerWidth > 576){
         map.addLayer({
@@ -244,14 +374,14 @@ function addGained(){
             'paint':{
                 'circle-radius': {
                     'stops':[
-                        [5,0.85],
-                        [6, 0.95],
+                        [5,1],
+                        [6, 1],
                         [7,1.1],
                         [8,1.2],
                         [9,1.2],
                         [10, 1.2],
                         [10.5,1.35],
-                        [11, 1.2]
+                        [11, 1.5]
                     ]
                 },
                 'circle-color':[
@@ -333,14 +463,14 @@ function addLost(){
             'paint':{
                 'circle-radius': {
                     'stops':[
-                        [5,0.85],
-                        [6, 0.95],
+                        [5,1],
+                        [6, 1],
                         [7,1.1],
                         [8,1.2],
                         [9,1.2],
                         [10, 1.2],
                         [10.5,1.35],
-                        [11, 1.2]
+                        [11, 1.5]
                     ]
                 },
                 'circle-color':[
@@ -479,6 +609,9 @@ function legendHover(){
         $(this).css("border","none")
         $('.b5').hide();
     })
+
+}
+function mobileToggle(){
 
 }
 $(document).ready(setMap);
