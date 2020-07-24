@@ -169,19 +169,26 @@ function setMap(){
                     var lBox = document.getElementById('lost_box')
                     lBox.style.opacity = 0.9
                     lBox.style.pointerEvents = 'auto'
-                }
+                }console.log(layer)
             }
             
         });
         
         var gen = document.getElementById('generations')    
         gen.addEventListener('click',function(e){
-            
+            console.log(layer)
             if(document.getElementById('gained').checked == true){
                 layer = 'gained_dots'
             }
             else if(document.getElementById('lost').checked == true){
                 layer = 'lost_dots'
+            }
+            else if(document.getElementById('lost').checked == false && document.getElementById('gained').checked == false){
+                $('.year').each(function(){
+                    if($(this).hasClass('active')){
+                        layer = "dots_"+this.id
+                    }})
+                    console.log(layer)
             }
             var layerID = e.target.id
             var opacityCheck = document.getElementById(layerID)
