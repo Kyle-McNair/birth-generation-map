@@ -1,7 +1,5 @@
 var map
-// if(window.innerWidth < 576){
-//     mobileToggle()
-// }
+
 // var collection = {"SG":{"Opacity": 1, "Color": "#750d87"},"BB":{"Opacity": 1, "Color": "#b28dc4"},"GX":{"Opacity": 1, "Color": "#af6e23"},
 //         "ML":{"Opacity": 1, "Color": "#a7d5a0"},"GZ":{"Opacity": 1, "Color": "#0062a"}};
 
@@ -31,6 +29,7 @@ var firstSymbolId;
 randomCity = cities[Math.floor(Math.random()*cities.length)]
 
 function setMap(){
+    
     mapboxgl.accessToken = "pk.eyJ1IjoibWNuYWlyazk0IiwiYSI6ImNrNmpxdDI1eDAwZjUzbG15OGFnZGxyd2EifQ.7XQ2utbtmE1Vqu4LbrcXyw"
 
     map = new mapboxgl.Map({
@@ -42,10 +41,13 @@ function setMap(){
         maxZoom: 12
         });
 
-
+    if(window.innerWidth < 576){
+            mobileToggle()
+    }
+    map.dragRotate.disable();
+    
     map.on('load', function () {
         var styles = map.getStyle().layers
-        console.log(styles)
         
         for (var i = 0; i < styles.length; i++) {
             if (styles[i].type === 'symbol') {
@@ -118,12 +120,29 @@ function setMap(){
                 }
                 if(click == '2013'){
                     layer = 'dots_2013'
+                    layers = map.getStyle().layers; 
+                    var layer_Ids = layers.map(function (layer) {
+                        return(layer.id);
+                    });
+                    if(layer_Ids.includes('gained_dots')){
+                        map.removeLayer('gained_dots')
+                        var gBox = document.getElementById('gained')
+                        gBox.checked = false;
+                    }
+                    if(layer_Ids.includes('lost_dots')){
+                        map.removeLayer('lost_dots')
+                        var lBox = document.getElementById('lost')
+                        lBox.checked = false;
+                    }
                     $('.year').each(function(){
                         if($(this).hasClass('active')){
                             $(this).removeClass('active')
                         }})
+                    if(layer_Ids.includes('dots_2018')){
+                        map.removeLayer('dots_2018')
+                    }
                     e.target.classList.add('active')
-                    map.removeLayer('dots_2018')
+                    // map.removeLayer('dots_2018')
                     add2013Dots()
                     var gBox = document.getElementById('gained_box')
                     gBox.style.opacity = 0.25
@@ -579,7 +598,7 @@ function legendHover(){
     })
     $('.item2').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b2').css("top","17%")
+        $('.b2').css("top","20.5%")
         $('.b2').show();
     }, function(){
         $(this).css("border","none")
@@ -587,7 +606,7 @@ function legendHover(){
     })
     $('.item3').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b3').css("top","25.5%")
+        $('.b3').css("top","29%")
         $('.b3').show();
     }, function(){
         $(this).css("border","none")
@@ -595,7 +614,7 @@ function legendHover(){
     })
     $('.item4').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b4').css("top","34%")
+        $('.b4').css("top","37.5%")
         $('.b4').show();
     }, function(){
         $(this).css("border","none")
@@ -603,7 +622,7 @@ function legendHover(){
     })
     $('.item5').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b5').css("top","43.5%")
+        $('.b5').css("top","46%")
         $('.b5').show();
     }, function(){
         $(this).css("border","none")
@@ -612,6 +631,20 @@ function legendHover(){
 
 }
 function mobileToggle(){
+    map.addControl(new mapboxgl.AttributionControl(), 'top-right');
+    // document.getElementById("legend").remove();
 
+    var btn = document.createElement('button')
+    btn.innerHTML = "Tap here for more information"
+    btn.classList.add("btn","btn-primary","mobileButton")
+    btn.setAttribute('type','button')
+    btn.setAttribute('data-toggle','collapse')
+    btn.setAttribute('data-target','#legend')
+    btn.setAttribute('aria-expanded','false')
+    btn.setAttribute('aria-controls','legend')
+    document.body.appendChild(btn)
+
+    var legend = document.getElementById('legend')
+    legend.classList.add('collapse')
 }
 $(document).ready(setMap);

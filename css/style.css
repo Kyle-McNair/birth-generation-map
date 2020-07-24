@@ -5,6 +5,12 @@ body{
     font-family: 'Heebo', sans-serif;
 }
 @media (max-width: 576px){
+    .propLegend{
+        z-index: 9999 !important;
+    }
+    .dropdownDiv{
+        left: 25% !important
+    }
     html {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
@@ -36,6 +42,7 @@ body{
         margin-left: auto !important;
         margin-right: auto !important;
         float: none !important;
+        z-index: 99990 !important;
     }
 
     h2{

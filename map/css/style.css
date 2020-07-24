@@ -92,8 +92,8 @@ ul{
 }
 #legend{
     position: absolute;
-    height: 35vh;
-    width: 15%;
+    height: auto;
+    width: 225px;
     background-color: black;
     color: white;
     opacity: 0.8;
@@ -103,13 +103,16 @@ ul{
     cursor: default !important;
     font-family: 'Heebo', sans-serif;
 }
+#labels{
+    margin-bottom: 15px;
+}
 .legendTitle{
     margin-top: 10px;
 }
 .dotScale{
     position: absolute;
     height: 5vh;
-    width: 20%;
+    width: 300px;
     background-color: black;
     color: white;
     opacity: 0.8;
@@ -137,7 +140,7 @@ h2{
 }
 .birthDesc {
     display: none;
-    top: 8.5%;
+    top: 12%;
     padding: 7px;
     width: 225px;
     position: absolute;
@@ -145,11 +148,35 @@ h2{
     background-color: black;
     color: white;
     font-size: 1em;
-    font-weight: 600;
-    opacity: 0.9;
+    font-weight: 500;
+    opacity: 1;
 }
 body{
     background-color: #191919 !important;
+}
+.mobileButton{
+    z-index: 99999 !important;
+    width: 100% !important;
+    height:5%;
+    bottom: 0 !important;
+    color: white !important;
+    background-color: black !important;
+    position: absolute;
+    text-decoration: none !important;
+    border-style: none !important;
+    font-family: 'Heebo', sans-serif;
+}
+
+.btn-primary.focus, .btn-primary:focus {
+    box-shadow:none !important;
+}
+.btn-primary{
+    background-color: black !important;
+    border-color: none !important;
+}
+.btn-primary:hover{
+    background-color: black !important;
+    border-color: none !important;
 }
 #about{
     font-family: 'Heebo', sans-serif;
@@ -159,13 +186,12 @@ body{
 }
 @media (max-width: 576px){
     .dotScale{
-        position: absolute;
         height: 40px;
         width: 70%;
         background-color: black;
         color: white;
-        opacity: 0.8;
-        top: 80px;
+        opacity: 0.9;
+        top: 90px;
         left: 15%;
         z-index: 100;
         cursor: default !important;
@@ -184,10 +210,9 @@ body{
     }
     #legend{
         left: 0;
-        bottom: 0;
-        height: auto;
+        height: 200px;
         width: 100%;
-        display: inline-block
+
     }
     #generations{
         float: left;
@@ -196,6 +221,14 @@ body{
     #functions{
         float: right;
         margin-right: 20px;
+    }
+    .c{
+        height: 2vh;
+        width: 2vh;
+        margin-right: 5px;
+    }
+    a.mapboxgl-ctrl-logo{
+        height: 10vh !important
     }
 }
 @media (max-width: 370px){
@@ -206,16 +239,16 @@ body{
         float: right;
         margin-right: -10px;
     }
+
 }
 @media (max-width: 325px){
     .dotScale{
-        position: absolute;
         height: 35px;
-        width: 75%;
+        width: 65%;
         opacity: 0.8;
         top: 80px;
-        left: 15%;
-        font-size: 0.9em;
+        left: 20%;
+        font-size: 0.8em;
     }
     .navbar-brand{
         font-size: 0.9em !important;
@@ -223,5 +256,16 @@ body{
     #functions{
         float: right;
         margin-right: -10px;
+    }
+    #legend{
+        height: 225px;
+    }
+    .generation{
+        margin-top: 10px;
+    }
+    .c{
+        height: 2vh;
+        width: 2vh;
+        margin-right: 5px;
     }
 }
