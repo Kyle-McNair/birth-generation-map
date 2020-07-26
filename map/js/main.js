@@ -15,11 +15,11 @@ var collection = {"SG":{"Opacity": 1, "Color": "#652187"},
     "ML":{"Opacity": 1, "Color": "#558c58"},
     "GZ":{"Opacity": 1, "Color": "#003d13"}};
 
-    var collection4 = {"SG":{"Opacity": 1, "Color": "#882255"},
-    "BB":{"Opacity": 1, "Color": "#CC6677"},
-    "GX":{"Opacity": 1, "Color": "#DDCC77"},
-    "ML":{"Opacity": 1, "Color": "#44AA99"},
-    "GZ":{"Opacity": 1, "Color": "#117733"}};
+    var collection2 = {"SG":{"Opacity": 1, "Color": "#d01c8b"},
+    "BB":{"Opacity": 1, "Color": "#ec88c3"},
+    "GX":{"Opacity": 1, "Color": "#ffe19b"},
+    "ML":{"Opacity": 1, "Color": "#79ad50"},
+    "GZ":{"Opacity": 1, "Color": "#007000"}};
 
 
 cities = [[-87.65, 41.88],[-112.09, 33.53],[-74.01, 40.71],[-71.06, 42.36],[-82.51, 27.89],[-97.74, 30.26],[-104.98, 39.74],[-93.27, 44.98],[-122.40, 37.73]];
