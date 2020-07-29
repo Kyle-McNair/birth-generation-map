@@ -1,3 +1,6 @@
+html{
+    scroll-behavior: smooth!important;
+}
 body{
     background-color: #191919 !important;
 }
@@ -265,7 +268,7 @@ figure.sticky {
     font-family: 'Heebo', sans-serif;
 }
 .states{
-    border: 1px solid white
+    border: 0.25px solid white
 }
 figure.sticky{
     position: sticky;

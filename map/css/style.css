@@ -8,19 +8,19 @@
     margin-top: auto;
 }
 .c1 {
-  background-color: #652187;
+  background-color: #722e94;
 }
 .c2 {
-   background-color: #9463ab;
+   background-color: #b97cca;
 }  
 .c3 {
-    background-color: #fdcf79;
+    background-color: #b16a24;
  }
 .c4 {
-    background-color: #558c58;
+    background-color: #86bf87;
 }
 .c5 {
-    background-color: #003d13;
+    background-color: #1e5528;
 }
 p{
     line-height: 1rem;
@@ -84,7 +84,7 @@ ul{
 
 /* map styling */
 #map, body, html{
-    height: 94vh;
+    height: 92vh;
     width: 100%;
 }
 #map{
@@ -140,7 +140,7 @@ h2{
 }
 .birthDesc {
     display: none;
-    top: 12%;
+    top: 21%;
     padding: 7px;
     width: 225px;
     position: absolute;
@@ -161,7 +161,7 @@ body{
     bottom: 0 !important;
     color: white !important;
     background-color: black !important;
-    position: absolute;
+    position: absolute !important;
     text-decoration: none !important;
     border-style: none !important;
     font-family: 'Heebo', sans-serif;

@@ -6,7 +6,7 @@ var article = scrolly.select("article");
 var stepper = article.selectAll(".stepper");
 const scroller = scrollama();
 const stickyscroller = scrollama()
-var map, chart1, albers, City, city_object, height, width;
+var map, chart1, albers, City, city_object, BB_Cities, ML_Cities, height, width;
 function handleStepEnter(response){
     if(response.direction === 'down'){
         response.element.style.opacity = 1
@@ -75,6 +75,8 @@ promises.push(d3.json("data/UA_Top_Cities.geojson"));
 promises.push(d3.json("data/bg_share.json"))
 promises.push(d3.json("data/state_data.json"))
 promises.push(d3.json("data/cities.json"))
+promises.push(d3.json("data/BB_Top_Cities.geojson"))
+promises.push(d3.json("data/ML_Top_Cities.geojson"))
     //list of promises goes and has the callback function be called
 Promise.all(promises).then(callback);
     
@@ -84,6 +86,8 @@ function callback(data){
     bg_sh = data[2]
     state_data = data[3]
     city_object = data[4]
+    BB_Cities = data[5]
+    ML_Cities = data[6]
     
 
     setChart1(bg_sh)
@@ -96,7 +100,7 @@ function callback(data){
         .attr("class", "states")
         .attr("d", path)
         .attr("stroke", "#FFFFFF")
-        .attr("stroke-width", "0.25px")
+        .attr("stroke-width", "0.15px")
         .attr("fill", "#111111");
     
     setupStickyfill();
@@ -111,6 +115,8 @@ function callback(data){
 function updateMap(response){
     map.selectAll(".proportional")
     .remove()
+    map.selectAll('.pulse')
+    .remove()
     d3.select(".infolabel") //remove the htlm tag.
     .remove();
     d3.selectAll(".propLegend").remove();
@@ -118,8 +124,8 @@ function updateMap(response){
     var index = response.index
     console.log(index)
     
-        var colors = ["#FFFF00","#652187","#9463ab","#fdcf79","#558c58","#003d13","blank","blank","#9463ab","#fdcf79","#558c58","#FFFF00"];
-        var list = ["blank","SG_2018","BB_2018","GX_2018","ML_2018","GZ_2018","blank","blank","BB_ch","GX_ch","ML_ch","blank"]
+        var colors = ["#FFFF00","#652187","#652187","#9463ab","#fdcf79","#558c58","#003d13","blank","blank","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#9463ab","#9463ab","#fdcf79","#558c58","#558c58","#003d13","#003d13",'#FFFF00'];
+        var list = ["blank","SG_2018","SG_2018","BB_2018","GX_2018","ML_2018","GZ_2018","blank","blank","blank","blank","blank","blank","BB_ch","BB_ch","GX_ch","ML_ch","ML_ch",'GZ_ch','GZ_ch','blank']
 
         var totals = [];
         for (var i in City.features) {
@@ -177,7 +183,7 @@ function updateMap(response){
         
 
     }
-    if(index < 6 && index > 0){
+    if(index < 7 && index > 0){
         createLegend()
         var radius = d3.scaleSqrt()
             .domain([1, max])
@@ -215,8 +221,89 @@ function updateMap(response){
             .append("desc")
             .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     } 
+    if(index == 9){
+        
+        createLegend()
+        var min = Math.min.apply(Math, totals);
+        var max = Math.max.apply(Math, totals);
+ 
+        var radius = d3.scaleSqrt()
+            .domain([1, max])
+            .range([2, 20*(width/700)]);
+            
+        map.selectAll(".map")
+        .data(City.features)
+        .enter()
+        .append("circle")
+        .sort(function(a, b){
+            //this function sorts from highest to lowest values
+            return (b.properties.GZ_ch + b.properties.ML_ch + b.properties.GX_ch + b.properties.BB_ch + b.properties.SG_ch) - (a.properties.GZ_ch + a.properties.ML_ch + a.properties.GX_ch + a.properties.BB_ch + a.properties.SG_ch)
+            })
+        .style("fill", colors[index])
+        .style("fill-opacity", 1)
+        .style("stroke","black")
+            .style("stroke-width",0.5)
+        .attr("class", function(d){
+            return "proportional "+d.properties.Join; })
+        .on("mouseover", function(d){
+            highlight(d.properties,(d.properties.GZ_ch + d.properties.ML_ch + d.properties.GX_ch + d.properties.BB_ch + d.properties.SG_ch),index);})
+        .on("mouseout", function(d){
+            dehighlight(d.properties)
+        })
+        .on("mousemove", moveLabel)
+        .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+        .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+        .transition()
+        .duration(750)
+        .attr("r", function(d){
+            if((d.properties.GZ_ch + d.properties.ML_ch + d.properties.GX_ch + d.properties.BB_ch + d.properties.SG_ch) > 0){
+            return radius((d.properties.GZ_ch + d.properties.ML_ch + d.properties.GX_ch + d.properties.BB_ch + d.properties.SG_ch))}})
 
-    else if(index > 7 && index < 11){
+        map.selectAll('circle')
+        .append("desc")
+        .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
+    }
+    if(index > 9 && index < 13){
+        
+        createLegend()
+        var min = Math.min.apply(Math, totals);
+        var max = Math.max.apply(Math, totals);
+ 
+        var radius = d3.scaleSqrt()
+            .domain([1, max])
+            .range([2, 20*(width/700)]);
+            
+        map.selectAll(".map")
+        .data(City.features)
+        .enter()
+        .append("circle")
+        .sort(function(a, b){
+            //this function sorts from highest to lowest values
+            return (b.properties.GZ_ch + b.properties.ML_ch + b.properties.GX_ch + b.properties.BB_ch + b.properties.SG_ch) - (a.properties.GZ_ch + a.properties.ML_ch + a.properties.GX_ch + a.properties.BB_ch + a.properties.SG_ch)
+            })
+        .style("fill", colors[index])
+        .style("fill-opacity", 1)
+        .style("stroke","black")
+            .style("stroke-width",0.5)
+        .attr("class", function(d){
+            return "proportional "+d.properties.Join; })
+        .on("mouseover", function(d){
+            highlight(d.properties,(d.properties.GZ_ch + d.properties.ML_ch + d.properties.GX_ch + d.properties.BB_ch + d.properties.SG_ch),index);})
+        .on("mouseout", function(d){
+            dehighlight(d.properties)
+        })
+        .on("mousemove", moveLabel)
+        .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+        .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+        .attr("r", function(d){
+            if((d.properties.GZ_ch + d.properties.ML_ch + d.properties.GX_ch + d.properties.BB_ch + d.properties.SG_ch) > 0){
+            return radius((d.properties.GZ_ch + d.properties.ML_ch + d.properties.GX_ch + d.properties.BB_ch + d.properties.SG_ch))}})
+
+        map.selectAll('circle')
+        .append("desc")
+        .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
+    }
+    else if(index == 13){
         createLegend()
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
@@ -225,6 +312,108 @@ function updateMap(response){
             .domain([1, max])
             .range([2, 20*(width/700)]);
 
+
+        map.selectAll('.map')
+            .data(City.features)
+            .enter()
+            .append("circle")
+            .sort(function(a, b){
+                //this function sorts from highest to lowest values
+                return b.properties[list[index]] - a.properties[list[index]]
+                })
+            .attr("class", function(d){
+                return "proportional "+d.properties.Urban_Areas; })
+            .style("fill", colors[index])
+            .style("fill-opacity", 1)
+            .style("stroke","black")
+            .style("stroke-width",0.5) 
+            .style("z-index", "99999")
+            .attr("class", function(d){
+                return "proportional "+d.properties.Join; })
+            .on("mouseover", function(d){
+                highlight(d.properties,d.properties[list[index]],index);})
+            .on("mouseout", function(d){
+                dehighlight(d.properties)
+            })
+            .on("mousemove", moveChartlessLabel)
+            .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+            .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+            .transition()
+            .duration(750)
+            .attr("r", function(d){
+                if(d.properties[list[index]] > 0){
+                return radius(d.properties[list[index]])}})
+
+            map.selectAll('circle')
+            .append("desc")
+            .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
+    }
+    else if(index == 14){
+        createLegend()
+        var min = Math.min.apply(Math, totals);
+        var max = Math.max.apply(Math, totals);
+ 
+        var radius = d3.scaleSqrt()
+            .domain([1, max])
+            .range([2, 20*(width/700)]);
+        
+        map.selectAll('.map')
+            .data(BB_Cities.features)
+            .enter()
+            .append("circle")
+            .attr("class","pulse")
+            .style("stroke", "#c994c7")
+            .style("z-index", "99999")
+            .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+            .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+            .attr("r", function(d){
+                if(d.properties[list[index]] > 0){
+                return radius(d.properties[list[index]])}})
+        
+        var pulseCircles = map.selectAll('.pulse')
+        pulse(pulseCircles);
+
+        map.selectAll('.map')
+            .data(City.features)
+            .enter()
+            .append("circle")
+            .sort(function(a, b){
+                //this function sorts from highest to lowest values
+                return b.properties[list[index]] - a.properties[list[index]]
+                })
+            .attr("class", function(d){
+                return "proportional "+d.properties.Urban_Areas; })
+            .style("fill", colors[index])
+            .style("fill-opacity", 1)
+            .style("stroke","black")
+            .style("stroke-width",0.5) 
+            .style("z-index", "99999")
+            .attr("class", function(d){
+                return "proportional "+d.properties.Join; })
+            .on("mouseover", function(d){
+                console.log("hover")
+                highlight(d.properties,d.properties[list[index]],index);})
+            .on("mouseout", function(d){
+                dehighlight(d.properties)
+            })
+            .on("mousemove", moveChartlessLabel)
+            .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+            .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+            .attr("r", function(d){
+                if(d.properties[list[index]] > 0){
+                return radius(d.properties[list[index]])}})
+            map.selectAll('circle')
+            .append("desc")
+            .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
+    }
+    else if(index == 15){
+        createLegend()
+        var min = Math.min.apply(Math, totals);
+        var max = Math.max.apply(Math, totals);
+ 
+        var radius = d3.scaleSqrt()
+            .domain([1, max])
+            .range([2, 20*(width/700)]);
 
         map.selectAll('.map')
             .data(City.features)
@@ -257,12 +446,191 @@ function updateMap(response){
             .attr("r", function(d){
                 if(d.properties[list[index]] > 0){
                 return radius(d.properties[list[index]])}})
-
             map.selectAll('circle')
             .append("desc")
             .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     }
-    if(index == 11){
+    else if(index == 16){
+        createLegend()
+        var min = Math.min.apply(Math, totals);
+        var max = Math.max.apply(Math, totals);
+ 
+        var radius = d3.scaleSqrt()
+            .domain([1, max])
+            .range([2, 20*(width/700)]);
+
+        map.selectAll('.map')
+            .data(City.features)
+            .enter()
+            .append("circle")
+            .sort(function(a, b){
+                //this function sorts from highest to lowest values
+                return b.properties[list[index]] - a.properties[list[index]]
+                })
+            .attr("class", function(d){
+                return "proportional "+d.properties.Urban_Areas; })
+            .style("fill", colors[index])
+            .style("fill-opacity", 1)
+            .style("stroke","black")
+            .style("stroke-width",0.5) 
+            .style("z-index", "99999")
+            .attr("class", function(d){
+                return "proportional "+d.properties.Join; })
+            .on("mouseover", function(d){
+                console.log("hover")
+                highlight(d.properties,d.properties[list[index]],index);})
+            .on("mouseout", function(d){
+                dehighlight(d.properties)
+            })
+            .on("mousemove", moveChartlessLabel)
+            .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+            .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+            .transition()
+            .duration(750)
+            .attr("r", function(d){
+                if(d.properties[list[index]] > 0){
+                return radius(d.properties[list[index]])}})
+            map.selectAll('circle')
+            .append("desc")
+            .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
+    }
+    else if(index == 17){
+        createLegend()
+        var min = Math.min.apply(Math, totals);
+        var max = Math.max.apply(Math, totals);
+ 
+        var radius = d3.scaleSqrt()
+            .domain([1, max])
+            .range([2, 20*(width/700)]);
+        
+        map.selectAll('.map')
+            .data(ML_Cities.features)
+            .enter()
+            .append("circle")
+            .attr("class","pulse")
+            .style("stroke", "#558c58")
+            .style("z-index", "99999")
+            .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+            .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+            .attr("r", function(d){
+                if(d.properties[list[index]] > 0){
+                return radius(d.properties[list[index]])}})
+        
+        var pulseCircles = map.selectAll('.pulse')
+        pulse(pulseCircles);
+
+        map.selectAll('.map')
+            .data(City.features)
+            .enter()
+            .append("circle")
+            .sort(function(a, b){
+                //this function sorts from highest to lowest values
+                return b.properties[list[index]] - a.properties[list[index]]
+                })
+            .attr("class", function(d){
+                return "proportional "+d.properties.Urban_Areas; })
+            .style("fill", colors[index])
+            .style("fill-opacity", 1)
+            .style("stroke","black")
+            .style("stroke-width",0.5) 
+            .style("z-index", "99999")
+            .attr("class", function(d){
+                return "proportional "+d.properties.Join; })
+            .on("mouseover", function(d){
+                console.log("hover")
+                highlight(d.properties,d.properties[list[index]],index);})
+            .on("mouseout", function(d){
+                dehighlight(d.properties)
+            })
+            .on("mousemove", moveChartlessLabel)
+            .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+            .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+            .attr("r", function(d){
+                if(d.properties[list[index]] > 0){
+                return radius(d.properties[list[index]])}})
+            map.selectAll('circle')
+            .append("desc")
+            .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
+    }
+    if(index == 18){
+        createLegend()
+        var min = Math.min.apply(Math, totals);
+        var max = Math.max.apply(Math, totals);
+ 
+        var radius = d3.scaleSqrt()
+            .domain([1, max])
+            .range([2, 20*(width/700)]);
+
+        map.selectAll(".map")
+        .data(City.features)
+        .enter()
+        .append("circle")
+        .sort(function(a, b){
+            //this function sorts from highest to lowest values
+            return b.properties[list[index]] - a.properties[list[index]]
+            })
+        .style("fill", colors[index])
+        .style("fill-opacity", 1)
+        .style("stroke","black")
+        .style("stroke-width",0.5)
+        .attr("class", function(d){
+            return "proportional "+d.properties.Join; })
+        .on("mouseover", function(d){
+            highlight(d.properties,d.properties[list[index]],index);})
+        .on("mouseout", function(d){
+            dehighlight(d.properties)
+        })
+        .on("mousemove", moveChartlessLabel)
+        .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+        .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+        .transition()
+        .duration(750)
+        .attr("r", function(d){
+            if(d.properties[list[index]] > 0){
+            return radius(d.properties[list[index]])}})
+        map.selectAll('circle')
+        .append("desc")
+        .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
+    }
+    if(index == 19){
+        createLegend()
+        var min = Math.min.apply(Math, totals);
+        var max = Math.max.apply(Math, totals);
+ 
+        var radius = d3.scaleSqrt()
+            .domain([1, max])
+            .range([2, 20*(width/700)]);
+
+        map.selectAll(".map")
+        .data(City.features)
+        .enter()
+        .append("circle")
+        .sort(function(a, b){
+            //this function sorts from highest to lowest values
+            return b.properties[list[index]] - a.properties[list[index]]
+            })
+        .style("fill", colors[index])
+        .style("fill-opacity", 1)
+        .style("stroke","black")
+        .style("stroke-width",0.5)
+        .attr("class", function(d){
+            return "proportional "+d.properties.Join; })
+        .on("mouseover", function(d){
+            highlight(d.properties,d.properties[list[index]],index);})
+        .on("mouseout", function(d){
+            dehighlight(d.properties)
+        })
+        .on("mousemove", moveChartlessLabel)
+        .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+        .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+        .attr("r", function(d){
+            if(d.properties[list[index]] > 0){
+            return radius(d.properties[list[index]])}})
+        map.selectAll('circle')
+        .append("desc")
+        .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
+    }
+    if(index == 20){
         map.selectAll(".map")
         .data(City.features)
         .enter()
@@ -275,23 +643,51 @@ function updateMap(response){
         .style("fill-opacity", 0.5)
         .attr("class", function(d){
             return "proportional "+d.properties.Join; })
-        .on("mouseover", function(d){
-            highlight(d.properties,d.properties[list[index]],index);})
-        .on("mouseout", function(d){
-            dehighlight(d.properties)
-        })
-        .on("mousemove", moveLabel)
         .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
         .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
         .transition()
         .duration(750)
-        .attr("r", "4")
+        .attr("r", "1.5")
 
-        map.selectAll('circle')
-        .append("desc")
-        .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
+        map.selectAll(".map")
+        .data(City.features)
+        .enter()
+        .append("circle")
+        .sort(function(a, b){
+            //this function sorts from highest to lowest values
+            return b.properties[list[index]] - a.properties[list[index]]
+            })
+        .style("fill", colors[index])
+        .style("fill-opacity", 0.4)
+        .attr("class", function(d){
+            return "proportional "+d.properties.Join; })
+        .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+        .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+        .transition()
+        .duration(750)
+        .attr("r", "3")
+        
+
     }
-   
+    function pulse(pulseCircles) {
+        (function repeat() {
+        pulseCircles
+            .transition()
+            .duration(500)
+            .attr("stroke-width", 0)
+            .attr('stroke-opacity', 0)
+            .transition()
+            .duration(500)
+            .attr("stroke-width", 0)
+            .attr('stroke-opacity', 0.45)
+            .transition()
+            .duration(1000)
+            .attr("stroke-width", 50)
+            .attr('stroke-opacity', 0)
+            .ease(d3.easePolyInOut)
+            .on("end", repeat);
+        })();
+    }   
 }
 function createLegend(){
     var totals = [];
@@ -556,7 +952,6 @@ function setStateChart(state_data){
         .text("Population Share of Wisconsin -2018");
     createDropdown(statebars, state_data)
 }
-function setStateChartChange(state_data){}
 function createDropdown(statebars, state_data){
     //add select element
     var abvList = {"Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA",
@@ -641,13 +1036,6 @@ function updateChart(statebars,state_value, state_data, abvList){
     .attr("y", function(d) { return y(d.Value) - 10; })
     .text(function(d){return  d3.format(",.1%")(d.Value)})
     .attr("text-anchor","middle")
-
-    // u.append("text")
-    //     .attr("class","label")
-    //     .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
-    //     .attr("y", function(d) { return y(d.Value) - 10; })
-    //     .text(function(d){return  d3.format(",.1%")(d.Value)})
-    //     .attr("text-anchor","middle")
     
     var chartTitle = d3.select(".stateTitle")
     // chart title is updated based on selected attribute. 
@@ -693,38 +1081,57 @@ function setLabel(props, actual, index){
     if(index == 1){
         gen = "Silent Generation"
     }
-    else if(index == 2){
+    if(index == 2){
+        gen = "Silent Generation"
+    }
+    else if(index == 3){
         gen = "Baby Boomer"
     }
-    else if(index ==3){
+    else if(index ==4){
         gen = "Generation X"
-    }
-    else if(index == 4){
-        gen = "Millennial"
     }
     else if(index == 5){
-        gen = "Generation Z"
-    }
-    else if(index == 8){
-        gen = "Baby Boomer"
-    }
-    else if(index == 9){
-        gen = "Generation X"
-    }
-    else if(index == 10){
         gen = "Millennial"
     }
-    if(index <6){
+    else if(index == 6){
+        gen = "Generation Z"
+    }
+    else if(index == 13){
+        gen = "Baby Boomer"
+    }
+    else if(index == 14){
+        gen = "Baby Boomer"
+    }
+    else if(index == 15){
+        gen = "Generation X"
+    }
+    else if(index == 16){
+        gen = "Millennial"
+    }
+    else if(index == 17){
+        gen = "Millennial"
+    }
+    else if(index == 18){
+        gen = "Generation Z"
+    }
+    else if(index == 19){
+        gen = "Generation Z"
+    }
+    if(index < 7){
         var urban = "<h1>" +props.Urban_Area +
             "</h1><br>"+gen+" Population: " + d3.format(",")(actual)+"<br>"
     }
-    else if(index > 7 && index < 11){
+    if(index > 8 && index < 13){
+        var urban = "<h1>" +props.Urban_Area +
+            "</h1><br>Total Population Increase: " + d3.format(",")(actual)+"<br>"
+    }
+    else if(index > 12 && index < 20){
         var urban = "<h1>" +props.Urban_Area +
         "</h1><br>"+gen+" Population Increase: " + d3.format(",")(actual)+"<br>" 
     }
-    else if(index == 11){
-        var urban = "<h1>" +props.Urban_Area +"</h1><br>"
-    }
+    // else if(index == 15){
+    //     var urban = "<h1>" +props.Urban_Area +"</h1><br>"
+    // }
 
     labelAttribute = urban
 
@@ -734,10 +1141,10 @@ function setLabel(props, actual, index){
         .attr("id", props.Join + "_label") //this attribute is based on the selected attribute.
         .html(labelAttribute); //.html calls up the html tag
 
-    if(index < 6){
+    if(index < 7){
         setMiniChart(assign)
     }
-    else if(index == 11){
+    else if(index > 8 && index < 11){
         setMiniChartChange(assign)
     }
     
@@ -864,13 +1271,12 @@ function setMiniChart(assign){
 }
 function setMiniChartChange(assign){
     var margin = {top: 30, right: 15, bottom: 20, left: 15},
-    leftPadding = 5;
-    chartWidth = 200,
+    chartWidth = 260,
     chartHeight = 100;
 
     var x = d3.scaleLinear()
         .range([0, chartWidth])
-        .domain([-0.20,0.20])
+        .domain([-1,1])
 
     var xTick = (d => d *100+ "%");
 
@@ -895,8 +1301,8 @@ function setMiniChartChange(assign){
 
     miniBars.append("rect")
         .attr("class", "statebar")
-        .attr("x", function(d) { return x(Math.min(0, d.Value/d.Totalyr2013)); })
-        .attr("width", function(d){ return Math.abs(x(d.Value/d.Totalyr2013)-x(0))})
+        .attr("x", function(d) { return x(Math.min(0, d.Value/d.Gen2013)); })
+        .attr("width", function(d){ return Math.abs(x(d.Value/d.Gen2013)-x(0))})
         .attr("y", function(d) { return y(d.Generation)})
         .attr("height", function(d){return y.bandwidth()})
         .style("fill",function(d){
@@ -907,12 +1313,12 @@ function setMiniChartChange(assign){
         .attr("class","miniBarLabel")
         .attr("y", function (d) {return y(d.Generation) + y.bandwidth()/1.5})
         .attr("x", function(d) { 
-            if((d.Value/d.Totalyr2013) > 0){
-                return x(d.Value/d.Totalyr2013) + 20}
+            if((d.Value/d.Gen2013) > 0){
+                return x(d.Value/d.Gen2013) + 20}
             else{
-                return x(d.Value/d.Totalyr2013) - 20}
+                return x(d.Value/d.Gen2013) - 20}
         })
-        .text(function(d){return  d3.format(",.1%")(d.Value/d.Totalyr2013)})
+        .text(function(d){return  d3.format(",.1%")(d.Value/d.Gen2013)})
         .attr("text-anchor","middle")
         .attr("color","white")
         
@@ -936,10 +1342,10 @@ function setMiniChartChange(assign){
         .attr("transform", "translate(" + x(0) + ",0)")
         .call(YAxis)
     var chartTitle = miniChartChange.append("text")
-        .attr("x", 10)
+        .attr("x", 0)
         .attr("y", -10)
         .attr("class", "miniTitleText") // .titleText is for css
-        .text("Pop. Change 2013 - 2018"); // expressed is the attribute name.
+        .text("Pop. Change by Generation: 2013 - 2018"); // expressed is the attribute name.
 }
 init()
 }

@@ -9,18 +9,18 @@ var collections = {"SG":{"Opacity": 1, "Color": "#93003a"},
     "ML":{"Opacity": 1, "Color": "#7fac79"},
     "GZ":{"Opacity": 1, "Color": "#176b2a"}};
 
-var collection = {"SG":{"Opacity": 1, "Color": "#652187"},
+var collection2 = {"SG":{"Opacity": 1, "Color": "#652187"},
     "BB":{"Opacity": 1, "Color": "#9463ab"},
-    "GX":{"Opacity": 1, "Color": "#fdcf79"},
+    "GX":{"Opacity": 1, "Color": "#a6611a"}, //#fdcf79
     "ML":{"Opacity": 1, "Color": "#558c58"},
     "GZ":{"Opacity": 1, "Color": "#003d13"}};
 
-    var collection2 = {"SG":{"Opacity": 1, "Color": "#d01c8b"},
-    "BB":{"Opacity": 1, "Color": "#ec88c3"},
-    "GX":{"Opacity": 1, "Color": "#ffe19b"},
-    "ML":{"Opacity": 1, "Color": "#79ad50"},
-    "GZ":{"Opacity": 1, "Color": "#007000"}};
-
+    var collection = {"SG":{"Opacity": 1, "Color": "#722e94"},
+    "BB":{"Opacity": 1, "Color": "#b97cca"},
+    "GX":{"Opacity": 1, "Color": "#b16a24"},
+    "ML":{"Opacity": 1, "Color": "#86bf87"},
+    "GZ":{"Opacity": 1, "Color": "#1e5528"}};
+    
 
 cities = [[-87.65, 41.88],[-112.09, 33.53],[-74.01, 40.71],[-71.06, 42.36],[-82.51, 27.89],[-97.74, 30.26],[-104.98, 39.74],[-93.27, 44.98],[-122.40, 37.73]];
 
@@ -169,14 +169,14 @@ function setMap(){
                     var lBox = document.getElementById('lost_box')
                     lBox.style.opacity = 0.9
                     lBox.style.pointerEvents = 'auto'
-                }console.log(layer)
+                }
             }
             
         });
         
         var gen = document.getElementById('generations')    
         gen.addEventListener('click',function(e){
-            console.log(layer)
+           
             if(document.getElementById('gained').checked == true){
                 layer = 'gained_dots'
             }
@@ -188,7 +188,7 @@ function setMap(){
                     if($(this).hasClass('active')){
                         layer = "dots_"+this.id
                     }})
-                    console.log(layer)
+                  
             }
             var layerID = e.target.id
             var opacityCheck = document.getElementById(layerID)
@@ -267,12 +267,12 @@ function addMainDots(){
                     'stops':[
                         [5,1],
                         [6, 1],
-                        [7,1.1],
-                        [8,1.2],
-                        [9,1.2],
-                        [10, 1.2],
-                        [10.5,1.35],
-                        [11, 1.5]
+                        [7,1.2],
+                        [8,1.3],
+                        [9,1.3],
+                        [10, 1.35],
+                        [10.5,1.5],
+                        [11, 1.8]
                     ]
                 },
                 'circle-color':[
@@ -297,15 +297,14 @@ function addMainDots(){
             'paint':{
                 'circle-radius': {
                     'stops':[
-                        [5,0.65],
-                        [6, 0.75],
-                        [7,0.85],
-                        [8,0.95],
-                        [9,0.95],
-                        [10, 0.95],
-                        [10.5,0.95],
-                        [11, 0.95],
-                        [12,1.5]
+                        [5,1],
+                        [6, 1],
+                        [7,1.2],
+                        [8,1.3],
+                        [9,1.3],
+                        [10, 1.35],
+                        [10.5,1.5],
+                        [11, 1.8]
                     ]
                 },
                 'circle-color':[
@@ -605,7 +604,7 @@ function legendHover(){
     })
     $('.item2').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b2').css("top","20.5%")
+        $('.b2').css("top","28%")
         $('.b2').show();
     }, function(){
         $(this).css("border","none")
@@ -613,7 +612,7 @@ function legendHover(){
     })
     $('.item3').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b3').css("top","29%")
+        $('.b3').css("top","36%")
         $('.b3').show();
     }, function(){
         $(this).css("border","none")
@@ -621,7 +620,7 @@ function legendHover(){
     })
     $('.item4').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b4').css("top","37.5%")
+        $('.b4').css("top","44%")
         $('.b4').show();
     }, function(){
         $(this).css("border","none")
@@ -629,7 +628,7 @@ function legendHover(){
     })
     $('.item5').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b5').css("top","46%")
+        $('.b5').css("top","52%")
         $('.b5').show();
     }, function(){
         $(this).css("border","none")
