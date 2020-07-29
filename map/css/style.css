@@ -161,7 +161,7 @@ body{
     bottom: 0 !important;
     color: white !important;
     background-color: black !important;
-    position: absolute !important;
+    position: fixed !important;
     text-decoration: none !important;
     border-style: none !important;
     font-family: 'Heebo', sans-serif;
