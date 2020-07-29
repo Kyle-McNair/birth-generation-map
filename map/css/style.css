@@ -83,11 +83,13 @@ ul{
 }
 
 /* map styling */
-#map, body, html{
-    height: 92vh;
+body, html{
     width: 100%;
 }
 #map{
+    top: 0;
+    bottom: 0;
+    width: 100%;
     position: absolute
 }
 #legend{
