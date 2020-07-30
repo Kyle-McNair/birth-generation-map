@@ -4,9 +4,90 @@ html{
 body{
     background-color: #191919 !important;
 }
+a.bottomLinks{
+    text-decoration: none;
+    color: #998ec3;
+}
+a.bottomLinks:hover{
+    color: #998ec3;
+    text-decoration: none;
+    font-weight: 800;
+}
+a:hover{
+    color: #998ec3;
+}
 #about{
     font-family: 'Heebo', sans-serif;
 }
+.chevron-container{
+    text-align: center;
+    position: relative;
+    width:50%;
+    height:auto;
+    z-index: 10;
+    top: 35vh;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    font-size: 1.5em;
+    font-family: 'Heebo', sans-serif
+}
+.chevron {
+    position: absolute;
+    width: 80px;
+    height: 8px;
+    opacity: 0;
+    transform: scale3d(0.5, 0.5, 0.5);
+    animation: move 3s ease-out infinite;
+    left: 45%;
+}
+
+.chevron:first-child {
+animation: move 3s ease-out 1s infinite;
+}
+
+.chevron:nth-child(2) {
+    animation: move 3s ease-out 2s infinite;
+}
+
+.chevron:before,
+.chevron:after {
+content: ' ';
+position: absolute;
+top: 0;
+height: 100%;
+width: 51%;
+background: #fff;
+}
+
+.chevron:before {
+left: 0;
+transform: skew(0deg, 40deg);
+}
+
+.chevron:after {
+right: 0;
+width: 50%;
+transform: skew(0deg, -40deg);
+}
+@keyframes move {
+    25% {
+      opacity: 1;
+  
+    }
+    33% {
+      opacity: 1;
+      transform: translateY(30px);
+    }
+    67% {
+      opacity: 1;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
+    }
+  }
 @media (max-width: 576px){
     .propLegend{
         z-index: 9999 !important;
@@ -94,19 +175,19 @@ canvas.dots {
     display: inline-block;
 }
 .c1 {
-  background-color: #652187;
+  background-color: #722e94;
 }
 .c2 {
-   background-color: #9463ab;
+   background-color: #b97cca;
 }  
 .c3 {
-    background-color: #fdcf79;
+    background-color: #b16a24;
  }
 .c4 {
-    background-color: #558c58;
+    background-color: #86bf87;
 }
 .c5 {
-    background-color: #003d13;
+    background-color: #1e5528;
 }
 .container-redefined{
     max-width: 60%;
@@ -168,6 +249,21 @@ h3{
     z-index: 15 !important;
     font-family: 'Heebo', sans-serif;
 }
+.spanHold{
+    margin-top: 30px;
+    text-align: left;
+    color: white;
+    font-size: 1.25em;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    width: 85%;
+    position: relative;
+    z-index: 15 !important;
+    font-family: 'Heebo', sans-serif;
+    margin-bottom: 25vh;
+}
 .introSection{
     height: 100vh;
     background-color: #191919;
@@ -198,6 +294,15 @@ li.about{
     background-color: #191919 !important;
     text-align: center;
     font-size: 1em !important;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: white !important;
+}
+.navbar-dark .navbar-nav .active>.nav-link {
+    color: #998ec3 !important;
+}
+.navbar.navbar-dark .nav-item .nav-link:hover { 
+    color: #998ec3 !important; 
 }
 ul{
     margin-left: -15px;
@@ -248,13 +353,16 @@ figure.sticky {
     font-family: 'Heebo', sans-serif;
 }
 .infolabel h1 {
-    margin: 0 20px 0 0;
+    text-align: center;
+    margin: 0 0px 0 0;
     padding: 0;
-    display: inline-block;
-    font-size: 1em;
+    display: block;
+    font-size: 1.35em;
+    margin-bottom: -20px;
     font-family: 'Heebo', sans-serif;
 }
 .infolabel {
+    text-align: center;
     margin: 0 20px 0 0;
     position: absolute;
     min-height: 6vh;
@@ -312,8 +420,11 @@ a.fa {
 }
 .miniTitleText{
     fill: white;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 .miniYaxis{
     font-size: 0.7em;
+}
+.minichart{
+    margin-left: -10px;
 }

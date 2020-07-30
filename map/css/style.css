@@ -59,6 +59,15 @@ nav.li{
 .navbar-nav{
     z-index: 99999 !important;
 }
+.navbar-dark .navbar-nav .nav-link {
+    color: white !important;
+}
+.navbar-dark .navbar-nav .active>.nav-link {
+    color: #998ec3 !important;
+}
+.navbar.navbar-dark .nav-item .nav-link:hover { 
+    color: #998ec3 !important; 
+}
 ul{
     margin-left: -15px;
 }

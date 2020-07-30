@@ -44,7 +44,7 @@ scroller
 }
 
 // load proportional symbol map //
-height = screen.height*0.95,
+height = screen.height*0.9,
 width = screen.width;
 
  //create new svg container for the map
@@ -124,11 +124,11 @@ function updateMap(response){
     var index = response.index
     console.log(index)
     
-        var colors = ["#FFFF00","#652187","#652187","#9463ab","#fdcf79","#558c58","#003d13","blank","blank","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#9463ab","#9463ab","#fdcf79","#558c58","#558c58","#003d13","#003d13",'#FFFF00'];
-        var list = ["blank","SG_2018","SG_2018","BB_2018","GX_2018","ML_2018","GZ_2018","blank","blank","blank","blank","blank","blank","BB_ch","BB_ch","GX_ch","ML_ch","ML_ch",'GZ_ch','GZ_ch','blank']
+    var colors = ["#FFFF00","#722e94","#722e94","#b97cca","#b16a24","#86bf87","#1e5528","blank","blank","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#b97cca","#b97cca","#b16a24","#86bf87","#86bf87","#1e5528","#1e5528",'#FFFF00'];
+    var list = ["blank","SG_2018","SG_2018","BB_2018","GX_2018","ML_2018","GZ_2018","blank","blank","blank","blank","blank","blank","BB_ch","BB_ch","GX_ch","ML_ch","ML_ch",'GZ_ch','GZ_ch','blank']
 
-        var totals = [];
-        for (var i in City.features) {
+    var totals = [];
+    for (var i in City.features) {
             var r1 = City.features[i].properties.SG_2018
             var r2 = City.features[i].properties.BB_2018
             var r3 = City.features[i].properties.GX_2018
@@ -140,10 +140,10 @@ function updateMap(response){
             totals.push(Number(r4))
             totals.push(Number(r5))
         }
-        var minRadius = 1
+    var minRadius = 1
 
-        var min = Math.min.apply(Math, totals);
-        var max = Math.max.apply(Math, totals);
+    var min = Math.min.apply(Math, totals);
+    var max = Math.max.apply(Math, totals);
     if(index == 0){
         map.selectAll(".map")
         .data(City.features)
@@ -183,7 +183,7 @@ function updateMap(response){
         
 
     }
-    if(index < 7 && index > 0){
+    else if(index < 7 && index > 0){
         createLegend()
         var radius = d3.scaleSqrt()
             .domain([1, max])
@@ -221,7 +221,7 @@ function updateMap(response){
             .append("desc")
             .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     } 
-    if(index == 9){
+    else if(index == 9){
         
         createLegend()
         var min = Math.min.apply(Math, totals);
@@ -263,7 +263,7 @@ function updateMap(response){
         .append("desc")
         .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     }
-    if(index > 9 && index < 13){
+    else if(index == 10){
         
         createLegend()
         var min = Math.min.apply(Math, totals);
@@ -302,6 +302,37 @@ function updateMap(response){
         map.selectAll('circle')
         .append("desc")
         .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
+    }
+    else if(index > 10 && index < 13){
+        
+        createLegend()
+        var min = Math.min.apply(Math, totals);
+        var max = Math.max.apply(Math, totals);
+ 
+        var radius = d3.scaleSqrt()
+            .domain([1, max])
+            .range([2, 20*(width/700)]);
+            
+        map.selectAll(".map")
+        .data(City.features)
+        .enter()
+        .append("circle")
+        .sort(function(a, b){
+            //this function sorts from highest to lowest values
+            return (b.properties.GZ_ch + b.properties.ML_ch + b.properties.GX_ch + b.properties.BB_ch + b.properties.SG_ch) - (a.properties.GZ_ch + a.properties.ML_ch + a.properties.GX_ch + a.properties.BB_ch + a.properties.SG_ch)
+            })
+        .style("fill", colors[index])
+        .style("fill-opacity", 1)
+        .style("stroke","black")
+            .style("stroke-width",0.5)
+        .attr("class", function(d){
+            return "proportional "+d.properties.Join; })
+        .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
+        .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
+        .attr("r", function(d){
+            if((d.properties.GZ_ch + d.properties.ML_ch + d.properties.GX_ch + d.properties.BB_ch + d.properties.SG_ch) > 0){
+            return radius((d.properties.GZ_ch + d.properties.ML_ch + d.properties.GX_ch + d.properties.BB_ch + d.properties.SG_ch))}})
+
     }
     else if(index == 13){
         createLegend()
@@ -508,7 +539,7 @@ function updateMap(response){
             .enter()
             .append("circle")
             .attr("class","pulse")
-            .style("stroke", "#558c58")
+            .style("stroke", "#86bf87")
             .style("z-index", "99999")
             .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
             .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
@@ -552,7 +583,7 @@ function updateMap(response){
             .append("desc")
             .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     }
-    if(index == 18){
+    else if(index == 18){
         createLegend()
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
@@ -592,7 +623,7 @@ function updateMap(response){
         .append("desc")
         .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     }
-    if(index == 19){
+    else if(index == 19){
         createLegend()
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
@@ -630,7 +661,7 @@ function updateMap(response){
         .append("desc")
         .text('{"fill":'+'"'+ colors[index]+'"'+',"stroke-width": "0.5"}');
     }
-    if(index == 20){
+    else if(index == 20){
         map.selectAll(".map")
         .data(City.features)
         .enter()
@@ -1196,7 +1227,7 @@ function moveChartlessLabel(){
 function setMiniChart(assign){
     var margin = {top: 30, right: 5, bottom: 10, left: 45},
     leftPadding = 5;
-    chartWidth = 150,
+    chartWidth = 200,
     chartHeight = 100;
 
     var y = d3.scaleLinear()
@@ -1261,7 +1292,7 @@ function setMiniChart(assign){
         .attr("transform", "translate(1," + chartHeight + ")")
         .call(xAxis)
     var chartTitle = miniChart.append("text")
-        .attr("x", 10)
+        .attr("x", 40)
         .attr("y", -10)
         .attr("class", "miniTitleText") // .titleText is for css
         .text("Pop. Share - 2018"); // expressed is the attribute name.
@@ -1342,7 +1373,7 @@ function setMiniChartChange(assign){
         .attr("transform", "translate(" + x(0) + ",0)")
         .call(YAxis)
     var chartTitle = miniChartChange.append("text")
-        .attr("x", 0)
+        .attr("x", 15)
         .attr("y", -10)
         .attr("class", "miniTitleText") // .titleText is for css
         .text("Pop. Change by Generation: 2013 - 2018"); // expressed is the attribute name.
