@@ -89,6 +89,13 @@ transform: skew(0deg, -40deg);
     }
   }
 @media (max-width: 576px){
+    .chevron-container{
+        width: 100% !important;
+    }
+    .chevron{
+        position: fixed;
+        left: 40%
+    }
     .propLegend{
         z-index: 9999 !important;
     }

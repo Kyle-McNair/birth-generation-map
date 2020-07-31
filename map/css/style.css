@@ -168,7 +168,7 @@ body{
 .mobileButton{
     z-index: 99999 !important;
     width: 100% !important;
-    height: 50px;
+    height: 60px;
     bottom: 0 !important;
     color: white !important;
     background-color: black !important;
@@ -222,7 +222,7 @@ body{
     #legend{
         left:0;
         bottom:50px;
-        height: 200px;
+        height: 220px;
         width: 100%;
 
     }
@@ -240,7 +240,10 @@ body{
         margin-right: 5px;
     }
     a.mapboxgl-ctrl-logo{
-        height: 10vh !important
+        height: 85px !important
+    }
+    .mapboxgl-ctrl-attrib{
+        height: 40px !important
     }
 }
 @media (max-width: 370px){
@@ -270,7 +273,7 @@ body{
         margin-right: -10px;
     }
     #legend{
-        height: 225px;
+        height: 245px;
     }
     .generation{
         margin-top: 10px;

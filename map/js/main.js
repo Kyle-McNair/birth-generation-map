@@ -625,8 +625,7 @@ function legendHover(){
 
 }
 function mobileToggle(){
-    map.addControl(new mapboxgl.AttributionControl(), 'top-right');
-    // document.getElementById("legend").remove();
+    map.addControl(new mapboxgl.AttributionControl(), 'bottom-right');
 
     var btn = document.createElement('button')
     btn.innerHTML = "Tap here for more information"
@@ -640,5 +639,14 @@ function mobileToggle(){
 
     var legend = document.getElementById('legend')
     legend.classList.add('collapse')
+
+    btn.addEventListener('click', function(){
+        if(this.innerHTML == "Tap here for more information"){
+            this.innerText = "Tap here to close legend"
+        }
+        else if(this.innerHTML == "Tap here to close legend"){
+            this.innerText = "Tap here for more information"
+        }
+    })
 }
 $(document).ready(setMap);
