@@ -10,7 +10,7 @@ var collection = {"SG":{"Opacity": 1, "Color": "#722e94"},
     "BB":{"Opacity": 1, "Color": "#b97cca"},
     "GX":{"Opacity": 1, "Color": "#b16a24"},
     "ML":{"Opacity": 1, "Color": "#86bf87"},
-    "GZ":{"Opacity": 1, "Color": "#1e5528"}};
+    "GZ":{"Opacity": 1, "Color": "#23632f"}};
     
 
 cities = [[-87.65, 41.88],[-112.09, 33.53],[-74.01, 40.71],[-71.06, 42.36],[-82.51, 27.89],[-97.74, 30.26],[-104.98, 39.74],[-93.27, 44.98],[-122.40, 37.73]];
@@ -247,312 +247,176 @@ function hideLabels(){
     })
 }
 function addMainDots(){
-    if(window.innerWidth > 576){
-        map.addLayer({
-            'id':'dots_2018',
-            'type':'circle',
-            'source':'Birth-Generations',
-            'source-layer':'2018_BG_Scale25',
-            'paint':{
-                'circle-radius': {
-                    'stops':[
-                        [5,1],
-                        [6, 1],
-                        [7,1.2],
-                        [8,1.3],
-                        [9,1.3],
-                        [10, 1.35],
-                        [10.5,1.5],
-                        [11, 1.8]
-                    ]
-                },
-                'circle-color':[
-                    'match',
-                    ['get','Generation'],
-                    'SG',collection.SG.Color,
-                    'BB',collection.BB.Color,
-                    'GX',collection.GX.Color,
-                    'ML',collection.ML.Color,
-                    'GZ',collection.GZ.Color,
-                    /* other */ '#ccc'
+    console.log(collection)
+    map.addLayer({
+        'id':'dots_2018',
+        'type':'circle',
+        'source':'Birth-Generations',
+        'source-layer':'2018_BG_Scale25',
+        'paint':{
+            'circle-radius': {
+                'stops':[
+                    [5,1],
+                    [6, 1],
+                    [7,1.2],
+                    [8,1.3],
+                    [9,1.3],
+                    [10, 1.35],
+                    [10.5,1.5],
+                    [11, 1.8]
                 ]
-            }
-        },firstSymbolId);
-    }
-    else{
-        map.addLayer({
-            'id':'dots_2018',
-            'type':'circle',
-            'source':'Birth-Generations',
-            'source-layer':'2018_BG_Scale25',
-            'paint':{
-                'circle-radius': {
-                    'stops':[
-                        [5,1],
-                        [6, 1],
-                        [7,1.2],
-                        [8,1.3],
-                        [9,1.3],
-                        [10, 1.35],
-                        [10.5,1.5],
-                        [11, 1.8]
-                    ]
-                },
-                'circle-color':[
-                    'match',
-                    ['get','Generation'],
-                    'SG',collection.SG.Color,
-                    'BB',collection.BB.Color,
-                    'GX',collection.GX.Color,
-                    'ML',collection.ML.Color,
-                    'GZ',collection.GZ.Color,
-                    /* other */ '#ccc'
-                ]
-            }
-        },firstSymbolId);
-    };
+            },
+            'circle-color':[
+                'match',
+                ['get','Generation'],
+                'SG',collection.SG.Color,
+                'BB',collection.BB.Color,
+                'GX',collection.GX.Color,
+                'ML',collection.ML.Color,
+                'GZ',collection.GZ.Color,
+                /* other */ '#ccc'
+            ],
+            'circle-opacity':[
+                'match',
+                ['get','Generation'],
+                'SG',collection.SG.Opacity,
+                'BB',collection.BB.Opacity,
+                'GX',collection.GX.Opacity,
+                'ML',collection.ML.Opacity,
+                'GZ',collection.GZ.Opacity,
+                1
+            ]
+        }
+    },firstSymbolId);
 }
 function add2013Dots(){
-    if(window.innerWidth > 576){
-        map.addLayer({
-            'id':'dots_2013',
-            'type':'circle',
-            'source':'Birth-Generations-2013',
-            'source-layer':'2013_BG_Scale25',
-            'paint':{
-                'circle-radius': {
-                    'stops':[
-                        [5,1],
-                        [6, 1],
-                        [7,1.2],
-                        [8,1.3],
-                        [9,1.3],
-                        [10, 1.35],
-                        [10.5,1.5],
-                        [11, 1.8]
-                    ]
-                },
-                'circle-color':[
-                    'match',
-                    ['get','Generation'],
-                    'SG',collection.SG.Color,
-                    'BB',collection.BB.Color,
-                    'GX',collection.GX.Color,
-                    'ML',collection.ML.Color,
-                    'GZ',collection.GZ.Color,
-                    /* other */ '#ccc'
+    console.log(collection)
+    map.addLayer({
+        'id':'dots_2013',
+        'type':'circle',
+        'source':'Birth-Generations-2013',
+        'source-layer':'2013_BG_Scale25',
+        'paint':{
+            'circle-radius': {
+                'stops':[
+                    [5,1],
+                    [6, 1],
+                    [7,1.2],
+                    [8,1.3],
+                    [9,1.3],
+                    [10, 1.35],
+                    [10.5,1.5],
+                    [11, 1.8]
                 ]
-            }
-        },firstSymbolId);
-    }
-    else{
-        map.addLayer({
-            'id':'dots_2013',
-            'type':'circle',
-            'source':'Birth-Generations-2013',
-            'source-layer':'2013_BG_Scale25',
-            'paint':{
-                'circle-radius': {
-                    'stops':[
-                        [5,1],
-                        [6, 1],
-                        [7,1.2],
-                        [8,1.3],
-                        [9,1.3],
-                        [10, 1.35],
-                        [10.5,1.5],
-                        [11, 1.8]
-                    ]
-                },
-                'circle-color':[
-                    'match',
-                    ['get','Generation'],
-                    'SG',collection.SG.Color,
-                    'BB',collection.BB.Color,
-                    'GX',collection.GX.Color,
-                    'ML',collection.ML.Color,
-                    'GZ',collection.GZ.Color,
-                    /* other */ '#ccc'
-                ]
-            }
-        },firstSymbolId);
-    };
+            },
+            'circle-color':[
+                'match',
+                ['get','Generation'],
+                'SG',collection.SG.Color,
+                'BB',collection.BB.Color,
+                'GX',collection.GX.Color,
+                'ML',collection.ML.Color,
+                'GZ',collection.GZ.Color,
+                /* other */ '#ccc'
+            ],
+            'circle-opacity':[
+                'match',
+                ['get','Generation'],
+                'SG',collection.SG.Opacity,
+                'BB',collection.BB.Opacity,
+                'GX',collection.GX.Opacity,
+                'ML',collection.ML.Opacity,
+                'GZ',collection.GZ.Opacity,
+                1
+            ]
+        }
+    },firstSymbolId);
 }
 function addGained(){
-    if(window.innerWidth > 576){
-        map.addLayer({
-            'id':'gained_dots',
-            'type':'circle',
-            'source':'Population-Change',
-            'source-layer':'Population_Change',
-            'filter':['==','Type','pos'],
-            'paint':{
-                'circle-radius': {
-                    'stops':[
-                        [5,1],
-                        [6, 1],
-                        [7,1.2],
-                        [8,1.3],
-                        [9,1.3],
-                        [10, 1.35],
-                        [10.5,1.5],
-                        [11, 1.8]
-                    ]
-                },
-                'circle-color':[
-                    'match',
-                    ['get','Generation'],
-                    'SG',collection.SG.Color,
-                    'BB',collection.BB.Color,
-                    'GX',collection.GX.Color,
-                    'ML',collection.ML.Color,
-                    'GZ',collection.GZ.Color,
-                    /* other */ '#ccc'
-                ],
-                'circle-opacity':[
-                    'match',
-                    ['get','Generation'],
-                    'SG',collection.SG.Opacity,
-                    'BB',collection.BB.Opacity,
-                    'GX',collection.GX.Opacity,
-                    'ML',collection.ML.Opacity,
-                    'GZ',collection.GZ.Opacity,
-                    1
+    map.addLayer({
+        'id':'gained_dots',
+        'type':'circle',
+        'source':'Population-Change',
+        'source-layer':'Population_Change',
+        'filter':['==','Type','pos'],
+        'paint':{
+            'circle-radius': {
+                'stops':[
+                    [5,1],
+                    [6, 1],
+                    [7,1.2],
+                    [8,1.3],
+                    [9,1.3],
+                    [10, 1.35],
+                    [10.5,1.5],
+                    [11, 1.8]
                 ]
-            }
-        },firstSymbolId);
-    }
-    else{
-        map.addLayer({
-            'id':'gained_dots',
-            'type':'circle',
-            'source':'Population-Change',
-            'source-layer':'Population_Change',
-            'filter':['==','Type','pos'],
-            'paint':{
-                'circle-radius': {
-                    'stops':[
-                        [5,1],
-                        [6, 1],
-                        [7,1.2],
-                        [8,1.3],
-                        [9,1.3],
-                        [10, 1.35],
-                        [10.5,1.5],
-                        [11, 1.8]
-                    ]
-                },
-                'circle-color':[
-                    'match',
-                    ['get','Generation'],
-                    'SG',collection.SG.Color,
-                    'BB',collection.BB.Color,
-                    'GX',collection.GX.Color,
-                    'ML',collection.ML.Color,
-                    'GZ',collection.GZ.Color,
-                    /* other */ '#ccc'
-                ],
-                'circle-opacity':[
-                    'match',
-                    ['get','Generation'],
-                    'SG',collection.SG.Opacity,
-                    'BB',collection.BB.Opacity,
-                    'GX',collection.GX.Opacity,
-                    'ML',collection.ML.Opacity,
-                    'GZ',collection.GZ.Opacity,
-                    1
-                ]
-            }
-        },firstSymbolId);
-    }
+            },
+            'circle-color':[
+                'match',
+                ['get','Generation'],
+                'SG',collection.SG.Color,
+                'BB',collection.BB.Color,
+                'GX',collection.GX.Color,
+                'ML',collection.ML.Color,
+                'GZ',collection.GZ.Color,
+                /* other */ '#ccc'
+            ],
+            'circle-opacity':[
+                'match',
+                ['get','Generation'],
+                'SG',collection.SG.Opacity,
+                'BB',collection.BB.Opacity,
+                'GX',collection.GX.Opacity,
+                'ML',collection.ML.Opacity,
+                'GZ',collection.GZ.Opacity,
+                1
+            ]
+        }
+    },firstSymbolId);
 }
 function addLost(){
-    if(window.innerWidth > 576){
-        map.addLayer({
-            'id':'lost_dots',
-            'type':'circle',
-            'source':'Population-Change',
-            'source-layer':'Population_Change',
-            'filter':['==','Type','neg'],
-            'paint':{
-                'circle-radius': {
-                    'stops':[
-                        [5,1],
-                        [6, 1],
-                        [7,1.2],
-                        [8,1.3],
-                        [9,1.3],
-                        [10, 1.35],
-                        [10.5,1.5],
-                        [11, 1.8]
-                    ]
-                },
-                'circle-color':[
-                    'match',
-                    ['get','Generation'],
-                    'SG',collection.SG.Color,
-                    'BB',collection.BB.Color,
-                    'GX',collection.GX.Color,
-                    'ML',collection.ML.Color,
-                    'GZ',collection.GZ.Color,
-                    /* other */ '#ccc'
-                ],
-                'circle-opacity':[
-                    'match',
-                    ['get','Generation'],
-                    'SG',collection.SG.Opacity,
-                    'BB',collection.BB.Opacity,
-                    'GX',collection.GX.Opacity,
-                    'ML',collection.ML.Opacity,
-                    'GZ',collection.GZ.Opacity,
-                    1
+    map.addLayer({
+        'id':'lost_dots',
+        'type':'circle',
+        'source':'Population-Change',
+        'source-layer':'Population_Change',
+        'filter':['==','Type','neg'],
+        'paint':{
+            'circle-radius': {
+                'stops':[
+                    [5,1],
+                    [6, 1],
+                    [7,1.2],
+                    [8,1.3],
+                    [9,1.3],
+                    [10, 1.35],
+                    [10.5,1.5],
+                    [11, 1.8]
                 ]
-            }
-        },firstSymbolId);
-    }
-    else{
-        map.addLayer({
-            'id':'lost_dots',
-            'type':'circle',
-            'source':'Population-Change',
-            'source-layer':'Population_Change',
-            'filter':['==','Type','neg'],
-            'paint':{
-                'circle-radius': {
-                    'stops':[
-                        [5,1],
-                        [6, 1],
-                        [7,1.2],
-                        [8,1.3],
-                        [9,1.3],
-                        [10, 1.35],
-                        [10.5,1.5],
-                        [11, 1.8]
-                    ]
-                },
-                'circle-color':[
-                    'match',
-                    ['get','Generation'],
-                    'SG',collection.SG.Color,
-                    'BB',collection.BB.Color,
-                    'GX',collection.GX.Color,
-                    'ML',collection.ML.Color,
-                    'GZ',collection.GZ.Color,
-                    /* other */ '#ccc'
-                ],
-                'circle-opacity':[
-                    'match',
-                    ['get','Generation'],
-                    'SG',collection.SG.Opacity,
-                    'BB',collection.BB.Opacity,
-                    'GX',collection.GX.Opacity,
-                    'ML',collection.ML.Opacity,
-                    'GZ',collection.GZ.Opacity,
-                    1
-                ]
-            }
-        },firstSymbolId);    
-    }
+            },
+            'circle-color':[
+                'match',
+                ['get','Generation'],
+                'SG',collection.SG.Color,
+                'BB',collection.BB.Color,
+                'GX',collection.GX.Color,
+                'ML',collection.ML.Color,
+                'GZ',collection.GZ.Color,
+                /* other */ '#ccc'
+            ],
+            'circle-opacity':[
+                'match',
+                ['get','Generation'],
+                'SG',collection.SG.Opacity,
+                'BB',collection.BB.Opacity,
+                'GX',collection.GX.Opacity,
+                'ML',collection.ML.Opacity,
+                'GZ',collection.GZ.Opacity,
+                1
+            ]
+        }
+    },firstSymbolId);
 }
 function dotScale(){
     var scale = 25

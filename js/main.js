@@ -124,7 +124,7 @@ function updateMap(response){
     var index = response.index
     console.log(index)
     
-    var colors = ["#FFFF00","#722e94","#722e94","#b97cca","#b16a24","#86bf87","#1e5528","blank","blank","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#b97cca","#b97cca","#b16a24","#86bf87","#86bf87","#1e5528","#1e5528",'#FFFF00'];
+    var colors = ["#FFFF00","#722e94","#722e94","#b97cca","#b16a24","#86bf87","#23632f","blank","blank","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#b97cca","#b97cca","#b16a24","#86bf87","#86bf87","#23632f","#23632f",'#FFFF00'];
     var list = ["blank","SG_2018","SG_2018","BB_2018","GX_2018","ML_2018","GZ_2018","blank","blank","blank","blank","blank","blank","BB_ch","BB_ch","GX_ch","ML_ch","ML_ch",'GZ_ch','GZ_ch','blank']
 
     var totals = [];

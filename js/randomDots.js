@@ -3,7 +3,7 @@ var dotMargin = 1;
 var numRows = 20;
 var numCols = 20;
 // Set the colors you want to support in this array
-var colors = ["#722e94","#b97cca","#b16a24","#86bf87","#1e5528"];
+var colors = ["#722e94","#b97cca","#b16a24","#86bf87","#23632f"];
 var directions = ['+', '-'];
 var speeds = [0.5, 1, 1.5, 2, 2.5];
 
