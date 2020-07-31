@@ -93,7 +93,7 @@ transform: skew(0deg, -40deg);
         width: 100% !important;
     }
     .chevron{
-        position: fixed;
+        position: absolute;
         left: 40%
     }
     .propLegend{
