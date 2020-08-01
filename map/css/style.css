@@ -35,7 +35,12 @@ p{
     margin-right: auto;
 }
 a.fa {
-    color: #191919;
+    color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+a.fa:hover{
+    color: #998ec3
 }
 .nav-item{
     background-color: #191919 !important;
@@ -142,6 +147,9 @@ body, html{
     border: 2px solid white;
     font-family: 'Heebo', sans-serif;
 }
+h4{
+    font-size: 1.5em !important;
+}
 h3{
     text-align: center;
     font-size: 1.5em !important;
@@ -151,6 +159,32 @@ h3{
 h2{
     text-align: center;
     font-size: 1.5em !important;
+}
+h4{
+    font-size: 1.5em !important;
+}
+.modal-content{
+    background-color: #191919 !important;
+    color: white !important;
+    font-family: 'Heebo', sans-serif !important;
+}
+.modal-links{
+    color: #998ec3 !important
+}
+.modal-header{
+    border-bottom: 3px solid white !important;
+}
+.modal-title{
+    margin-left: auto !important;
+    margin-right: auto !important;
+    font-size: 2em !important;
+}
+.close{
+    color: white !important;
+}
+.modal-header .close {
+    padding: 1rem 1rem;
+    margin: -1rem -1rem -1rem 0 !important;
 }
 .bGen{
     margin-left: 0.5vw;
@@ -207,6 +241,10 @@ body{
     /* margin-top: 10px; */
 }
 @media (max-width: 576px){
+    .modal-content{
+        height: 450px !important;
+        overflow: auto !important;
+    }
     .dotScale{
         height: 40px;
         width: 70%;

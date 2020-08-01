@@ -5,8 +5,10 @@ var figure = scrolly.select("figure");
 var article = scrolly.select("article");
 var stepper = article.selectAll(".stepper");
 const scroller = scrollama();
-const stickyscroller = scrollama()
-var map, chart1, albers, City, city_object, BB_Cities, ML_Cities, height, width;
+const stickyMapscroller = scrollama();
+const stickyNatChartscroller = scrollama();
+const stickyStateChartscroller = scrollama();
+var map, chart1, albers, City, city_object, BB_Cities, ML_Cities, height, width, statebars, state_data;
 function handleStepEnter(response){
     if(response.direction === 'down'){
         response.element.style.opacity = 1
@@ -54,10 +56,6 @@ map = d3.select("figure.prop-map")
     .attr("viewBox", `0 0 ${width} ${height}`)
     .attr("width", "100%")
     .attr("height", "100%")
-        // .style("position","absolute");
-
-// prop = map.append("g")
-//     .attr("opacity",1)
 
 albers = d3.geoAlbers()
     .scale(width)
@@ -90,9 +88,9 @@ function callback(data){
     ML_Cities = data[6]
     
 
-    setChart1(bg_sh)
-    // createDropdown(state_data)
+    setNationalChart(bg_sh)
     setStateChart(state_data)
+
     var country = topojson.feature(states, states.objects.states);
 
     var states_US = map.append("path")
@@ -104,13 +102,27 @@ function callback(data){
         .attr("fill", "#111111");
     
     setupStickyfill();
-    stickyscroller
-    .setup({
-        step: '#scrolly article .stepper',
-        debug: false,
-        offset: 0.85
-    })
-    .onStepEnter(updateMap)
+    stickyMapscroller
+        .setup({
+            step: '#mapScrolly article .mapStepper',
+            debug: false,
+            offset: 0.85
+        })
+        .onStepEnter(updateMap)
+
+    stickyNatChartscroller
+        .setup({
+            step: '#natScrolly article .natStepper',
+            debug: false,
+            offset: 0.8
+        })
+
+    stickyStateChartscroller
+        .setup({
+            step: '#stateScrolly article .stateStepper',
+            debug: false,
+            offset: 0.8
+        }).onStepEnter(stateInputs)
 } 
 function updateMap(response){
     map.selectAll(".proportional")
@@ -744,14 +756,11 @@ function createLegend(){
 
     var LegendValues = [50000,500000,1000000]
 
-    var LegendString = [{"Type":"Fifty Thousand","Amount":50000},{"Type":"Five Hundred Thousand","Amount":500000},{"Type":"One Million","Amount":1000000}]
-
-
     var LegendRange = radius.range()[1]*width/700
 
     var legend =  d3.select(".legend")
-        .style("width", LegendRange+100+"px")
-        .style("height", LegendRange+"px");
+        .style("width", LegendRange + 100 +"px")
+        .style("height", LegendRange +"px");
 
     var lHeight = $(".legend").height()
 
@@ -794,6 +803,32 @@ function createLegend(){
         .data(LegendValues)
         .enter()
         .append("text")
+        .attr("class", "legendShadow")
+        .text(function(d){
+            return d3.format(",")(d)})
+        .attr("x", function(d){
+            if(d == 50000){
+                return(LegendRange-8)}
+             
+            if(d == 500000){
+                return(LegendRange-15)
+            }
+            return LegendRange-27})
+        .attr("y",function(d){
+            if(d ==1000000){
+                return LegendRange-(radius(d)*2)-14
+            }
+            if(d ==500000){
+                return LegendRange-(radius(d)*2)-9
+            }
+            return LegendRange - (radius(d)*2)-10
+        })
+        .attr('alignment-baseline', 'middle')
+
+    legendLabels = circles.selectAll(".legendLabels")
+        .data(LegendValues)
+        .enter()
+        .append("text")
         .attr("class","propLabels")
         .text(function(d){
             return d3.format(",")(d)})
@@ -804,7 +839,7 @@ function createLegend(){
             if(d == 500000){
                 return(LegendRange-15)
             }
-            return LegendRange-25})
+            return LegendRange-27})
         .attr("y",function(d){
             if(d ==1000000){
                 return LegendRange-(radius(d)*2)-14
@@ -814,11 +849,23 @@ function createLegend(){
             }
             return LegendRange - (radius(d)*2)-10
         })
-        .attr("stroke", "white")
         .attr('alignment-baseline', 'middle')
-        .attr("font-size","14")
+    
+    var legendTitle = legend.selectAll('.propLegend')
+        .append("text")
+        .attr("class", "legendTitle")
+        .attr("x", 0)
+        .attr("y", function(){
+            if(window.innerWidth > 1600){
+                return 55
+            }
+            if(window.innerWidth < 1600){
+                return 20
+            }
+        })
+        .text("Approximate Population");
 }
-function setChart1(bg_sh){
+function setNationalChart(bg_sh){
     var margin = {top: 15, right: 5, bottom: 100, left: 45},
     
     leftPadding = 5,
@@ -847,7 +894,7 @@ function setChart1(bg_sh){
 
     
 
-    chart1 = d3.select("#chart1")
+    chart1 = d3.select("figure.natChart")
         .append("svg")
         .attr("class","chart1")
         .attr("width", chartWidth + margin.left + margin.right)
@@ -923,9 +970,9 @@ function setStateChart(state_data){
         .domain(select.map(function(d) { return d.Generation; }))
         .padding(0.25);  
 
-    chart2 = d3.select("#chart2")
+    chart2 = d3.select("figure.stateChart")
         .append("svg")
-        .attr("class","chart2")
+        .attr("class","stateChart")
         .attr("width", chartWidth + margin.left + margin.right)
         .attr("height", chartHeight + margin.top + margin.bottom)
         .append("g")
@@ -933,7 +980,7 @@ function setStateChart(state_data){
           "translate(" + margin.left + "," + margin.top + ")");
 
 
-    var statebars = chart2.selectAll(".bar")
+    statebars = chart2.selectAll(".bar")
         .data(select)
         .enter()
         .append("g")
@@ -980,8 +1027,27 @@ function setStateChart(state_data){
 
     var chartTitle = d3.select(".stateTitle")
     // chart title is updated based on selected attribute. 
-        .text("Population Share of Wisconsin -2018");
+        .text("Population Share of Wisconsin - 2018");
     createDropdown(statebars, state_data)
+}
+function stateInputs(response){
+    var abvList = {"Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA",
+    "Colorado":"CO","Connecticut":"CT","Delaware":"DE","Florida":"FL", "Georgia":"GA","Hawaii":"HI","Idaho":"ID",
+    "Illinois":"IL","Indiana":"IN","Iowa":"IA","Kansas":"KS","Kentucky":"KY","Louisiana":"LA","Maine":"ME",
+    "Maryland":"MD","Massachusetts":"MA","Michigan":"MI","Minnesota":"MN","Mississippi":"MS","Missouri":"MO","Montana":"MT",
+    "Nebraska":"NE","Nevada":"NV","New Hampshire":"NH","New Jersey":"NJ","New Mexico":"NM","New York":"NY","North Carolina":"NC","North Dakota":"ND",
+    "Ohio":"OH","Oklahoma":"OK","Oregon":"OR","Pennsylvania":"PA","Rhode Island":"RI","South Carolina":"SC","South Dakota":"SD","Tennessee":"TN",
+    "Texas":"TX","Utah":"UT","Vermont":"VT","Virginia":"VA","Washington":"WA","West Virginia":"WV","Wisconsin":"WI","Wyoming":"WY"}
+    var dropdown = document.getElementById('dropdown')
+    var index = response.index
+    console.log(index)
+    var stateList = ['Wisconsin','Wisconsin','Utah','California','Florida','Maine','Vermont','Nevada','New York','blank']
+    if(index < (stateList.length - 1)){
+        updateChart(statebars, stateList[index], state_data, abvList)
+    }
+    if(index == (stateList.length - 1)){
+        dropdown.style.opacity = 1
+    }
 }
 function createDropdown(statebars, state_data){
     //add select element
@@ -996,6 +1062,7 @@ function createDropdown(statebars, state_data){
     var dropdown = d3.select(".dropdownDiv")
         .append("select")
         .attr("class", "dropdown")//.dropwdown is for css, this will also determine the placement on the screen
+        .attr("id","dropdown")
         .on("change", function(){
             console.log(this.value)
             updateChart(statebars, this.value, state_data, abvList)// when attribute is changed, the changeAttribute function is called to update.
@@ -1026,7 +1093,6 @@ function updateChart(statebars,state_value, state_data, abvList){
     chartWidth = window.innerWidth * 0.65,
     chartHeight = window.innerHeight*0.5;
     var yTick = (d => d + "%");
-
     console.log(select)
     var y = d3.scaleLinear()
         .range([chartHeight, 0])
@@ -1037,7 +1103,7 @@ function updateChart(statebars,state_value, state_data, abvList){
         .domain(select.map(function(d) { return d.Generation; }))
         .padding(0.25); 
     //position bars
-    var svg = d3.select("#chart2")
+    var svg = d3.select("figure.stateChart")
 
     var u = svg.selectAll("rect")
         .data(select)
@@ -1070,7 +1136,7 @@ function updateChart(statebars,state_value, state_data, abvList){
     
     var chartTitle = d3.select(".stateTitle")
     // chart title is updated based on selected attribute. 
-        .text("Population Share of "+ state_value + " -2018");
+        .text("Population Share of "+ state_value + " - 2018");
 };
 function highlight(props, actual, index){
     //change stroke
@@ -1160,13 +1226,10 @@ function setLabel(props, actual, index){
         var urban = "<h1>" +props.Urban_Area +
         "</h1><br>"+gen+" Population Increase: " + d3.format(",")(actual)+"<br>" 
     }
-    // else if(index == 15){
-    //     var urban = "<h1>" +props.Urban_Area +"</h1><br>"
-    // }
 
     labelAttribute = urban
 
-    var infolabel = d3.select("figure.sticky")
+    var infolabel = d3.select("figure.prop-map")
         .append("div")
         .attr("class", "infolabel")//.inforlabel for css
         .attr("id", props.Join + "_label") //this attribute is based on the selected attribute.

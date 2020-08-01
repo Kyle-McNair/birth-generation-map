@@ -5,7 +5,7 @@ var numCols = 20;
 // Set the colors you want to support in this array
 var colors = ["#722e94","#b97cca","#b16a24","#86bf87","#23632f"];
 var directions = ['+', '-'];
-var speeds = [0.5, 1, 1.5, 2, 2.5];
+var speeds = [0.5, 1, 1.5, 2];
 
 var canvas = $('canvas.dots');
 var context = canvas[0].getContext('2d');
@@ -13,44 +13,34 @@ var canvasWidth = canvas.width();
 var canvasHeight = canvas.height(); // this one is new
 canvas.attr({height: canvasHeight, width: canvasWidth});
 
-var dotWidth = ((canvasWidth - (2 * dotMargin)) / numCols) - dotMargin;
-var dotHeight = ((canvasHeight - (2 * dotMargin)) / numRows) - dotMargin;
+var dotWidth = ((canvasWidth - (2.5 * dotMargin)) / numCols) - dotMargin;
+var dotHeight = ((canvasHeight - (2.5 * dotMargin)) / numRows) - dotMargin;
 
 if( dotWidth > dotHeight ) {
   var dotDiameter = dotHeight;
-  var xMargin = (canvasWidth - ((2 * dotMargin) + (numCols * dotDiameter))) / numCols;
+  var xMargin = (canvasWidth - ((2.5 * dotMargin) + (numCols * dotDiameter))) / numCols;
   var yMargin = dotMargin;
 } else {
   var dotDiameter = dotWidth;
   var xMargin = dotMargin;
-  var yMargin = (canvasHeight - ((2 * dotMargin) + (numRows * dotDiameter))) / numRows;
+  var yMargin = (canvasHeight - ((2.5 * dotMargin) + (numRows * dotDiameter))) / numRows;
 }
 
 // Start with an empty array of dots.
 var dots = [];
 
-var dotRadius = 2.5;
+var dotRadius = 2;
 
 for(var i = 0; i < numRows; i++) {
   for(var j = 0; j < numCols; j++) {
   var x = (j * (dotDiameter + xMargin)) + dotMargin + (xMargin / 2) + dotRadius;
   var y = (i * (dotDiameter + yMargin)) + dotMargin + (yMargin / 2) + dotRadius;
-  // Get random color, direction and speed.
   var color = colors[Math.floor(Math.random() * colors.length)];
   var xMove = directions[Math.floor(Math.random() * directions.length)];
   var yMove = directions[Math.floor(Math.random() * directions.length)];
   var speed = speeds[Math.floor(Math.random() * speeds.length)];
   // Set the object.
-  var dot = {
-    x: x,
-    y: y,
-    radius: dotRadius,
-    xMove: xMove,
-    yMove: yMove,
-    color: color,
-    speed: speed
-  };
-  // Save it to the dots array.
+  var dot = {x: x, y: y, radius: dotRadius, xMove: xMove, yMove: yMove, color: color, speed: speed};
   dots.push(dot);
   drawDot(dot);
   }

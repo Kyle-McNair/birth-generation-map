@@ -16,6 +16,14 @@ a.bottomLinks:hover{
 a:hover{
     color: #998ec3;
 }
+a.fa {
+    color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+a.fa:hover{
+    color: #998ec3
+}
 #about{
     font-family: 'Heebo', sans-serif;
 }
@@ -89,6 +97,16 @@ transform: skew(0deg, -40deg);
     }
   }
 @media (max-width: 576px){
+    p {
+        line-height: 1rem;
+    }
+    .aboutPoints{
+        font-size: 1em !important;
+    }
+    .modal-content{
+        height: 450px !important;
+        overflow: auto !important;
+    }
     .chevron-container{
         width: 100% !important;
     }
@@ -122,6 +140,9 @@ transform: skew(0deg, -40deg);
     }
     .facts{
         margin-left: -10px !important;
+    }
+    .container-redefined{
+        max-width: 80% !important;
     }
     .introBox{
         width: 85% !important;
@@ -181,6 +202,10 @@ canvas.dots {
     border-radius: 50%;
     display: inline-block;
 }
+.csx{
+    margin-left: 15px;
+    margin-right: 15px;
+}
 .c1 {
   background-color: #722e94;
 }
@@ -209,7 +234,7 @@ div.introBox h1{
 }
 .dropdownDiv{
     position: absolute;
-    left: 15%;
+    left: 70%;
     font-size: 1.25em;
     z-index: 99999 !important;
 }
@@ -283,10 +308,31 @@ li{
 li.about{
     color: black
 }
-.modal-title {
-    margin-bottom: 0;
-    line-height: 1.5;
-    color: black
+.modal-content{
+    background-color: #191919 !important;
+    color: white !important;
+    font-family: 'Heebo', sans-serif !important;
+}
+.modal-links{
+    color: #998ec3 !important
+}
+.modal-header{
+    border-bottom: 3px solid white !important;
+}
+.modal-title{
+    margin-left: auto !important;
+    margin-right: auto !important;
+    font-size: 2em !important;
+}
+.close{
+    color: white !important;
+}
+.modal-header .close {
+    padding: 1rem 1rem;
+    margin: -1rem -1rem -1rem 0 !important;
+}
+.fade{
+    opacity: 0.8 !important;
 }
 .navbar{
     position: sticky !important; 
@@ -343,6 +389,23 @@ figure.sticky {
     height: 100%;
     width: 100%;
 }
+.propLabels{
+    font-family: 'Heebo', sans-serif;
+    fill: white;
+    font-size: 1em;
+}
+.legendShadow {
+    font-family: 'Heebo', sans-serif;
+    stroke: #191919;
+    stroke-width: 10px;
+    opacity: 1;
+}
+.legendTitle{
+    font-family: 'Heebo', sans-serif;
+    fill: white;
+    font-size: 1.2em; 
+}
+
 .introParagraphLEFT{
     padding: 1vw;
     text-align: left;
@@ -383,22 +446,26 @@ figure.sticky {
     font-family: 'Heebo', sans-serif;
 }
 .states{
-    border: 0.25px solid white
+    border: 0.25px solid white;
 }
 figure.sticky{
     position: sticky;
     z-index: 0;
 }
+figure.natChart, figure.stateChart{
+    position: sticky;
+    top: 20%;
+    z-index: 0;
+}
 p.introParagraph{
     width: 40%;
 }
-.stepper:last-child {
+.mapStepper:last-child, .natStepper:last-child {
     margin-bottom: 0;
 }
-#scrolly {
+#natScrolly, #mapScrolly, #stateScrolly {
     position: relative;
 }
-
 article {
     position: relative;
 }
@@ -408,6 +475,9 @@ article {
     width: 0;
     z-index: 0
 }
+.dropdown{
+    opacity: 0
+}
 /* Chart 1 */
 .axis{
     color: white;
@@ -416,9 +486,6 @@ article {
 .label{
     fill: white;
     font-size: .9em;
-}
-a.fa {
-    color: #191919;
 }
 /* Mini Charts */
 .miniBarLabel{
