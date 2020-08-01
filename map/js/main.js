@@ -1,4 +1,6 @@
 var map
+var before, after
+var swipe
 
 var collection2 = {"SG":{"Opacity": 1, "Color": "#652187"},
     "BB":{"Opacity": 1, "Color": "#9463ab"},
@@ -19,6 +21,7 @@ var firstSymbolId;
 
 randomCity = cities[Math.floor(Math.random()*cities.length)]
 
+
 function setMap(){
     
     mapboxgl.accessToken = "pk.eyJ1IjoibWNuYWlyazk0IiwiYSI6ImNrNmpxdDI1eDAwZjUzbG15OGFnZGxyd2EifQ.7XQ2utbtmE1Vqu4LbrcXyw"
@@ -32,11 +35,13 @@ function setMap(){
         maxZoom: 12
         });
 
+
     if(window.innerWidth < 576){
             mobileToggle()
     }
     map.dragRotate.disable();
-    
+    map.touchZoomRotate.disableRotation();
+
     map.on('load', function () {
         var styles = map.getStyle().layers
         
@@ -178,9 +183,9 @@ function setMap(){
                 $('.year').each(function(){
                     if($(this).hasClass('active')){
                         layer = "dots_"+this.id
-                    }})
-                  
+                    }})    
             }
+            console.log(layer)
             var layerID = e.target.id
             var opacityCheck = document.getElementById(layerID)
             if(opacityCheck.style.opacity == 0.25){
@@ -221,6 +226,7 @@ function setMap(){
                 }
         })
         
+        
     })
     
     
@@ -228,11 +234,14 @@ function setMap(){
         var dotInfo = $('.dotText')
         dotInfo.text(dotScale())
     })
+
     if(window.innerWidth > 576){
         legendHover()
     }
+    
     hideLabels()
 }
+
 function hideLabels(){
     var toggle = document.getElementById('labels')
     toggle.addEventListener('change',function(){
@@ -247,7 +256,6 @@ function hideLabels(){
     })
 }
 function addMainDots(){
-    console.log(collection)
     map.addLayer({
         'id':'dots_2018',
         'type':'circle',
@@ -290,7 +298,7 @@ function addMainDots(){
     },firstSymbolId);
 }
 function add2013Dots(){
-    console.log(collection)
+    
     map.addLayer({
         'id':'dots_2013',
         'type':'circle',
@@ -514,3 +522,27 @@ function mobileToggle(){
     })
 }
 $(document).ready(setMap);
+// var compare = document.getElementById('swipe')
+//     compare.addEventListener('change', function(){
+//     if(this.checked == true){
+//         var g = document.getElementById('gained_box')
+//         var l = document.getElementById('lost_box')
+//         g.style.opacity = 0.25
+//         g.style.pointerEvents = 'none'
+//         l.style.opacity = 0.25
+//         l.style.pointerEvents = 'none'
+//         var gCheck = document.getElementById('gained')
+//         var lCheck = document.getElementById('lost')
+//         var center = map.getCenter()
+//         setSwipe(center)
+//     }
+//     if(this.checked == false){
+//         var g = document.getElementById('gained_box')
+//         var l = document.getElementById('lost_box')
+//         g.style.opacity = 0.9
+//         g.style.pointerEvents = 'auto'
+//         l.style.opacity = 0.9
+//         l.style.pointerEvents = 'auto'
+//         swipe.remove()
+//         }   
+//     })
