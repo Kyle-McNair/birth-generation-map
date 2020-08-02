@@ -97,6 +97,9 @@ transform: skew(0deg, -40deg);
     }
   }
 @media (max-width: 576px){
+    .stateTitle, .nationalTitle{
+        font-size: 1em !important;
+    }
     p {
         line-height: 1rem;
     }

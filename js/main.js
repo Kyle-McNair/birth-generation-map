@@ -876,10 +876,6 @@ function setNationalChart(bg_sh){
 
     translate = "translate(" + leftPadding + "," + topBottomPadding + ")";
 
-    for(var i in bg_sh){
-        console.log(bg_sh[i])
-    }
-
     var yTick = (d => d *100 + "%")
     
     var y = d3.scaleLinear()
@@ -925,8 +921,7 @@ function setNationalChart(bg_sh){
         .text(function(d){return  d3.format(",.1%")(d.Value)})
         .attr("text-anchor","middle")
 
-        
-
+    
     var yAxis = d3.axisLeft()
         .tickFormat(yTick)
         .ticks(5)
@@ -1092,8 +1087,8 @@ function updateChart(statebars,state_value, state_data, abvList){
     select = eval(select)
     chartWidth = window.innerWidth * 0.65,
     chartHeight = window.innerHeight*0.5;
+    
     var yTick = (d => d + "%");
-    console.log(select)
     var y = d3.scaleLinear()
         .range([chartHeight, 0])
         .domain([0,0.4])
