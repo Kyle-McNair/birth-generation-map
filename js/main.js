@@ -860,7 +860,7 @@ function createLegend(){
                 return 55
             }
             if(window.innerWidth < 1600){
-                return 20
+                return 40
             }
         })
         .text("Approximate Population");
@@ -1096,11 +1096,13 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     };
     select = eval(select)
 
-    chartWidth = window.innerWidth * 0.65,
-    chartHeight = window.innerHeight * 0.5;
+    chartWidth = window.innerWidth * 0.65;
 
     if(window.innerWidth < 576){
         chartHeight = window.innerHeight*0.45
+    }
+    else{
+        chartHeight = window.innerHeight * 0.5;
     }
     var yTick = (d => d + "%");
     var y = d3.scaleLinear()
@@ -1128,6 +1130,13 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     .attr("width", x.bandwidth())
     .attr("y", function(d) { return y(d.Value)})
     .attr("height", function(d){return chartHeight - y(d.Value)})
+    .attr("transform", function(){
+        if(window.innerWidth < 576){
+            return "translate(0,-15)"}
+        else{
+            return "translate(0,0)"
+        }
+    })
     .style("fill",function(d){
         return d.Color
     })
@@ -1141,6 +1150,13 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     .duration(1500)
     .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
     .attr("y", function(d) { return y(d.Value) - 10; })
+    .attr("transform", function(){
+        if(window.innerWidth < 576){
+            return "translate(0,-15)"}
+        else{
+            return "translate(0,0)"
+        }
+    })
     .text(function(d){return  d3.format(",.1%")(d.Value)})
     .attr("text-anchor","middle")
     
