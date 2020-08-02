@@ -456,6 +456,7 @@ figure.sticky {
 
 figure.natChart, figure.stateChart{
     position: sticky;
+    top: 25%;
     z-index: 0;
     transform: translate3d(0,0,0);
 }
