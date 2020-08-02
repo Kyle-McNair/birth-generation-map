@@ -1024,10 +1024,13 @@ function setStateChart(state_data){
 
     var chartTitle = d3.select(".stateTitle")
     // chart title is updated based on selected attribute. 
-        .text("Population Share of Wisconsin - 2018 "+chartHeight);
-    createDropdown(statebars, state_data)
+        .text("Population Share of Wisconsin - 2018");
+    createDropdown(statebars, state_data, chartWidth, chartHeight)
 }
 function stateInputs(response){
+    var chartWidth = window.innerWidth * 0.65;
+    var chartHeight = window.innerHeight*0.5;
+    
     var abvList = {"Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA",
     "Colorado":"CO","Connecticut":"CT","Delaware":"DE","Florida":"FL", "Georgia":"GA","Hawaii":"HI","Idaho":"ID",
     "Illinois":"IL","Indiana":"IN","Iowa":"IA","Kansas":"KS","Kentucky":"KY","Louisiana":"LA","Maine":"ME",
@@ -1040,13 +1043,13 @@ function stateInputs(response){
     console.log(index)
     var stateList = ['Wisconsin','Wisconsin','Utah','California','Florida','Maine','Vermont','Nevada','New York','blank']
     if(index < (stateList.length - 1)){
-        updateChart(statebars, stateList[index], state_data, abvList)
+        updateChart(statebars, stateList[index], state_data, chartWidth, chartHeight, abvList)
     }
     if(index == (stateList.length - 1)){
         dropdown.style.opacity = 1
     }
 }
-function createDropdown(statebars, state_data){
+function createDropdown(statebars, state_data, chartWidth, chartHeight){
     //add select element
     var abvList = {"Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA",
     "Colorado":"CO","Connecticut":"CT","Delaware":"DE","Florida":"FL", "Georgia":"GA","Hawaii":"HI","Idaho":"ID",
@@ -1061,8 +1064,7 @@ function createDropdown(statebars, state_data){
         .attr("class", "dropdown")//.dropwdown is for css, this will also determine the placement on the screen
         .attr("id","dropdown")
         .on("change", function(){
-            console.log(this.value)
-            updateChart(statebars, this.value, state_data, abvList)// when attribute is changed, the changeAttribute function is called to update.
+            updateChart(statebars, this.value, state_data, chartWidth, chartHeight, abvList)// when attribute is changed, the changeAttribute function is called to update.
         });
 
     //add initial option
@@ -1079,7 +1081,7 @@ function createDropdown(statebars, state_data){
         .attr("value", function(d){ return d })
         .text(function(d){ return d });
 };
-function updateChart(statebars,state_value, state_data, abvList){
+function updateChart(statebars,state_value, state_data, chartWidth, chartHeight, abvList){
     var select;
     for(var i in abvList){
         if(i == state_value){
