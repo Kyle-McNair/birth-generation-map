@@ -1130,13 +1130,6 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     .attr("width", x.bandwidth())
     .attr("y", function(d) { return y(d.Value)})
     .attr("height", function(d){return chartHeight - y(d.Value)})
-    .attr("transform", function(){
-        if(window.innerWidth < 576){
-            return "translate(0,-15)"}
-        else{
-            return "translate(0,0)"
-        }
-    })
     .style("fill",function(d){
         return d.Color
     })
@@ -1150,13 +1143,6 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     .duration(1500)
     .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
     .attr("y", function(d) { return y(d.Value) - 10; })
-    .attr("transform", function(){
-        if(window.innerWidth < 576){
-            return "translate(0,-15)"}
-        else{
-            return "translate(0,0)"
-        }
-    })
     .text(function(d){return  d3.format(",.1%")(d.Value)})
     .attr("text-anchor","middle")
     
