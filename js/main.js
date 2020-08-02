@@ -944,10 +944,10 @@ function setNationalChart(bg_sh){
         .style("text-anchor", "end");
 }
 function setStateChart(state_data){
-    var margin = {top: 15, right: 5, bottom: 100, left: 45},
+    var margin = {top: 15, right: 15, bottom: 100, left: 45},
     
-    leftPadding = 5,
-    rightPadding = 5,
+    leftPadding = 50,
+    rightPadding = 50,
     topBottomPadding = 20,
     chartWidth = window.innerWidth * 0.65,
     chartHeight = window.innerHeight*0.5,
@@ -957,7 +957,6 @@ function setStateChart(state_data){
         chartHeight = window.innerHeight*0.45
     }
 
-    console.log(chartWidth, chartHeight)
     var select = state_data.WI
     var yTick = (d => d *100 + "%")
     
@@ -1107,7 +1106,8 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
         .range([0, chartWidth])
         .domain(select.map(function(d) { return d.Generation; }))
         .padding(0.25); 
-    //position bars
+    
+        //position bars
     var svg = d3.select("figure.stateChart")
 
     var u = svg.selectAll("rect")
