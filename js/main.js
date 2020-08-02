@@ -859,8 +859,8 @@ function createLegend(){
             if(window.innerWidth > 1600){
                 return 55
             }
-            if(window.innerWidth < 1600){
-                return 40
+            else if(window.innerWidth < 1600){
+                return 35
             }
         })
         .text("Approximate Population");
