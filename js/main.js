@@ -944,7 +944,7 @@ function setNationalChart(bg_sh){
         .style("text-anchor", "end");
 }
 function setStateChart(state_data){
-    var margin = {top: 100, right: 15, bottom: 100, left: 45},
+    var margin = {top: 15, right: 15, bottom: 100, left: 45},
     
     leftPadding = 50,
     rightPadding = 50,
