@@ -951,8 +951,11 @@ function setStateChart(state_data){
     topBottomPadding = 20,
     chartWidth = window.innerWidth * 0.65,
     chartHeight = window.innerHeight*0.5,
-
     translate = "translate(" + leftPadding + "," + topBottomPadding + ")";
+
+    if(window.innerWidth < 576){
+        chartHeight = window.innerHeight*0.45
+    }
 
     console.log(chartWidth, chartHeight)
     var select = state_data.WI
@@ -1030,7 +1033,6 @@ function setStateChart(state_data){
 function stateInputs(response){
     var chartWidth = window.innerWidth * 0.65;
     var chartHeight = window.innerHeight*0.5;
-    
     var abvList = {"Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA",
     "Colorado":"CO","Connecticut":"CT","Delaware":"DE","Florida":"FL", "Georgia":"GA","Hawaii":"HI","Idaho":"ID",
     "Illinois":"IL","Indiana":"IN","Iowa":"IA","Kansas":"KS","Kentucky":"KY","Louisiana":"LA","Maine":"ME",
@@ -1091,7 +1093,9 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     select = eval(select)
     chartWidth = window.innerWidth * 0.65,
     chartHeight = window.innerHeight * 0.5;
-
+    if(window.innerWidth < 576){
+        chartHeight = window.innerHeight*0.45
+    }
     console.log(chartWidth, chartHeight)
 
     var yTick = (d => d + "%");
@@ -1137,7 +1141,7 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     
     var chartTitle = d3.select(".stateTitle")
     // chart title is updated based on selected attribute. 
-        .text("Population Share of - 2018 "+chartHeight);
+        .text("Population Share of " + state_value +" - 2018 "+chartHeight);
 };
 function highlight(props, actual, index){
     //change stroke
