@@ -1124,6 +1124,7 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     .attr("width", x.bandwidth())
     .attr("y", function(d) { return y(d.Value)})
     .attr("height", function(d){return chartHeight - y(d.Value)})
+    .attr("transform", "translate(0,0)")
     .style("fill",function(d){
         return d.Color
     })
