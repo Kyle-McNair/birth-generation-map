@@ -953,6 +953,8 @@ function setStateChart(state_data){
     chartHeight = window.innerHeight*0.5,
 
     translate = "translate(" + leftPadding + "," + topBottomPadding + ")";
+
+    console.log(chartWidth, chartHeight)
     var select = state_data.WI
     var yTick = (d => d *100 + "%")
     
@@ -1022,7 +1024,7 @@ function setStateChart(state_data){
 
     var chartTitle = d3.select(".stateTitle")
     // chart title is updated based on selected attribute. 
-        .text("Population Share of Wisconsin - 2018");
+        .text("Population Share of Wisconsin - 2018 "+chartHeight);
     createDropdown(statebars, state_data)
 }
 function stateInputs(response){
@@ -1086,8 +1088,10 @@ function updateChart(statebars,state_value, state_data, abvList){
     };
     select = eval(select)
     chartWidth = window.innerWidth * 0.65,
-    chartHeight = window.innerHeight*0.5;
-    
+    chartHeight = window.innerHeight * 0.5;
+
+    console.log(chartWidth, chartHeight)
+
     var yTick = (d => d + "%");
     var y = d3.scaleLinear()
         .range([chartHeight, 0])
@@ -1131,7 +1135,7 @@ function updateChart(statebars,state_value, state_data, abvList){
     
     var chartTitle = d3.select(".stateTitle")
     // chart title is updated based on selected attribute. 
-        .text("Population Share of "+ state_value + " - 2018");
+        .text("Population Share of - 2018 "+chartHeight);
 };
 function highlight(props, actual, index){
     //change stroke
