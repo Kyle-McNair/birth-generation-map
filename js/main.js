@@ -856,10 +856,10 @@ function createLegend(){
         .attr("class", "legendTitle")
         .attr("x", 0)
         .attr("y", function(){
-            if(window.innerWidth > 1600){
+            if(window.innerWidth > 1400){
                 return 55
             }
-            else if(window.innerWidth < 1600){
+            else {
                 return 35
             }
         })
