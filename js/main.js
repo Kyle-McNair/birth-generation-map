@@ -971,7 +971,7 @@ function setStateChart(state_data){
 
     chart2 = d3.select("figure.stateChart")
         .append("svg")
-        .attr("class","stateChart")
+        .attr("class","state-Chart")
         .attr("width", chartWidth + margin.left + margin.right)
         .attr("height", chartHeight + margin.top + margin.bottom)
         .append("g")
@@ -1044,6 +1044,7 @@ function stateInputs(response){
     console.log(index)
     var stateList = ['Wisconsin','Wisconsin','Utah','California','Florida','Maine','Vermont','Nevada','New York','blank']
     if(index < (stateList.length - 1)){
+        dropdown.style.opacity = 0
         updateChart(statebars, stateList[index], state_data, chartWidth, chartHeight, abvList)
     }
     if(index == (stateList.length - 1)){

@@ -456,10 +456,14 @@ figure.sticky {
 
 figure.natChart, figure.stateChart{
     position: sticky;
-    height: 50%;
     top: 25%;
-    bottom: 25%;
+    left: 25%;
     z-index: 0;
+    transform: translate(0%, 0%);
+}
+.state-Chart{
+    margin-top: auto;
+    margin-bottom: auto;
 }
 p.introParagraph{
     width: 40%;
