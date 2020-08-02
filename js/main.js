@@ -1084,6 +1084,8 @@ function createDropdown(statebars, state_data, chartWidth, chartHeight){
         .text(function(d){ return d });
 };
 function updateChart(statebars,state_value, state_data, chartWidth, chartHeight, abvList){
+    var margin = {top: 15, right: 15, bottom: 100, left: 45};
+
     var select;
     for(var i in abvList){
         if(i == state_value){
@@ -1096,8 +1098,7 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     if(window.innerWidth < 576){
         chartHeight = window.innerHeight*0.45
     }
-    console.log(chartWidth, chartHeight)
-
+    console.log($(window).scrollTop)
     var yTick = (d => d + "%");
     var y = d3.scaleLinear()
         .range([chartHeight, 0])
@@ -1124,7 +1125,6 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     .attr("width", x.bandwidth())
     .attr("y", function(d) { return y(d.Value)})
     .attr("height", function(d){return chartHeight - y(d.Value)})
-    .attr("transform", "translate(0,0)")
     .style("fill",function(d){
         return d.Color
     })
