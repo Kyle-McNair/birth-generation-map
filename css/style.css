@@ -451,12 +451,10 @@ figure.sticky {
 .states{
     border: 0.25px solid white;
 }
-figure.sticky{
-    position: sticky;
-    z-index: 0;
-}
+
 figure.natChart, figure.stateChart{
     position: sticky;
+    top: 20%;
     z-index: 0;
 }
 p.introParagraph{
