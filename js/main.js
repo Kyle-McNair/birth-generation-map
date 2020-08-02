@@ -1148,7 +1148,8 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     
     var chartTitle = d3.select(".stateTitle")
     // chart title is updated based on selected attribute. 
-        .text("Population Share of " + state_value +" - 2018 ");
+        // .text("Population Share of " + state_value +" - 2018 ");
+        .text(chartHeight);
 };
 function highlight(props, actual, index){
     //change stroke
