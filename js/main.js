@@ -972,6 +972,7 @@ function setStateChart(state_data){
     chart2 = d3.select("figure.stateChart")
         .append("svg")
         .attr("class","state-Chart")
+        // .attr('viewBox', `0 0 ${chartWidth*1.5} ${chartHeight*1.5}`)
         .attr("width", chartWidth + margin.left + margin.right)
         .attr("height", chartHeight + margin.top + margin.bottom)
         .append("g")
@@ -1039,6 +1040,7 @@ function stateInputs(response){
     "Nebraska":"NE","Nevada":"NV","New Hampshire":"NH","New Jersey":"NJ","New Mexico":"NM","New York":"NY","North Carolina":"NC","North Dakota":"ND",
     "Ohio":"OH","Oklahoma":"OK","Oregon":"OR","Pennsylvania":"PA","Rhode Island":"RI","South Carolina":"SC","South Dakota":"SD","Tennessee":"TN",
     "Texas":"TX","Utah":"UT","Vermont":"VT","Virginia":"VA","Washington":"WA","West Virginia":"WV","Wisconsin":"WI","Wyoming":"WY"}
+    
     var dropdown = document.getElementById('dropdown')
     var index = response.index
     console.log(index)
@@ -1093,12 +1095,13 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
         }
     };
     select = eval(select)
+
     chartWidth = window.innerWidth * 0.65,
     chartHeight = window.innerHeight * 0.5;
+
     if(window.innerWidth < 576){
         chartHeight = window.innerHeight*0.45
     }
-    console.log($(window).scrollTop)
     var yTick = (d => d + "%");
     var y = d3.scaleLinear()
         .range([chartHeight, 0])
