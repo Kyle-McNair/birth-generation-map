@@ -856,11 +856,11 @@ function createLegend(){
         .attr("class", "legendTitle")
         .attr("x", 0)
         .attr("y", function(){
-            if(window.innerWidth > 1400){
+            if(window.innerWidth > 1000){
                 return 55
             }
             else {
-                return 10
+                return 20
             }
         })
         .text("Approximate Population");
