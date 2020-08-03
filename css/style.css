@@ -113,8 +113,8 @@ transform: skew(0deg, -40deg);
         height: 450px !important;
         overflow: auto !important;
     }
-    .modal-header{
-        height: 80px !important; 
+    .mobileHeader{
+        margin-bottom: 30px;
     }
     .chevron-container{
         width: 100% !important;
