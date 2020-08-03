@@ -110,6 +110,9 @@ transform: skew(0deg, -40deg);
         height: 450px !important;
         overflow: auto !important;
     }
+    .modal-title{
+        margin-bottom: 50px !important; 
+    }
     .chevron-container{
         width: 100% !important;
     }
