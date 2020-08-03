@@ -106,6 +106,9 @@ transform: skew(0deg, -40deg);
     .aboutPoints{
         font-size: 1em !important;
     }
+    h4{
+        font-size: 1.3em !important;
+    }
     .modal-content{
         height: 450px !important;
         overflow: auto !important;
