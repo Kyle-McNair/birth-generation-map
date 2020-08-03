@@ -1,14 +1,6 @@
 var map
-var before, after
-var swipe
 
-var collection2 = {"SG":{"Opacity": 1, "Color": "#652187"},
-    "BB":{"Opacity": 1, "Color": "#9463ab"},
-    "GX":{"Opacity": 1, "Color": "#a6611a"}, //#fdcf79
-    "ML":{"Opacity": 1, "Color": "#558c58"},
-    "GZ":{"Opacity": 1, "Color": "#003d13"}};
-
-var collection = {"SG":{"Opacity": 1, "Color": "#722e94"},
+var genObject = {"SG":{"Opacity": 1, "Color": "#722e94"},
     "BB":{"Opacity": 1, "Color": "#b97cca"},
     "GX":{"Opacity": 1, "Color": "#b16a24"},
     "ML":{"Opacity": 1, "Color": "#86bf87"},
@@ -35,20 +27,24 @@ function setMap(){
         maxZoom: 12
         });
 
-
+    
     if(window.innerWidth < 576){
             mobileToggle()
+    }
+    else if(window.innerWidth > 576){
+        var zoomControl = new mapboxgl.NavigationControl()
+        map.addControl(zoomControl, 'top-left')
     }
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
 
     map.on('load', function () {
         var styles = map.getStyle().layers
-        
+        console.log(styles)
         for (var i = 0; i < styles.length; i++) {
-            if (styles[i].type === 'symbol') {
+            if (styles[i].type == 'symbol') {
             firstSymbolId = styles[i].id;
-            break;
+            break
             }
         }
         
@@ -185,42 +181,41 @@ function setMap(){
                         layer = "dots_"+this.id
                     }})    
             }
-            console.log(layer)
             var layerID = e.target.id
             var opacityCheck = document.getElementById(layerID)
             if(opacityCheck.style.opacity == 0.25){
                 opacityCheck.style.opacity = 0.9
-                for(var c in collection){
+                for(var c in genObject){
                     if(layerID == c){
-                        collection[c].Opacity = 1
+                        genObject[c].Opacity = 1
                     }
                 }
                 map.setPaintProperty(layer,'circle-opacity',[
                     'match',
                     ['get','Generation'],
-                    'SG',collection.SG.Opacity,
-                    'BB',collection.BB.Opacity,
-                    'GX',collection.GX.Opacity,
-                    'ML',collection.ML.Opacity,
-                    'GZ',collection.GZ.Opacity,
+                    'SG',genObject.SG.Opacity,
+                    'BB',genObject.BB.Opacity,
+                    'GX',genObject.GX.Opacity,
+                    'ML',genObject.ML.Opacity,
+                    'GZ',genObject.GZ.Opacity,
                     1
             ])
             }
             else{
                 opacityCheck.style.opacity = 0.25
-                for(var c in collection){
+                for(var c in genObject){
                     if(layerID == c){
-                        collection[c].Opacity = 0
+                        genObject[c].Opacity = 0
                     }
                 }
                 map.setPaintProperty(layer,'circle-opacity',[
                     'match',
                     ['get','Generation'],
-                    'SG',collection.SG.Opacity,
-                    'BB',collection.BB.Opacity,
-                    'GX',collection.GX.Opacity,
-                    'ML',collection.ML.Opacity,
-                    'GZ',collection.GZ.Opacity,
+                    'SG',genObject.SG.Opacity,
+                    'BB',genObject.BB.Opacity,
+                    'GX',genObject.GX.Opacity,
+                    'ML',genObject.ML.Opacity,
+                    'GZ',genObject.GZ.Opacity,
                     1
                 ])
                 }
@@ -248,10 +243,16 @@ function hideLabels(){
         if(this.checked){
             map.setLayoutProperty("City Labels", 'visibility', 'none') 
             map.setLayoutProperty("State Labels", 'visibility', 'none') 
+            map.setLayoutProperty("Water Labels", 'visibility', 'none') 
+            map.setLayoutProperty("Suburb Labels", 'visibility', 'none') 
+            map.setLayoutProperty("Neighborhoods Labels", 'visibility', 'none') 
         }
         else{
             map.setLayoutProperty("City Labels", 'visibility', 'visible')   
             map.setLayoutProperty("State Labels", 'visibility', 'visible')
+            map.setLayoutProperty("Water Labels", 'visibility', 'visible') 
+            map.setLayoutProperty("Suburb Labels", 'visibility', 'visible') 
+            map.setLayoutProperty("Neighborhoods Labels", 'visibility', 'visible') 
         }
     })
 }
@@ -277,21 +278,21 @@ function addMainDots(){
             'circle-color':[
                 'match',
                 ['get','Generation'],
-                'SG',collection.SG.Color,
-                'BB',collection.BB.Color,
-                'GX',collection.GX.Color,
-                'ML',collection.ML.Color,
-                'GZ',collection.GZ.Color,
+                'SG',genObject.SG.Color,
+                'BB',genObject.BB.Color,
+                'GX',genObject.GX.Color,
+                'ML',genObject.ML.Color,
+                'GZ',genObject.GZ.Color,
                 /* other */ '#ccc'
             ],
             'circle-opacity':[
                 'match',
                 ['get','Generation'],
-                'SG',collection.SG.Opacity,
-                'BB',collection.BB.Opacity,
-                'GX',collection.GX.Opacity,
-                'ML',collection.ML.Opacity,
-                'GZ',collection.GZ.Opacity,
+                'SG',genObject.SG.Opacity,
+                'BB',genObject.BB.Opacity,
+                'GX',genObject.GX.Opacity,
+                'ML',genObject.ML.Opacity,
+                'GZ',genObject.GZ.Opacity,
                 1
             ]
         }
@@ -320,21 +321,21 @@ function add2013Dots(){
             'circle-color':[
                 'match',
                 ['get','Generation'],
-                'SG',collection.SG.Color,
-                'BB',collection.BB.Color,
-                'GX',collection.GX.Color,
-                'ML',collection.ML.Color,
-                'GZ',collection.GZ.Color,
+                'SG',genObject.SG.Color,
+                'BB',genObject.BB.Color,
+                'GX',genObject.GX.Color,
+                'ML',genObject.ML.Color,
+                'GZ',genObject.GZ.Color,
                 /* other */ '#ccc'
             ],
             'circle-opacity':[
                 'match',
                 ['get','Generation'],
-                'SG',collection.SG.Opacity,
-                'BB',collection.BB.Opacity,
-                'GX',collection.GX.Opacity,
-                'ML',collection.ML.Opacity,
-                'GZ',collection.GZ.Opacity,
+                'SG',genObject.SG.Opacity,
+                'BB',genObject.BB.Opacity,
+                'GX',genObject.GX.Opacity,
+                'ML',genObject.ML.Opacity,
+                'GZ',genObject.GZ.Opacity,
                 1
             ]
         }
@@ -363,21 +364,21 @@ function addGained(){
             'circle-color':[
                 'match',
                 ['get','Generation'],
-                'SG',collection.SG.Color,
-                'BB',collection.BB.Color,
-                'GX',collection.GX.Color,
-                'ML',collection.ML.Color,
-                'GZ',collection.GZ.Color,
+                'SG',genObject.SG.Color,
+                'BB',genObject.BB.Color,
+                'GX',genObject.GX.Color,
+                'ML',genObject.ML.Color,
+                'GZ',genObject.GZ.Color,
                 /* other */ '#ccc'
             ],
             'circle-opacity':[
                 'match',
                 ['get','Generation'],
-                'SG',collection.SG.Opacity,
-                'BB',collection.BB.Opacity,
-                'GX',collection.GX.Opacity,
-                'ML',collection.ML.Opacity,
-                'GZ',collection.GZ.Opacity,
+                'SG',genObject.SG.Opacity,
+                'BB',genObject.BB.Opacity,
+                'GX',genObject.GX.Opacity,
+                'ML',genObject.ML.Opacity,
+                'GZ',genObject.GZ.Opacity,
                 1
             ]
         }
@@ -406,21 +407,21 @@ function addLost(){
             'circle-color':[
                 'match',
                 ['get','Generation'],
-                'SG',collection.SG.Color,
-                'BB',collection.BB.Color,
-                'GX',collection.GX.Color,
-                'ML',collection.ML.Color,
-                'GZ',collection.GZ.Color,
+                'SG',genObject.SG.Color,
+                'BB',genObject.BB.Color,
+                'GX',genObject.GX.Color,
+                'ML',genObject.ML.Color,
+                'GZ',genObject.GZ.Color,
                 /* other */ '#ccc'
             ],
             'circle-opacity':[
                 'match',
                 ['get','Generation'],
-                'SG',collection.SG.Opacity,
-                'BB',collection.BB.Opacity,
-                'GX',collection.GX.Opacity,
-                'ML',collection.ML.Opacity,
-                'GZ',collection.GZ.Opacity,
+                'SG',genObject.SG.Opacity,
+                'BB',genObject.BB.Opacity,
+                'GX',genObject.GX.Opacity,
+                'ML',genObject.ML.Opacity,
+                'GZ',genObject.GZ.Opacity,
                 1
             ]
         }

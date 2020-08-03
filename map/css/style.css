@@ -234,11 +234,14 @@ body{
 #about{
     font-family: 'Heebo', sans-serif;
 }
-#compare{
+/* #compare{
+    margin-top: 10px;
+} */
+#gained_box{
     margin-top: 10px;
 }
-#gained_box{
-    /* margin-top: 10px; */
+.mapboxgl-ctrl-group{
+    margin-top: 80px !important;
 }
 @media (max-width: 576px){
     .modal-content{
