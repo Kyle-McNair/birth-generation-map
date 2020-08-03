@@ -1096,14 +1096,6 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     };
     select = eval(select)
 
-    chartWidth = window.innerWidth * 0.65;
-
-    if(window.innerWidth < 576){
-        chartHeight = window.innerHeight*0.45
-    }
-    else{
-        chartHeight = window.innerHeight * 0.5;
-    }
     var yTick = (d => d + "%");
     var y = d3.scaleLinear()
         .range([chartHeight, 0])
