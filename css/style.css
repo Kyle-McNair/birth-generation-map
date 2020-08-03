@@ -175,6 +175,9 @@ transform: skew(0deg, -40deg);
     .navbar-brand{
         font-size: 1.1em !important;
     }
+    figure.natChart, figure.stateChart{
+        top: 15%;
+    }
   }
 canvas.dots {
     position: absolute;
