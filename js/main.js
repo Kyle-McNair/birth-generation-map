@@ -766,8 +766,9 @@ function createLegend(){
 
     var circles = legend.append("svg")
         .attr("class","propLegend")
-        .attr("width","100%")
         .attr("height","100%")
+        .attr("width","100%")
+        .attr("transform","translate(50,0)")
         .style("top", "0px")
         .style("left", "0px");
 
@@ -1053,7 +1054,7 @@ function stateInputs(response){
     var dropdown = document.getElementById('dropdown')
     var index = response.index
     console.log(index)
-    var stateList = ['Wisconsin','Wisconsin','Utah','California','Florida','Maine','Vermont','Nevada','New York','blank']
+    var stateList = ['Wisconsin','Wisconsin','Utah','California','Florida','Maine','Vermont','Texas','New York','blank']
     if(index < (stateList.length - 1)){
         dropdown.style.opacity = 0
         updateChart(statebars, stateList[index], state_data, chartWidth, chartHeight, abvList)
