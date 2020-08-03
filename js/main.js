@@ -855,14 +855,7 @@ function createLegend(){
         .append("text")
         .attr("class", "legendTitle")
         .attr("x", 0)
-        .attr("y", function(){
-            if(window.innerWidth > 1000){
-                return 55
-            }
-            else {
-                return 20
-            }
-        })
+        .attr("y", 0)
         .text("Approximate Population");
 }
 function setNationalChart(bg_sh){

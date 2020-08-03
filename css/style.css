@@ -410,6 +410,7 @@ figure.sticky {
 }
 .legendTitle{
     font-family: 'Heebo', sans-serif;
+    transform: translate(0,30%);
     fill: white;
     font-size: 1.2em; 
 }
