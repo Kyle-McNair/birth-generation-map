@@ -110,8 +110,8 @@ transform: skew(0deg, -40deg);
         height: 450px !important;
         overflow: auto !important;
     }
-    .modal-title{
-        height: 50px !important; 
+    .modal-header{
+        height: 80px !important; 
     }
     .chevron-container{
         width: 100% !important;
@@ -413,11 +413,10 @@ figure.sticky {
 }
 .legendTitle{
     font-family: 'Heebo', sans-serif;
-    transform: translate(0,30%);
+    /* transform: translate(0,25%); */
     fill: white;
     font-size: 1.2em; 
 }
-
 .introParagraphLEFT{
     padding: 1vw;
     text-align: left;
