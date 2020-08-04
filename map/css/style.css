@@ -34,6 +34,18 @@ p{
     margin-left: auto;
     margin-right: auto;
 }
+a.explanation{
+    color: white; 
+    text-decoration: none;
+    padding: 5px;
+    font-size: 0.9em;
+}
+a.explanation:hover{
+    color: black; 
+    font-weight: 800;
+    text-decoration: none;
+    background-color: white;
+}
 a.fa {
     color: white;
     margin-left: 10px;
@@ -120,7 +132,7 @@ body, html{
     width: 225px;
     background-color: black;
     color: white;
-    opacity: 0.8;
+    opacity: 0.9;
     bottom: 4vh;
     left: 1vw;
     z-index: 100;

@@ -26,6 +26,36 @@
     </head>
 
     <body>
+
+     <!-- Dot Explanation Modal -->
+     <div class="modal fade" id="explanation" tabindex="-1" role="dialog" aria-labelledby="about-screen" aria-hidden="true" data-backdrop="static">
+      <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h2 class="modal-title">What are all of these dots?</h2>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <ul>
+                    <li>All of the dot represents a <i>rough</i> distribution of population density by birth generation.</li>
+                      <ul>
+                        <li>Population was aggregated through the U.S. Census Block Groups.</li>
+                        <li>Dots are categorized and colored by </li>
+                      </ul>
+                    <li>Each dot was <i>randomly</i> placed within each U.S. Census Block Group</li>
+                      <ul>
+                        <li>Each dot does not actually portray of where people live. For insance, one Generation Z dot at the scale of 1 dot = 25 people means 25 people who are in the Generation Z
+                          group live in that area. It does <u>not</u> mean 25 Generation Z people live in that one location that dot is placed on.
+                        </li>
+                        <li>The scale of the dot placement does not represent true total population of the whole area.</li>
+                      </ul>
+                  </ul>
+              </div>
+          </div>
+      </div>
+    </div> 
       <!-- About Modal -->
       <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="about-screen" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -119,6 +149,7 @@
               <div id = "gained_box"><input class = "check" id = "gained" type = "checkbox"><span> See Who Came</span></div>
               <div id = "lost_box"><input class = "check" id = "lost" type = "checkbox"><span> See Who Left</span></div>
               <div><input class = "check" id = "labels" type = "checkbox"><span> Hide Labels</span></div>
+              <div style = "margin-bottom: 8px;"><a class="explanation" href="#" data-toggle="modal" data-target="#explanation">What are all of these dots?</a></div>
             </div>
           </div>
       </div>
