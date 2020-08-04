@@ -861,7 +861,7 @@ function createLegend(){
         .attr("x", 0)
         .attr("y", function(){
             if(window.innerWidth <= 1024){
-                return "25%"
+                return "18%"
             }
             if(window.innerWidth < 1600 && window.innerWidth > 1024){
                 return "30%"}
