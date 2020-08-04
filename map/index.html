@@ -32,7 +32,7 @@
       <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h2 class="modal-title">What are all of these dots?</h2>
+                  <h2 class="modal-title dotTitle">What are all of these dots?</h2>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
@@ -72,7 +72,7 @@
                       <li>Robert Manduca's <a  class = "modal-links" href = "http://www.robertmanduca.com/projects/jobs.html?utm_content=buffer903c7&utm_medium=social&utm_source=plus.google.com&utm_campaign=buffer" target = "_blank">Where Are The Jobs?</a></li>
                       <li>Kyle Walker's <a class = "modal-links" href = "http://personal.tcu.edu/kylewalker/maps/education/#12/37.7536/-122.4473" target = "_blank">Educational Attainment in America</a></li>
                     </ul>
-                  <h4>Data Sources</h4>
+                  <h4>Data Sources:</h4>
                   <p><u>Scrollytelling Data:</u></p>
                     <ul>
                       <li>GIS & Tabular data at the United States level, State Level, Urban Area level, and U.S. Census Block Group level were all provided by 
@@ -81,7 +81,7 @@
                       </li>
                       <li>Original age classificaiton of the birth generations were from PEW Research.</li>
                     </ul>
-                  <p><u>Generation Dot Map</u></p>
+                  <p><u>Generation Dot Map:</u></p>
                     <ul>
                       <li>Dots were randomly generated from each Census Block Group based on the NGHIS 2014-2018 ACS & NHGIS 2009-2013 ACS.</li>
                       <li>Basemap and vector tilesets hosting by Mapbox.</li>
@@ -146,12 +146,14 @@
             </div>
             <div id = "functions">
               <!-- <div id = "compare"><input class = "check" id = "swipe" type = "checkbox"><span> Compare Years</span></div> -->
-              <div id = "gained_box"><input class = "check" id = "gained" type = "checkbox"><span> See Who Came</span></div>
-              <div id = "lost_box"><input class = "check" id = "lost" type = "checkbox"><span> See Who Left</span></div>
+              <div id = "gained_box"><input class = "check" id = "gained" type = "checkbox"><span> Migrated In</span></div>
+              <div id = "lost_box"><input class = "check" id = "lost" type = "checkbox"><span> Migrated Out</span></div>
               <div><input class = "check" id = "labels" type = "checkbox"><span> Hide Labels</span></div>
-              <div style = "margin-bottom: 8px;"><a class="explanation" href="#" data-toggle="modal" data-target="#explanation">What are all of these dots?</a></div>
             </div>
           </div>
+          <div class = "container">
+            <div class = "helpButton" align = "center" style = "margin-bottom: 12px; margin-left: auto;margin-right: auto;"><a class="explanation" href="#" data-toggle="modal" data-target="#explanation">What are all of these dots?</a></div>
+        </div>
       </div>
       <div id = "map"></div>
       <!-- <div id = 'comparison-container'>

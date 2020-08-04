@@ -37,8 +37,10 @@ p{
 a.explanation{
     color: white; 
     text-decoration: none;
-    padding: 5px;
-    font-size: 0.9em;
+    padding: 3px;
+    font-size: 0.95em;
+    text-align: center;
+    text-decoration: none;
 }
 a.explanation:hover{
     color: black; 
@@ -291,7 +293,7 @@ body{
     #legend{
         left:0;
         bottom:50px;
-        height: 220px;
+        height: 250px;
         width: 100%;
 
     }
@@ -302,6 +304,22 @@ body{
     #functions{
         float: right;
         margin-right: 20px;
+        margin-bottom: 0px;
+    }
+    #labels{
+        margin-bottom: 0;
+    }
+    .explanation{
+        margin-top: 100px
+    }
+    .dotTitle{
+        font-size: 1.5em !important;
+    }
+    .helpButton{
+        margin-top: 26%;
+        height:30px;
+        margin-bottom: 10px;
+        bottom: 0;
     }
     .c{
         height: 2vh;
@@ -342,7 +360,12 @@ body{
         margin-right: -10px;
     }
     #legend{
-        height: 245px;
+        height: 275px;
+    }
+    .helpButton{
+        margin-top: 31%;
+        height:30px;
+        bottom: 0;
     }
     .generation{
         margin-top: 10px;

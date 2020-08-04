@@ -523,27 +523,3 @@ function mobileToggle(){
     })
 }
 $(document).ready(setMap);
-// var compare = document.getElementById('swipe')
-//     compare.addEventListener('change', function(){
-//     if(this.checked == true){
-//         var g = document.getElementById('gained_box')
-//         var l = document.getElementById('lost_box')
-//         g.style.opacity = 0.25
-//         g.style.pointerEvents = 'none'
-//         l.style.opacity = 0.25
-//         l.style.pointerEvents = 'none'
-//         var gCheck = document.getElementById('gained')
-//         var lCheck = document.getElementById('lost')
-//         var center = map.getCenter()
-//         setSwipe(center)
-//     }
-//     if(this.checked == false){
-//         var g = document.getElementById('gained_box')
-//         var l = document.getElementById('lost_box')
-//         g.style.opacity = 0.9
-//         g.style.pointerEvents = 'auto'
-//         l.style.opacity = 0.9
-//         l.style.pointerEvents = 'auto'
-//         swipe.remove()
-//         }   
-//     })
