@@ -171,9 +171,7 @@ h4{
 .modal-links{
     color: #998ec3 !important
 }
-.modal-header{
-    border-bottom: 3px solid white !important;
-}
+
 .modal-title{
     margin-left: auto !important;
     margin-right: auto !important;
@@ -181,6 +179,9 @@ h4{
 }
 .close{
     color: white !important;
+}
+.modal-header{
+    border-bottom: none !important;
 }
 .modal-header .close {
     padding: 1rem 1rem;
@@ -242,6 +243,10 @@ body{
 }
 .mapboxgl-ctrl-group{
     margin-top: 80px !important;
+}
+.modal-title{
+    width: 100%;
+    border-bottom: 2px solid white;
 }
 @media (max-width: 576px){
     .modal-content{

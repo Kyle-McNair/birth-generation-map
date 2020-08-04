@@ -733,6 +733,9 @@ function updateMap(response){
     }   
 }
 function createLegend(){
+    if(window.innerWidth < 576){
+        return
+    }
     var totals = [];
         for (var i in City.features) {
             var r1 = City.features[i].properties.SG_2018
@@ -768,7 +771,7 @@ function createLegend(){
         .attr("class","propLegend")
         .attr("height","100%")
         .attr("width","100%")
-        .attr("transform","translate(50,0)")
+        .attr("transform","translate(40,0)")
         .style("top", "0px")
         .style("left", "0px");
 
@@ -858,9 +861,9 @@ function createLegend(){
         .attr("x", 0)
         .attr("y", function(){
             if(window.innerWidth < 1600){
-                return "25%"}
+                return "30%"}
             if(window.innerWidth > 1600){
-                return "35%"
+                return "40%"
             }})
         .text("Approximate Population");
 }
@@ -951,7 +954,6 @@ function setStateChart(state_data){
     chartWidth = window.innerWidth * 0.65,
     
     translate = "translate(" + leftPadding + "," + topBottomPadding + ")";
-    console.log(window.innerWidth)
     var chartHeight;
     if(window.innerWidth > 576){
         chartHeight = window.innerHeight*0.5
@@ -1239,7 +1241,7 @@ function setLabel(props, actual, index){
     }
     if(index > 8 && index < 13){
         var urban = "<h1>" +props.Urban_Area +
-            "</h1><br>Total Population Increase: " + d3.format(",")(actual)+"<br>"
+            "</h1><br>Total Population Increase: " + "<div style = 'display:inline; color:#FFFF00;'>"+d3.format(",")(actual)+"</div><br>"
     }
     else if(index > 12 && index < 20){
         var urban = "<h1>" +props.Urban_Area +

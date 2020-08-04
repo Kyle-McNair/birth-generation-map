@@ -109,12 +109,15 @@ transform: skew(0deg, -40deg);
     h4{
         font-size: 1.3em !important;
     }
+    .modal-title{
+        border-bottom: 2px solid white;
+    }
     .modal-content{
         height: 450px !important;
         overflow: auto !important;
     }
     .mobileHeader{
-        margin-bottom: 30px;
+        margin-bottom: 10px;
     }
     .chevron-container{
         width: 100% !important;
@@ -294,7 +297,7 @@ h3{
     font-family: 'Heebo', sans-serif;
 }
 .spanHold{
-    margin-top: 20px;
+    margin-top: 3vh;
     text-align: left;
     color: white;
     font-size: 1.25em;
@@ -335,6 +338,14 @@ li.about{
 }
 .close{
     color: white !important;
+}
+.modal-title{
+    text-align: center;
+    width: 100%;
+    border-bottom: 2px solid white;
+}
+.modal-header{
+    border-bottom: none !important;
 }
 .modal-header .close {
     padding: 1rem 1rem;
@@ -403,7 +414,7 @@ figure.sticky {
 .propLabels{
     font-family: 'Heebo', sans-serif;
     fill: white;
-    font-size: 1em;
+    font-size: 0.9em;
 }
 .legendShadow {
     font-family: 'Heebo', sans-serif;
@@ -413,9 +424,8 @@ figure.sticky {
 }
 .legendTitle{
     font-family: 'Heebo', sans-serif;
-    /* transform: translate(0,25%); */
     fill: white;
-    font-size: 1.2em; 
+    font-size: 1em; 
 }
 .introParagraphLEFT{
     padding: 1vw;
@@ -462,7 +472,7 @@ figure.sticky {
 
 figure.natChart, figure.stateChart{
     position: sticky;
-    top: 25%;
+    top: 20%;
     z-index: 0;
     transform: translate3d(0,0,0);
 }
