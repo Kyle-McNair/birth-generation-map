@@ -265,7 +265,7 @@ body{
 @media (max-width: 576px){
     .modal-content{
         height: 450px !important;
-        overflow: auto !important;
+        overflow: scroll !important;
     }
     .dotScale{
         height: 40px;
