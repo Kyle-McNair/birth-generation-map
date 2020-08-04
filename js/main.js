@@ -38,7 +38,7 @@ scroller
     .setup({
         step: '.step',
         debug: false,
-        offset: 0.6,
+        offset: 0.45,
     })
     .onStepEnter(handleStepEnter)
     .onStepExit(handleStepExit);
@@ -172,7 +172,8 @@ function updateMap(response){
         .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
         .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
         .transition()
-        .duration(750)
+        .delay(function(d,i){ return 20*i; }) 
+        .duration(100)
         .attr("r", "1.5")
 
         map.selectAll(".map")
@@ -190,7 +191,8 @@ function updateMap(response){
         .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
         .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
         .transition()
-        .duration(750)
+        .delay(function(d,i){ return 25*i; }) 
+        .duration(100)
         .attr("r", "3")
         
 
@@ -266,7 +268,8 @@ function updateMap(response){
         .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
         .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
         .transition()
-        .duration(750)
+        .delay(function(d,i){ return 10*i; }) 
+        .duration(500)
         .attr("r", function(d){
             if((d.properties.GZ_ch + d.properties.ML_ch + d.properties.GX_ch + d.properties.BB_ch + d.properties.SG_ch) > 0){
             return radius((d.properties.GZ_ch + d.properties.ML_ch + d.properties.GX_ch + d.properties.BB_ch + d.properties.SG_ch))}})
@@ -382,6 +385,7 @@ function updateMap(response){
             .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
             .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
             .transition()
+            .delay(function(d,i){ return 50*i; }) 
             .duration(750)
             .attr("r", function(d){
                 if(d.properties[list[index]] > 0){
@@ -485,6 +489,7 @@ function updateMap(response){
             .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
             .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
             .transition()
+            .delay(function(d,i){ return 50*i; })
             .duration(750)
             .attr("r", function(d){
                 if(d.properties[list[index]] > 0){
@@ -529,6 +534,7 @@ function updateMap(response){
             .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
             .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
             .transition()
+            .delay(function(d,i){ return 30*i; })
             .duration(750)
             .attr("r", function(d){
                 if(d.properties[list[index]] > 0){
@@ -627,6 +633,7 @@ function updateMap(response){
         .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
         .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
         .transition()
+        .delay(function(d,i){ return 15*i; })
         .duration(750)
         .attr("r", function(d){
             if(d.properties[list[index]] > 0){
@@ -689,7 +696,8 @@ function updateMap(response){
         .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
         .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
         .transition()
-        .duration(750)
+        .delay(function(d,i){ return 20*i; }) 
+        .duration(100)
         .attr("r", "1.5")
 
         map.selectAll(".map")
@@ -707,7 +715,8 @@ function updateMap(response){
         .attr("cx", function(d){return albers(d.geometry.coordinates)[0]})
         .attr("cy", function(d){return albers(d.geometry.coordinates)[1]})
         .transition()
-        .duration(750)
+        .delay(function(d,i){ return 25*i; }) 
+        .duration(100)
         .attr("r", "3")
         
 
@@ -860,8 +869,8 @@ function createLegend(){
         .attr("class", "legendTitle")
         .attr("x", 0)
         .attr("y", function(){
-            if(window.innerWidth <= 1024){
-                return "12%"
+            if(window.innerWidth < 1024){
+                return "10px"
             }
             if(window.innerWidth < 1600 && window.innerWidth > 1024){
                 return "30%"}
