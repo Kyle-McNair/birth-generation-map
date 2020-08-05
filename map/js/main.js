@@ -24,7 +24,7 @@ function setMap(){
         center: randomCity, // starting position [lng, lat]
         zoom: 9, // starting zoom
         minZoom: 2,
-        maxZoom: 12
+        maxZoom: 12.5
         });
 
     var locator = new mapboxgl.GeolocateControl({
@@ -256,6 +256,10 @@ function hideLabels(){
             map.setLayoutProperty("Water Labels", 'visibility', 'none') 
             map.setLayoutProperty("Suburb Labels", 'visibility', 'none') 
             map.setLayoutProperty("Neighborhoods Labels", 'visibility', 'none') 
+            map.setLayoutProperty("Interstate Labels", 'visibility', 'none') 
+            map.setLayoutProperty("Primary Labels", 'visibility', 'none') 
+            map.setLayoutProperty("Trunk Labels", 'visibility', 'none') 
+            map.setLayoutProperty("Street Labels", 'visibility', 'none') 
         }
         else{
             map.setLayoutProperty("City Labels", 'visibility', 'visible')   
@@ -263,6 +267,10 @@ function hideLabels(){
             map.setLayoutProperty("Water Labels", 'visibility', 'visible') 
             map.setLayoutProperty("Suburb Labels", 'visibility', 'visible') 
             map.setLayoutProperty("Neighborhoods Labels", 'visibility', 'visible') 
+            map.setLayoutProperty("Interstate Labels", 'visibility', 'visible') 
+            map.setLayoutProperty("Primary Labels", 'visibility', 'visible') 
+            map.setLayoutProperty("Trunk Labels", 'visibility', 'visible') 
+            map.setLayoutProperty("Street Labels", 'visibility', 'visible')
         }
     })
 }
@@ -279,10 +287,10 @@ function addMainDots(){
                     [6, 1],
                     [7,1.2],
                     [8,1.3],
-                    [9,1.3],
-                    [10, 1.35],
-                    [10.5,1.5],
-                    [11, 1.8]
+                    [9,1.35],
+                    [10, 1.4],
+                    [10.5,1.55],
+                    [11, 1.85]
                 ]
             },
             'circle-color':[
@@ -322,10 +330,10 @@ function add2013Dots(){
                     [6, 1],
                     [7,1.2],
                     [8,1.3],
-                    [9,1.3],
-                    [10, 1.35],
-                    [10.5,1.5],
-                    [11, 1.8]
+                    [9,1.35],
+                    [10, 1.4],
+                    [10.5,1.55],
+                    [11, 1.85]
                 ]
             },
             'circle-color':[
@@ -365,10 +373,10 @@ function addGained(){
                     [6, 1],
                     [7,1.2],
                     [8,1.3],
-                    [9,1.3],
-                    [10, 1.35],
-                    [10.5,1.5],
-                    [11, 1.8]
+                    [9,1.35],
+                    [10, 1.4],
+                    [10.5,1.55],
+                    [11, 1.85]
                 ]
             },
             'circle-color':[
@@ -408,10 +416,10 @@ function addLost(){
                     [6, 1],
                     [7,1.2],
                     [8,1.3],
-                    [9,1.3],
-                    [10, 1.35],
-                    [10.5,1.5],
-                    [11, 1.8]
+                    [9,1.35],
+                    [10, 1.4],
+                    [10.5,1.55],
+                    [11, 1.85]
                 ]
             },
             'circle-color':[
@@ -475,7 +483,7 @@ function legendHover(){
     })
     $('.item2').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b2').css("top","28%")
+        $('.b2').css("top","26%")
         $('.b2').show();
     }, function(){
         $(this).css("border","none")
@@ -483,7 +491,7 @@ function legendHover(){
     })
     $('.item3').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b3').css("top","36%")
+        $('.b3').css("top","33.5%")
         $('.b3').show();
     }, function(){
         $(this).css("border","none")
@@ -491,7 +499,7 @@ function legendHover(){
     })
     $('.item4').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b4').css("top","44%")
+        $('.b4').css("top","41%")
         $('.b4').show();
     }, function(){
         $(this).css("border","none")
@@ -499,7 +507,7 @@ function legendHover(){
     })
     $('.item5').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b5').css("top","52%")
+        $('.b5').css("top","49%")
         $('.b5').show();
     }, function(){
         $(this).css("border","none")

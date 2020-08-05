@@ -214,7 +214,7 @@ h4{
 }
 .birthDesc {
     display: none;
-    top: 21%;
+    top: 19.5%;
     padding: 7px;
     width: 225px;
     position: absolute;
@@ -264,9 +264,7 @@ body{
 .mapboxgl-ctrl-group{
     margin-top: 80px !important;
 }
-/* button.mapboxgl-ctrl-geolocate{
-    margin-top: -50px !important
-} */
+
 .modal-title{
     width: 100%;
     border-bottom: 2px solid white;
