@@ -68,7 +68,11 @@ staticScatter
 height = screen.height*0.9,
 width = screen.width;
 
- //create new svg container for the map
+albers = d3.geoAlbers()
+    .scale(width)
+    .translate([width / 2, height / 2]);
+
+//create new svg container for the map
 map = d3.select("figure.prop-map")
     .append("svg")
     .attr("class","map")
@@ -76,15 +80,12 @@ map = d3.select("figure.prop-map")
     .attr("width", "100%")
     .attr("height", "100%")
 
-albers = d3.geoAlbers()
-    .scale(width)
-    .translate([width / 2, height / 2]);
 
-    //call in the projection
+//call in the projection
 var path = d3.geoPath()
     .projection(albers);
 
-    //use Promise.all to parallelize asynchronous data loading
+//use Promise.all to parallelize asynchronous data loading
 var promises = [];
 
 promises.push(d3.json("data/topos/states_generalized.topojson"));
@@ -94,7 +95,7 @@ promises.push(d3.json("data/state_data.json"))
 promises.push(d3.json("data/cities.json"))
 promises.push(d3.json("data/BB_Top_Cities.geojson"))
 promises.push(d3.json("data/ML_Top_Cities.geojson"))
-    //list of promises goes and has the callback function be called
+//list of promises goes and has the callback function be called
 Promise.all(promises).then(callback);
     
 function callback(data){
@@ -119,7 +120,9 @@ function callback(data){
         .attr("stroke", "#FFFFFF")
         .attr("stroke-width", "0.15px")
         .attr("fill", "#111111");
-    
+    if(window.innerWidth < 576){
+        informUser()
+    }
     setupStickyfill();
     stickyMapscroller
         .setup({
@@ -151,6 +154,7 @@ function updateMap(response){
     d3.select(".infolabel") //remove the htlm tag.
     .remove();
     d3.selectAll(".propLegend").remove();
+    
 
     var index = response.index
     
@@ -752,7 +756,9 @@ function updateMap(response){
             .ease(d3.easePolyInOut)
             .on("end", repeat);
         })();
-    }   
+    }
+    d3.selectAll(".inform").raise()   
+    d3.selectAll(".informText").raise()
 }
 function createLegend(){
     if(window.innerWidth < 576){
@@ -882,7 +888,7 @@ function createLegend(){
         .attr("class", "legendTitle")
         .attr("x", 0)
         .attr("y",0)
-        .attr("transform","translate("+LegendRange/4.5  +","+LegendRange/3+")")
+        .attr("transform","translate("+LegendRange/2.5  +","+LegendRange/2.5+")")
         // .attr("y", function(){
         //     if(window.innerWidth < 1024){
         //         return "10px"
@@ -1535,8 +1541,31 @@ function scatterplot(){
         .delay(function(d,i){ return 25*i; }) 
         .duration(25)
         .attr("r", 2);
+}
+function informUser(){
+    var h = screen.height;
+    var w = screen.width;
+    var inform = "<div>This portion of the <br>page is best<br> viewed on desktop</div>"
 
+    var informData = d3.selectAll(".map")
+        .append("rect")
+        .attr("class","inform")
+        .attr("viewBox", `0 0 ${w} ${h}`)
+        // .attr('y', function(){return albers(48.999)})
+        // .attr('x', function(){return albers(-129.022)})
+        .attr('width', "100%")
+        .attr('height', "50%")
+        .attr('transform','translate(0,150)')
+        .raise()
 
+    var text = d3.selectAll(".map")
+        .append("text")
+        .attr("class","informText")
+        .attr('transform','translate('+w/2+','+h/2.25+')')
+        .text("Best viewed on a larger device")
+        .attr("text-anchor","middle")
+        .raise()
+        
 }
 init()
 }

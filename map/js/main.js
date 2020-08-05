@@ -31,8 +31,11 @@ function setMap(){
         positionOptions: {
         enableHighAccuracy: true
         },
-        trackUserLocation: false
+        trackUserLocation: false,
+        showAccuracyCircle: false,
+        showUserLocation: false,
         })
+        
     
     if(window.innerWidth < 576){
         map.addControl(locator, 'bottom-left')

@@ -271,6 +271,18 @@ h3{
     color: white;
     font-family: 'Heebo', sans-serif;
 }
+.inform{
+    font-family: 'Heebo', sans-serif;
+    z-index: 100 !important;
+    fill: grey !important;
+    opacity: 0.4;
+    font-size: 1.2em;
+}
+.informText{
+    fill: white;
+    font-size: 1.5em;
+    text-shadow: -5px 5px 0 black, 5px 5px 0 black, 5px -5px 0 black, -5px -5px 0 black;
+}
 .introBox{
     padding: 15px, 0;
     color: white;
