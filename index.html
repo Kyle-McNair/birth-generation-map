@@ -222,21 +222,21 @@
           <h2 align = "center" class = 'nationalTitle'>Population Share of Birth Generations - 2018</h2>
         </figure>
         <article>
-          <div class = "gap"></div>
+          <div style = "height: 85vh"></div>
           <div class = "natStepper">
             <p class = "introParagraphLEFT" style = "background-color: rgba(25,25,25,0.9);">
             Based on the plot, there is roughly an even share between Gen Z and Gen X... 
             </p>
           </div>
 
-          <div class = "gap"></div>
+          <div style = "height: 85vh"></div>
           <div class = "natStepper">
             <p class = "introParagraphLEFT" style = "background-color: rgba(25,25,25,0.9);">
               Not to mention Millennials and Boomers sharing the same.
             </p>
           </div>
 
-          <div class = "gap"></div>
+          <div style = "height: 85vh"></div>
           <div class = "natStepper">
             <p class = "introParagraphLEFT" style = "background-color: rgba(25,25,25,0.9);">
               This can be an indication how a majority of the Boomers are parents to the Millennials, and the majority of Gen X are parents to Gen Z.
@@ -525,25 +525,37 @@
         <div class = "introParagraph step" style = "opacity: 0; transition: opacity 1000ms">
           In conclusion, we are seeing a spike in Generation Z over these past 5 years, and can understand a good blend of Millennials and Gen X are moving more in the city. Meanwhile, we are seeing the first wave of Boomers retire, and not have as dense of a population in some of the larger metropolitan areas.
         </div>
-        <div style = "height: 200px"></div>
-        <div class = "introParagraph step" style = "text-align: center; opacity: 0; transition: opacity 1000ms">
+      </div>
+
+      <section id = "scatter">
+      <figure class = "sticky scatterplot" id = "scatterplot"></figure>
+      <article>
+        <div style = "height: 300px"></div>
+        <div class = "scatterStep">
+          <p class = "introParagraph" style = "text-align: center; background-color: rgba(25,25,25,0.95);">
           Want to go into more detail? 
+          </p>
+        <div id = "explore" style = "height: 400px"></div>
+          <div class = "scatterStep">
+            <p class = "introParagraph" style = "background-color: rgba(25,25,25,0.95);">
+              You can! Using the dot density technique in mapping, we can look at an even larger scale of the distribution of birth generations around the nation.
+            </p>
+          </div>
+        <div id = "explore" style = "height: 400px"></div>
+          <div class = "scatterStep">
+            <p class = "introParagraph" style = "text-align: center; background-color: rgba(25,25,25,0.95);">
+              Click on the <a class = "bottomLinks" href = "map/index.html">Explore</a> Tab to find out!
+            </p>
         </div>
-        <div style = "height: 200px"></div>
-        <div class = "introParagraph step" style = "opacity: 0 ;transition: opacity 1000ms">
-          You can! Using the dot density technique in mapping, we can look at an even larger scale of the distribution of birth generations around the nation.
-        </div>
-        <div style = "height: 100px"></div>
-        <div id = "explore" style = "height: 200px"></div>
-        <div  class = "introParagraph step" style = "opacity: 0 ;transition: opacity 1000ms; text-align:center">
-          Click on the <a class = "bottomLinks" href = "map/index.html">Explore</a> Tab to find out!
-        </div>
-        <div style = "height: 100px"></div>
-        <div class = "introParagraph step" style = "text-align:center; font-size: 1.5em; opacity: 0 ;transition: opacity 1000ms">
-          <a class = "bottomLinks" href = "#mainStart">Back to Top</a>
+        <div style = "height: 400px"></div>
+        <div class = "scatterStep">
+            <p class = "introParagraph" style = "text-align: center; background-color: rgba(25,25,25,0.95);">
+              <a class = "bottomLinks" href = "#mainStart">Back to Top</a>
+            </p>
         </div>
         <div style = "height: 300px"></div>
-      </div>
+      </article>
+      </section>
 
         <script type="text/javascript" src="lib/d3.js"></script>
         <script type="text/javascript" src="lib/topojson.js"></script>

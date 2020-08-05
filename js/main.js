@@ -8,7 +8,12 @@ const scroller = scrollama();
 const stickyMapscroller = scrollama();
 const stickyNatChartscroller = scrollama();
 const stickyStateChartscroller = scrollama();
+const staticScatter = scrollama();
 var map, chart1, albers, City, city_object, BB_Cities, ML_Cities, height, width, statebars, state_data;
+
+var figure = document.getElementById('scatterplot')
+figure.style.height = screen.height - 60
+
 function handleStepEnter(response){
     if(response.direction === 'down'){
         response.element.style.opacity = 1
@@ -17,7 +22,13 @@ function handleStepEnter(response){
         response.element.style.opacity = 0
     }
 }
-
+function handleStaticEnter(response){
+    if(response.index == 1){
+        d3.select(".randomDots")
+            .remove();
+        scatterplot()
+    }
+}
 function handleStepExit(response){
     if(response.direction === 'up'){
         response.element.style.opacity = 0
@@ -43,6 +54,14 @@ scroller
     .onStepEnter(handleStepEnter)
     .onStepExit(handleStepExit);
     window.addEventListener("resize", scroller.resize);
+
+staticScatter
+    .setup({
+        step: '#scatter article .scatterStep',
+        debug: false,
+        offset: 0.85
+    })
+    .onStepEnter(handleStaticEnter)
 }
 
 // load proportional symbol map //
@@ -134,7 +153,6 @@ function updateMap(response){
     d3.selectAll(".propLegend").remove();
 
     var index = response.index
-    console.log(index)
     
     var colors = ["#FFFF00","#722e94","#722e94","#b97cca","#b16a24","#86bf87","#23632f","blank","blank","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#b97cca","#b97cca","#b16a24","#86bf87","#86bf87","#23632f","#23632f",'#FFFF00'];
     var list = ["blank","SG_2018","SG_2018","BB_2018","GX_2018","ML_2018","GZ_2018","blank","blank","blank","blank","blank","blank","BB_ch","BB_ch","GX_ch","ML_ch","ML_ch",'GZ_ch','GZ_ch','blank']
@@ -219,7 +237,6 @@ function updateMap(response){
             .attr("class", function(d){
                 return "proportional "+d.properties.Join; })
             .on("mouseover", function(d){
-                console.log("hover")
                 highlight(d.properties,d.properties[list[index]],index);})
             .on("mouseout", function(d){
                 dehighlight(d.properties)
@@ -438,7 +455,6 @@ function updateMap(response){
             .attr("class", function(d){
                 return "proportional "+d.properties.Join; })
             .on("mouseover", function(d){
-                console.log("hover")
                 highlight(d.properties,d.properties[list[index]],index);})
             .on("mouseout", function(d){
                 dehighlight(d.properties)
@@ -480,7 +496,6 @@ function updateMap(response){
             .attr("class", function(d){
                 return "proportional "+d.properties.Join; })
             .on("mouseover", function(d){
-                console.log("hover")
                 highlight(d.properties,d.properties[list[index]],index);})
             .on("mouseout", function(d){
                 dehighlight(d.properties)
@@ -525,7 +540,6 @@ function updateMap(response){
             .attr("class", function(d){
                 return "proportional "+d.properties.Join; })
             .on("mouseover", function(d){
-                console.log("hover")
                 highlight(d.properties,d.properties[list[index]],index);})
             .on("mouseout", function(d){
                 dehighlight(d.properties)
@@ -586,7 +600,6 @@ function updateMap(response){
             .attr("class", function(d){
                 return "proportional "+d.properties.Join; })
             .on("mouseover", function(d){
-                console.log("hover")
                 highlight(d.properties,d.properties[list[index]],index);})
             .on("mouseout", function(d){
                 dehighlight(d.properties)
@@ -1072,7 +1085,6 @@ function stateInputs(response){
     
     var dropdown = document.getElementById('dropdown')
     var index = response.index
-    console.log(index)
     var stateList = ['Wisconsin','Wisconsin','Utah','California','Florida','Maine','Vermont','Texas','New York','blank']
     if(index < (stateList.length - 1)){
         dropdown.style.opacity = 0
@@ -1473,6 +1485,56 @@ function setMiniChartChange(assign){
         .attr("y", -10)
         .attr("class", "miniTitleText") // .titleText is for css
         .text("Pop. Change by Generation: 2013 - 2018"); // expressed is the attribute name.
+}
+function scatterplot(){
+    var colorSet = ["#722e94","#b97cca","#b16a24","#86bf87","#23632f"];
+
+    var margin = {top: 20, right: 20, bottom: 20, left: 20}
+
+    var height = screen.height - 60
+    var width = window.innerWidth*.98
+
+    var x = d3.scaleLinear()
+        .range([0,width])
+    var y = d3.scaleLinear()
+        .range([height,0])
+
+    var fakedata = function(){
+        var dataset = []
+        for(var i = 0; i < 2000; i++){
+            var x = d3.randomUniform(0,2000)();
+            var y = d3.randomUniform(0,2000)();
+            var c = colorSet[Math.floor(Math.random()*colorSet.length)]
+            dataset.push({"x": x,"y": y, "color":c});
+        }
+        return dataset
+    }
+    var data = fakedata()
+
+    x.domain([0,2000])
+    y.domain([0,2000])
+
+    var scatter = d3.select('.scatterplot')
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("class","randomDots")
+        .append("g")
+    
+    scatter.append("g")
+        .selectAll("dot")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("fill", function(d){return d.color})
+        .attr("cx", function(d) { return x(d.x); })
+        .attr("cy", function(d) { return y(d.y); })
+        .transition()
+        .delay(function(d,i){ return 25*i; }) 
+        .duration(25)
+        .attr("r", 2);
+
+
 }
 init()
 }

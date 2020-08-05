@@ -398,7 +398,15 @@ figure.sticky {
     top: 0;
     z-index: 10 !important;
     font-family: 'Heebo', sans-serif;
-
+}
+#scatterplot{
+    height: 100%;
+    width: 100%;
+    position: -moz-sticky;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 0 !important;
 }
 /* map styling */
 .legend{
@@ -476,6 +484,10 @@ figure.natChart, figure.stateChart{
     z-index: 0;
     transform: translate3d(0,0,0);
 }
+figure.scatterplot{
+    position: sticky;
+    z-index: 0;
+}
 
 p.introParagraph{
     width: 40%;
@@ -483,7 +495,7 @@ p.introParagraph{
 .mapStepper:last-child, .natStepper:last-child {
     margin-bottom: 0;
 }
-#natScrolly, #mapScrolly, #stateScrolly {
+#natScrolly, #mapScrolly, #stateScrolly, #scatter {
     position: relative;
 }
 article {
