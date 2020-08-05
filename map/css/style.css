@@ -34,6 +34,10 @@ p{
     margin-left: auto;
     margin-right: auto;
 }
+a{
+    text-decoration: none;
+
+}
 a.explanation{
     color: white; 
     text-decoration: none;
@@ -41,12 +45,14 @@ a.explanation{
     font-size: 0.95em;
     text-align: center;
     text-decoration: none;
+    box-shadow: none!important;
 }
 a.explanation:hover{
     color: black; 
     font-weight: 800;
     text-decoration: none;
     background-color: white;
+    box-shadow: none!important;
 }
 a.fa {
     color: white;
@@ -258,6 +264,9 @@ body{
 .mapboxgl-ctrl-group{
     margin-top: 80px !important;
 }
+/* button.mapboxgl-ctrl-geolocate{
+    margin-top: -50px !important
+} */
 .modal-title{
     width: 100%;
     border-bottom: 2px solid white;

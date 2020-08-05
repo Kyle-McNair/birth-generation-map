@@ -27,17 +27,24 @@ function setMap(){
         maxZoom: 12
         });
 
+    var locator = new mapboxgl.GeolocateControl({
+        positionOptions: {
+        enableHighAccuracy: true
+        },
+        trackUserLocation: false
+        })
     
     if(window.innerWidth < 576){
-            mobileToggle()
+        map.addControl(locator, 'bottom-left')
+        mobileToggle()
     }
     else if(window.innerWidth > 576){
         var zoomControl = new mapboxgl.NavigationControl()
         map.addControl(zoomControl, 'top-left')
+        map.addControl(locator, 'top-left')
     }
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
-
     map.on('load', function () {
         var styles = map.getStyle().layers
         console.log(styles)

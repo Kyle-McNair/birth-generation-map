@@ -881,15 +881,17 @@ function createLegend(){
         .append("text")
         .attr("class", "legendTitle")
         .attr("x", 0)
-        .attr("y", function(){
-            if(window.innerWidth < 1024){
-                return "10px"
-            }
-            if(window.innerWidth < 1600 && window.innerWidth > 1024){
-                return "30%"}
-            if(window.innerWidth > 1600){
-                return "40%"
-            }})
+        .attr("y",0)
+        .attr("transform","translate("+LegendRange/4  +","+LegendRange/2.5+")")
+        // .attr("y", function(){
+        //     if(window.innerWidth < 1024){
+        //         return "10px"
+        //     }
+        //     if(window.innerWidth < 1600 && window.innerWidth > 1024){
+        //         return "30%"}
+        //     if(window.innerWidth > 1600){
+        //         return "40%"
+        //     }})
         .text("Approximate Population");
 }
 function setNationalChart(bg_sh){

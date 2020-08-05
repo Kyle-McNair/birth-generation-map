@@ -15,6 +15,8 @@ a.bottomLinks:hover{
 }
 a:hover{
     color: #998ec3;
+    box-shadow: none!important;
+    text-decoration: none;
 }
 a.fa {
     color: white;
@@ -100,8 +102,8 @@ transform: skew(0deg, -40deg);
     .stateTitle, .nationalTitle{
         font-size: 1em !important;
     }
-    p {
-        line-height: 1rem;
+    .spanHold{
+        margin-top: 0vh !important;
     }
     .aboutPoints{
         font-size: 1em !important;
@@ -170,6 +172,7 @@ transform: skew(0deg, -40deg);
         margin-right: auto !important;
         float: none !important;
         z-index: 99990 !important;
+        line-height: 1.4rem !important;
     }
 
     h2{
