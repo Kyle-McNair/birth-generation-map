@@ -781,19 +781,22 @@ function createLegend(){
 
         var min = Math.min.apply(Math, totals);
         var max = Math.max.apply(Math, totals);
+
     var radius = d3.scaleSqrt()
-    .domain([1, max])
-    .range([1, 20*(width/700)]);
+        .domain([1, max])
+        .range([1, 20*(width/700)]);
 
     var LegendValues = [50000,500000,1000000]
 
     var LegendRange = radius.range()[1]*width/700
-
+        console.log(LegendRange)
     var legend =  d3.select(".legend")
         .style("width", LegendRange + 100 +"px")
         .style("height", LegendRange +"px");
 
-    var lHeight = $(".legend").height()
+    var lHeight = $(".legend").height();
+    var lWidth = $(".legend").width();
+    console.log(lHeight, lWidth)
 
     var circles = legend.append("svg")
         .attr("class","propLegend")
@@ -888,16 +891,11 @@ function createLegend(){
         .attr("class", "legendTitle")
         .attr("x", 0)
         .attr("y",0)
-        .attr("transform","translate("+LegendRange/2.5  +","+LegendRange/2.5+")")
-        // .attr("y", function(){
-        //     if(window.innerWidth < 1024){
-        //         return "10px"
-        //     }
-        //     if(window.innerWidth < 1600 && window.innerWidth > 1024){
-        //         return "30%"}
-        //     if(window.innerWidth > 1600){
-        //         return "40%"
-        //     }})
+        .attr("transform",function(){
+            if(lHeight > 100){return "translate("+20+","+lHeight*0.25+")"}
+            else if(lHeight < 100 && lHeight > 50){"translate("+0+","+lHeight*0.1+")"}
+            else if(lHeight < 50){"translate("+0+","+lHeight*0.05+")"}
+            })
         .text("Approximate Population");
 }
 function setNationalChart(bg_sh){
@@ -934,7 +932,6 @@ function setNationalChart(bg_sh){
         .attr("transform", 
           "translate(" + margin.left + "," + margin.top + ")");
 
-
     var bars = chart1.selectAll(".bar")
         .data(bg_sh)
         .enter()
@@ -956,7 +953,6 @@ function setNationalChart(bg_sh){
         .text(function(d){return  d3.format(",.1%")(d.Value)})
         .attr("text-anchor","middle")
 
-    
     var yAxis = d3.axisLeft()
         .tickFormat(yTick)
         .ticks(5)
@@ -982,7 +978,6 @@ function setStateChart(state_data){
     var margin = {top: 15, right: 15, bottom: 100, left: 45},
     
     leftPadding = 50,
-    rightPadding = 50,
     topBottomPadding = 20,
     chartWidth = window.innerWidth * 0.65,
     
@@ -1043,8 +1038,6 @@ function setStateChart(state_data){
         .text(function(d){return  d3.format(",.1%")(d.Value)})
         .attr("text-anchor","middle")
     
-        
-
     var yAxis = d3.axisLeft()
         .tickFormat(yTick)
         .ticks(5)
@@ -1073,7 +1066,9 @@ function setStateChart(state_data){
 }
 function stateInputs(response){
     var chartWidth = window.innerWidth * 0.65;
+
     var chartHeight;
+
     if(window.innerWidth > 576){
         chartHeight = window.innerHeight*0.5
     }
@@ -1083,6 +1078,7 @@ function stateInputs(response){
     else if(window.innerWidth < 375){
         chartHeight = 300
     }
+
     var abvList = {"Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA",
     "Colorado":"CO","Connecticut":"CT","Delaware":"DE","Florida":"FL", "Georgia":"GA","Hawaii":"HI","Idaho":"ID",
     "Illinois":"IL","Indiana":"IN","Iowa":"IA","Kansas":"KS","Kentucky":"KY","Louisiana":"LA","Maine":"ME",
@@ -1138,14 +1134,17 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     var margin = {top: 15, right: 15, bottom: 100, left: 45};
 
     var select;
+
     for(var i in abvList){
         if(i == state_value){
             select = "state_data."+String(abvList[i])
         }
     };
+
     select = eval(select)
 
     var yTick = (d => d + "%");
+
     var y = d3.scaleLinear()
         .range([chartHeight, 0])
         .domain([0,0.4])
@@ -1161,8 +1160,7 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
     var u = svg.selectAll("rect")
         .data(select)
 
-    u
-    .enter()
+    u.enter()
     .append("rect")
     .merge(u)
     .transition()
@@ -1175,7 +1173,9 @@ function updateChart(statebars,state_value, state_data, chartWidth, chartHeight,
         return d.Color
     })
     .text(function(d){return 100*d.total})
+
     var t = svg.selectAll('.label')
+
     t.data(select)
     t.enter()
     .append("text")
@@ -1206,6 +1206,7 @@ function dehighlight(props){
         .style("stroke-width", function(){
             return getStyle(this, "stroke-width")
         });
+
     function getStyle(element, styleName){
         var styleText = d3.select(element)
             .select("desc") //the desc finds the same as the element to go back to original style.
@@ -1215,6 +1216,7 @@ function dehighlight(props){
 
         return styleObject[styleName];
     };
+
     d3.select(".infolabel") //remove the htlm tag.
         .remove();
 };
@@ -1222,12 +1224,15 @@ function setLabel(props, actual, index){
     var labelAttribute;
     var match = city_object.Feature
     var assign;
+
     for(var m in match){
         if(match[m].Urban_Area.City == props.Urban_Area){
             assign = match[m].Urban_Area
         }
     }
+
     var gen;
+
     if(index == 1){
         gen = "Silent Generation"
     }
@@ -1342,9 +1347,8 @@ function moveChartlessLabel(){
 };
 function setMiniChart(assign){
     var margin = {top: 30, right: 5, bottom: 10, left: 45},
-    leftPadding = 5;
-    chartWidth = 200,
-    chartHeight = 100;
+        chartWidth = 200,
+        chartHeight = 100;
 
     var y = d3.scaleLinear()
         .range([chartHeight, 0])
@@ -1365,7 +1369,6 @@ function setMiniChart(assign){
         .attr("transform", 
           "translate(" + margin.left + "," + margin.top + ")");
 
-
     var miniBars = miniChart.selectAll(".bar")
         .data(assign.yr2018)
         .enter()
@@ -1380,7 +1383,6 @@ function setMiniChart(assign){
         .style("fill",function(d){
             return d.Color
         })
-        // .text(function(d){return 100*d.total})
     miniBars.append("text")
         .attr("class","miniBarLabel")
         .attr("x", function (d) {return x(d.Generation) + x.bandwidth()/2})
@@ -1394,7 +1396,6 @@ function setMiniChart(assign){
         .ticks(5)
         .scale(y)
         
-    
     var xAxis = d3.axisBottom()
         .tickValues([])
         .scale(x)
@@ -1412,14 +1413,11 @@ function setMiniChart(assign){
         .attr("y", -10)
         .attr("class", "miniTitleText") // .titleText is for css
         .text("Pop. Share - 2018"); // expressed is the attribute name.
-
-
-
 }
 function setMiniChartChange(assign){
     var margin = {top: 30, right: 15, bottom: 20, left: 15},
-    chartWidth = 260,
-    chartHeight = 100;
+        chartWidth = 260,
+        chartHeight = 100;
 
     var x = d3.scaleLinear()
         .range([0, chartWidth])
@@ -1551,8 +1549,6 @@ function informUser(){
         .append("rect")
         .attr("class","inform")
         .attr("viewBox", `0 0 ${w} ${h}`)
-        // .attr('y', function(){return albers(48.999)})
-        // .attr('x', function(){return albers(-129.022)})
         .attr('width', "100%")
         .attr('height', "50%")
         .attr('transform','translate(0,150)')
@@ -1564,8 +1560,7 @@ function informUser(){
         .attr('transform','translate('+w/2+','+h/2.25+')')
         .text("Best viewed on a larger device")
         .attr("text-anchor","middle")
-        .raise()
-        
+        .raise()   
 }
 init()
 }
