@@ -894,7 +894,7 @@ function createLegend(){
         .attr("transform",function(){
             if(lHeight > 100){return "translate("+20+","+lHeight*0.35+")"}
             else if(lHeight < 100 && lHeight > 50){"translate("+0+","+lHeight*0.2+")"}
-            else if(lHeight < 50){"translate("+0+","+lHeight*0.1+")"}
+            else if(lHeight < 50){"translate("+0+","+lHeight*0.2+")"}
             })
         .text("Approximate Population");
 }
