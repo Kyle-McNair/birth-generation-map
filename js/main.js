@@ -890,13 +890,14 @@ function createLegend(){
     var legendTitle = legend.selectAll('.propLegend')
         .append("text")
         .attr("class", "legendTitle")
-        .attr("x", 0)
-        .attr("y",0)
-        .attr("transform",function(){
-            if(h > 100){return "translate("+20+","+h*0.2+")"}
-            else if(h < 100 && h > 50){"translate("+0+","+h*0.1+")"}
-            else if(h < 50){"translate("+0+","+h*0.05+")"}
-            })
+        .attr("x",20)
+        .attr("y", function(){ 
+            return LegendRange - (radius(1000000)*2)-30})
+        // .attr("transform",function(){
+        //     if(h > 225){return "translate("+20+","+h*0.2+")"}
+        //     else if(h < 225 && h > 150){"translate("+0+","+h*0.2+")"}
+        //     else if(h < 150){"translate("+0+","+h*0.05+")"}
+        //     })
         .text("Approximate Population");
 }
 function setNationalChart(bg_sh){
