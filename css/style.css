@@ -340,6 +340,7 @@ li.about{
     color: white !important;
 }
 .modal-title{
+    line-height: 2 !important;
     text-align: center;
     width: 100%;
     border-bottom: 2px solid white;
