@@ -882,7 +882,7 @@ function createLegend(){
         .attr("class", "legendTitle")
         .attr("x", 0)
         .attr("y",0)
-        .attr("transform","translate("+LegendRange/4  +","+LegendRange/2.5+")")
+        .attr("transform","translate("+LegendRange/4.5  +","+LegendRange/3+")")
         // .attr("y", function(){
         //     if(window.innerWidth < 1024){
         //         return "10px"
