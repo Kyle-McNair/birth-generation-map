@@ -890,7 +890,7 @@ function createLegend(){
     var legendTitle = legend.selectAll('.propLegend')
         .append("text")
         .attr("class", "legendTitle")
-        .attr("x",20)
+        .attr("x",0)
         .attr("y", function(){ 
             return LegendRange - (radius(1000000)*2)-30})
         // .attr("transform",function(){
