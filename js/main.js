@@ -800,7 +800,7 @@ function createLegend(){
 
     var circles = legend.append("svg")
         .attr("class","propLegend")
-        .attr("height","100%")
+        .attr("height",LegendRange+100)
         .attr("width","100%")
         .attr("transform","translate(40,0)")
         .style("top", "0px")
@@ -892,9 +892,9 @@ function createLegend(){
         .attr("x", 0)
         .attr("y",0)
         .attr("transform",function(){
-            if(lHeight > 100){return "translate("+20+","+lHeight*0.25+")"}
-            else if(lHeight < 100 && lHeight > 50){"translate("+0+","+lHeight*0.1+")"}
-            else if(lHeight < 50){"translate("+0+","+lHeight*0.05+")"}
+            if(lHeight > 100){return "translate("+20+","+lHeight*0.35+")"}
+            else if(lHeight < 100 && lHeight > 50){"translate("+0+","+lHeight*0.2+")"}
+            else if(lHeight < 50){"translate("+0+","+lHeight*0.1+")"}
             })
         .text("Approximate Population");
 }
