@@ -441,7 +441,7 @@ figure.sticky {
 .propLabels{
     font-family: 'Heebo', sans-serif;
     fill: white;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 .legendShadow {
     font-family: 'Heebo', sans-serif;
@@ -452,7 +452,7 @@ figure.sticky {
 .legendTitle{
     font-family: 'Heebo', sans-serif;
     fill: white;
-    font-size: 1em; 
+    font-size: 0.9em; 
 }
 .introParagraphLEFT{
     padding: 1vw;
