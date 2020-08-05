@@ -119,6 +119,9 @@ transform: skew(0deg, -40deg);
     .mobileHeader{
         margin-bottom: 10px;
     }
+    .modal-body{
+        margin-top: 20px !important
+    }
     .chevron-container{
         width: 100% !important;
     }
@@ -351,9 +354,7 @@ li.about{
     padding: 1rem 1rem;
     margin: -1rem -1rem -1rem 0 !important;
 }
-.modal-body{
-    margin-top: 20px !important
-}
+
 .fade{
     opacity: 0.8 !important;
 }
