@@ -340,7 +340,6 @@ li.about{
     color: white !important;
 }
 .modal-title{
-    line-height: 2 !important;
     text-align: center;
     width: 100%;
     border-bottom: 2px solid white;
@@ -351,6 +350,9 @@ li.about{
 .modal-header .close {
     padding: 1rem 1rem;
     margin: -1rem -1rem -1rem 0 !important;
+}
+.modal-body{
+    margin-top: 20px !important
 }
 .fade{
     opacity: 0.8 !important;
