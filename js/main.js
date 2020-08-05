@@ -802,7 +802,7 @@ function createLegend(){
         .attr("class","propLegend")
         .attr("height","100%")
         .attr("width","100%")
-        .attr("transform","translate(50,90)")
+        .attr("transform","translate(100,150)")
         .style("top", "0px")
         .style("left", "0px");
 
@@ -894,7 +894,7 @@ function createLegend(){
         .attr("x",0)
         .attr("y", function(){ 
             return LegendRange - (radius(1000000)*2)-30})
-        .text("Approximate"+"<br>"+"Population");
+        .text("Approximate Population");
 }
 function setNationalChart(bg_sh){
     var margin = {top: 15, right: 5, bottom: 100, left: 45},
