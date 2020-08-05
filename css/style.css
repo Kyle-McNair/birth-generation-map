@@ -453,6 +453,7 @@ figure.sticky {
     font-family: 'Heebo', sans-serif;
     fill: white;
     font-size: 0.9em; 
+    text-align: center;
 }
 .introParagraphLEFT{
     padding: 1vw;

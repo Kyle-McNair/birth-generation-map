@@ -791,17 +791,18 @@ function createLegend(){
     var LegendRange = radius.range()[1]*width/700
         console.log(LegendRange)
     var legend =  d3.select(".legend")
-        .style("width", LegendRange + 100 +"px")
-        .style("height", LegendRange +"px");
+        .style("width", LegendRange + 150 +"px")
+        .style("height", LegendRange + 150 +"px")
+  
 
     var lHeight = $(".legend").height();
     var lWidth = $(".legend").width();
     console.log(lHeight, lWidth)
     var circles = legend.append("svg")
         .attr("class","propLegend")
-        .attr("height",LegendRange+100)
+        .attr("height","100%")
         .attr("width","100%")
-        .attr("transform","translate(40,0)")
+        .attr("transform","translate(50,90)")
         .style("top", "0px")
         .style("left", "0px");
 
@@ -893,12 +894,7 @@ function createLegend(){
         .attr("x",0)
         .attr("y", function(){ 
             return LegendRange - (radius(1000000)*2)-30})
-        // .attr("transform",function(){
-        //     if(h > 225){return "translate("+20+","+h*0.2+")"}
-        //     else if(h < 225 && h > 150){"translate("+0+","+h*0.2+")"}
-        //     else if(h < 150){"translate("+0+","+h*0.05+")"}
-        //     })
-        .text("Approximate Population");
+        .text("Approximate"+"<br>"+"Population");
 }
 function setNationalChart(bg_sh){
     var margin = {top: 15, right: 5, bottom: 100, left: 45},
