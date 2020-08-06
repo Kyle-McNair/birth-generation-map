@@ -48,7 +48,7 @@ function init(){
 scroller
     .setup({
         step: '.step',
-        debug: true,
+        debug: false,
         offset: 0.65,
     })
     .onStepEnter(handleStepEnter)
