@@ -503,7 +503,7 @@ function legendHover(){
     })
     $('.item4').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b4').css("top","41%")
+        $('.b4').css("top","40%")
         $('.b4').show();
     }, function(){
         $(this).css("border","none")
@@ -511,7 +511,7 @@ function legendHover(){
     })
     $('.item5').hover(function(){
         $(this).css("border","1.5px solid white")
-        $('.b5').css("top","49%")
+        $('.b5').css("top","48%")
         $('.b5').show();
     }, function(){
         $(this).css("border","none")
