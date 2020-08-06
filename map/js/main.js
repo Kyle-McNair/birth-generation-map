@@ -24,7 +24,7 @@ function setMap(){
         center: randomCity, // starting position [lng, lat]
         zoom: 9, // starting zoom
         minZoom: 2,
-        maxZoom: 12.5
+        maxZoom: 13
         });
 
     var locator = new mapboxgl.GeolocateControl({
