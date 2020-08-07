@@ -517,6 +517,22 @@ function legendHover(){
         $(this).css("border","none")
         $('.b5').hide();
     })
+    $('#gained_box').hover(function(){
+        $(this).css("border","1.5px solid white")
+        $('.b6').css("top","68%")
+        $('.b6').show();
+    }, function(){
+        $(this).css("border","none")
+        $('.b6').hide();
+    })
+    $('#lost_box').hover(function(){
+        $(this).css("border","1.5px solid white")
+        $('.b7').css("top","75%")
+        $('.b7').show();
+    }, function(){
+        $(this).css("border","none")
+        $('.b7').hide();
+    })
 
 }
 function mobileToggle(){

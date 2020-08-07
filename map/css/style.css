@@ -255,9 +255,9 @@ body{
 #about{
     font-family: 'Heebo', sans-serif;
 }
-/* #compare{
-    margin-top: 10px;
-} */
+.check{
+    margin-left: 5px;
+}
 #gained_box{
     margin-top: 10px;
 }
