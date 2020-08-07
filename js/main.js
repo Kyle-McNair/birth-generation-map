@@ -791,8 +791,8 @@ function createLegend(){
     var LegendRange = radius.range()[1]*width/700
         console.log(LegendRange)
     var legend =  d3.select(".legend")
-        .style("width", LegendRange + 150 +"px")
-        .style("height", LegendRange + 150 +"px")
+        .style("width", LegendRange + 100 +"px")
+        .style("height", LegendRange + 100 +"px")
   
 
     var lHeight = $(".legend").height();
@@ -802,7 +802,7 @@ function createLegend(){
         .attr("class","propLegend")
         .attr("height","100%")
         .attr("width","100%")
-        .attr("transform","translate(100,150)")
+        .attr("transform","translate(100,100)")
         .style("top", "0px")
         .style("left", "0px");
 
@@ -895,6 +895,7 @@ function createLegend(){
         .attr("y", function(){ 
             return LegendRange - (radius(1000000)*2)-30})
         .text("Approximate Population");
+    legend.lower()
 }
 function setNationalChart(bg_sh){
     var margin = {top: 15, right: 5, bottom: 100, left: 45},
