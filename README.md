@@ -33,7 +33,7 @@ Python was used to create the dot-density point and randomly place them within e
 
 Scrollytelling was used from [Scrollama.js](https://github.com/russellgoldenberg/scrollama) and [D3.js](https://d3js.org/), while the interactive dot-density map was used with [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/api/).
 
-The interactive dot-density map portrays the approximate population density of each birth generation. The map shows an approximate distribution of population count by birth generation at different zoom scales. Random dot placement does **not** imply that the count of that particular birth generation lives in that specific point location, it is to imply that there is a population count of that birth generation within that U.S. Census Block Group.
+The interactive dot-density map portrays the simple count of population by birth generation. Since the dot value changes by zoom level, the population stays at a simple count. Random dot placement does **not** imply that the count of that particular birth generation lives in that specific point location, it is to imply that there is a population count of that birth generation within that U.S. Census Block Group.
 
 ### Order of Scripting
 When organizing the data, these were the following scripts used in this order:
