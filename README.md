@@ -8,7 +8,9 @@ Scrollytelling Page: https://kyle-mcnair.github.io/birth-generation-map/index.ht
 Interactive Map: https://kyle-mcnair.github.io/birth-generation-map/map/index.html
 
 ### About the Project
-This project uses is divided into two sections of scrollytelling, and an interactive dot-density map. The topic discusses where majority of the population in the United States lives by birth generation. Spatial and tabular data was provided from the National Historical GIS [NHGIS](https://www.nhgis.org/).
+The project was inspired by Robert Manduca's [Where Are The Jobs?](http://www.robertmanduca.com/projects/jobs.html?utm_content=buffer903c7&utm_medium=social&utm_source=plus.google.com&utm_campaign=buffer) and Kyle Walker's [Educational Attainment in America](http://personal.tcu.edu/kylewalker/maps/education/#12/37.7536/-122.4473)
+
+This project is divided into two sections: scrollytelling and an interactive dot-density map. The topic discusses where majority of the population in the United States lives by birth generation. Spatial and tabular data was provided from the National Historical GIS ([NHGIS](https://www.nhgis.org/)).
 
 Provided by NHGIS, the spatial files needed for whole analysis (scrollytelling & interactive map):
   * United States Boundary
@@ -17,7 +19,7 @@ Provided by NHGIS, the spatial files needed for whole analysis (scrollytelling &
   * U.S. Census Block Groups
   * U.S. Census Blocks
 
-Tabular files for whole analysis (scrollytelling & interactive map) was brought from the American Community Survey (ACS) in NHGIS to use the Total Population - Sex by Age (B01001) at the following geographic scales:
+Tabular files for whole analysis (scrollytelling & interactive map) was brought from the American Community Survey (ACS) in NHGIS to use the Total Population - Sex by Age (B01001) Table. All tables were downloaded at the following geographic scales:
   * U.S. Census Block Groups 2014-2018
   * U.S. Census Block Groups 2009-2013
   * 2010 U.S. Census Blocks
@@ -27,11 +29,11 @@ Tabular files for whole analysis (scrollytelling & interactive map) was brought 
 
 Python was used to create the dot-density point and randomly place them within each U.S. Census Block Group. Because there are so many points being loaded onto a map, Mapbox's [Tippecanoe](https://github.com/mapbox/tippecanoe) was used to have the points be converted to vector tiles.
 
-**Note:** Tippecanoe works best on a Mac device, but if using Windows, I found [ArcGIS2Mapbox](https://github.com/GISupportICRC/ArcGIS2Mapbox) to be very helpful.
+**Note:** Tippecanoe works best on a Mac device, but if using a Windows device, I found [ArcGIS2Mapbox](https://github.com/GISupportICRC/ArcGIS2Mapbox) to be very helpful.
 
 Scrollytelling was used from [Scrollama.js](https://github.com/russellgoldenberg/scrollama) and [D3.js](https://d3js.org/), while the interactive dot-density map was used with [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/api/).
 
-The interactive dot-density map portrays the approximate population density of each birth generation. The map shows an approximate distribution of population count by birth generation. Where the dot is placed on the map does **not** imply that the count of that particular birth generation lives there, it is to imply that there is a population count of that birth generation within that U.S. Census Block Group.
+The interactive dot-density map portrays the approximate population density of each birth generation. The map shows an approximate distribution of population count by birth generation at different zoom scales. Random dot placement does **not** imply that the count of that particular birth generation lives in that specific point location, it is to imply that there is a population count of that birth generation within that U.S. Census Block Group.
 
 ### Order of Scripting
 When organizing the data, these were the following scripts used in this order:
