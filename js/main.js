@@ -797,7 +797,7 @@ function createLegend(){
 
     var lHeight = $(".legend").height();
     var lWidth = $(".legend").width();
-    console.log(lHeight, lWidth)
+
     var circles = legend.append("svg")
         .attr("class","propLegend")
         .attr("height","100%")
@@ -898,7 +898,7 @@ function createLegend(){
     legend.lower()
 }
 function setNationalChart(bg_sh){
-    var margin = {top: 15, right: 5, bottom: 100, left: 45},
+    var margin = {top: 15, right: 5, bottom: 150, left: 45},
     
     leftPadding = 5,
     rightPadding = 5,
@@ -974,7 +974,7 @@ function setNationalChart(bg_sh){
         .style("text-anchor", "end");
 }
 function setStateChart(state_data){
-    var margin = {top: 15, right: 15, bottom: 100, left: 45},
+    var margin = {top: 15, right: 15, bottom: 150, left: 45},
     
     leftPadding = 50,
     topBottomPadding = 20,
@@ -1347,7 +1347,7 @@ function moveChartlessLabel(){
 function setMiniChart(assign){
     var margin = {top: 30, right: 5, bottom: 10, left: 45},
         chartWidth = 200,
-        chartHeight = 100;
+        chartHeight = 120;
 
     var y = d3.scaleLinear()
         .range([chartHeight, 0])
@@ -1378,7 +1378,7 @@ function setMiniChart(assign){
         .attr("x", function(d) { return x(d.Generation); })
         .attr("width",chartWidth/6)
         .attr("y", function(d) { return y(d.Value)})
-        .attr("height", function(d){return 100 - y(d.Value)})
+        .attr("height", function(d){return 120 - y(d.Value)})
         .style("fill",function(d){
             return d.Color
         })
@@ -1414,9 +1414,9 @@ function setMiniChart(assign){
         .text("Pop. Share - 2018"); // expressed is the attribute name.
 }
 function setMiniChartChange(assign){
-    var margin = {top: 30, right: 15, bottom: 20, left: 15},
+    var margin = {top: 30, right: 20, bottom: 20, left: 20},
         chartWidth = 260,
-        chartHeight = 100;
+        chartHeight = 120;
 
     var x = d3.scaleLinear()
         .range([0, chartWidth])
@@ -1458,9 +1458,9 @@ function setMiniChartChange(assign){
         .attr("y", function (d) {return y(d.Generation) + y.bandwidth()/1.5})
         .attr("x", function(d) { 
             if((d.Value/d.Gen2013) > 0){
-                return x(d.Value/d.Gen2013) + 20}
+                return x(d.Value/d.Gen2013) + 22}
             else{
-                return x(d.Value/d.Gen2013) - 20}
+                return x(d.Value/d.Gen2013) - 22}
         })
         .text(function(d){return  d3.format(",.1%")(d.Value/d.Gen2013)})
         .attr("text-anchor","middle")

@@ -533,23 +533,23 @@ article {
 /* Chart 1 */
 .axis{
     color: white;
-    font-size: .8em;
+    font-size: 1em;
 }
 .label{
     fill: white;
-    font-size: .9em;
+    font-size: 1em;
 }
 /* Mini Charts */
 .miniBarLabel{
-    font-size: 0.7em;
-    fill: white;
+    font-size: 0.8em;
+    fill: white
 }
 .miniTitleText{
     fill: white;
-    font-size: 0.8em;
+    font-size: 0.85em;
 }
 .miniYaxis{
-    font-size: 0.7em;
+    font-size: 0.8em;
 }
 .minichart{
     margin-left: -10px;
